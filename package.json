@@ -1,0 +1,17 @@
+{
+  "name": "grievance-portal",
+  "version": "1.0.0",
+  "description": "A production-grade, multilingual AI model layer for citizen grievance systems supporting **English, Hindi, and Tamil** across 5 public administration categories:\r 1. **Water Supply & Quality**\r 2. **Sanitation & Garbage**\r 3. **Roads & Potholes**\r 4. **Electricity & Power Cut**\r 5. **Public Healthcare & Clinics**",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1"
+  }
+}

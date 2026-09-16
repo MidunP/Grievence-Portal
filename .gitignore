@@ -1,0 +1,35 @@
+# Dependencies
+node_modules/
+
+# Python cache & virtual environments
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+ENV/
+.venv
+
+# Environment variables & secrets
+.env
+.env.local
+.env.*.local
+*.env
+
+# Plan files & AI artifacts (Exclude plan markdown files)
+*plan*.md
+*Plan*.md
+*PLAN*.md
+*task*.md
+*Task*.md
+*TASK*.md
+.gemini/
+artifacts/
+
+# System & IDE files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

@@ -1,0 +1,104 @@
+[
+  {
+    "id": "GRV-2026-7297",
+    "text": "Main water pipeline burst near Station Road. Heavy water logging and contamination.",
+    "area": "Anna Nagar",
+    "language": "en",
+    "category": "Water Supply & Quality",
+    "category_confidence": 0.9997,
+    "priority": "Critical",
+    "priority_reason": "Triggered critical hazard/emergency keywords or high urgency count",
+    "department": "Department of Water Resources & Sanitation",
+    "sla_hours": 24,
+    "status": "Submitted",
+    "days_open": 0,
+    "duplicate_matched": false,
+    "matched_complaint": {
+      "id": "5f260b2a",
+      "text": "Main water pipeline burst near Station Road crossing. Thousands of gallons leaking continuously.",
+      "category": "Water Supply & Quality",
+      "priority": "Critical"
+    },
+    "similarity_score": 0.8179,
+    "explanation": "Grievance classified as 'Water Supply & Quality' with 100.0% confidence. Assigned priority 'Critical' (Triggered critical hazard/emergency keywords or high urgency count). Routed to 'Department of Water Resources & Sanitation'.",
+    "key_terms": [
+      "burst",
+      "water",
+      "pipeline",
+      "road"
+    ],
+    "created_at": "2026-09-16T05:15:14.009Z"
+  },
+  {
+    "id": "GRV-2026-7405",
+    "text": "Main water pipeline burst near Station Road. Thousands of gallons leaking continuously on main road.",
+    "area": "Anna Nagar",
+    "language": "en",
+    "category": "Water Supply & Quality",
+    "category_confidence": 1,
+    "priority": "Critical",
+    "priority_reason": "Triggered critical hazard/emergency keywords or high urgency count",
+    "department": "Department of Water Resources & Sanitation",
+    "sla_hours": 24,
+    "status": "Flagged Duplicate",
+    "days_open": 0,
+    "duplicate_matched": true,
+    "matched_complaint": {
+      "id": "5f260b2a",
+      "text": "Main water pipeline burst near Station Road crossing. Thousands of gallons leaking continuously.",
+      "category": "Water Supply & Quality",
+      "priority": "Critical"
+    },
+    "similarity_score": 0.9368,
+    "explanation": "Grievance classified as 'Water Supply & Quality' with 100.0% confidence. Assigned priority 'Critical' (Triggered critical hazard/emergency keywords or high urgency count). Routed to 'Department of Water Resources & Sanitation'.",
+    "key_terms": [
+      "burst",
+      "water",
+      "pipeline",
+      "road"
+    ],
+    "created_at": "2026-09-16T04:58:54.685Z"
+  },
+  {
+    "id": "GRV-2026-8941",
+    "text": "Main water pipeline burst near Station Road. Thousands of gallons leaking.",
+    "area": "Anna Nagar",
+    "language": "en",
+    "category": "Water Supply & Quality",
+    "priority": "Critical",
+    "department": "Department of Water Resources & Sanitation",
+    "status": "Dispatched",
+    "days_open": 1,
+    "duplicate_matched": false,
+    "created_at": "2026-09-15T04:58:54.700Z",
+    "explanation": "Grievance classified as Water Supply & Quality. Critical hazard keyword (burst) detected."
+  },
+  {
+    "id": "GRV-2026-3120",
+    "text": "वार्ड नंबर 10 में पिछले 4 दिनों से कचरा नहीं उठाया गया है। दुर्गंध फैल रही है।",
+    "area": "Gandhi Chowk",
+    "language": "hi",
+    "category": "Sanitation & Garbage",
+    "priority": "High",
+    "department": "Municipal Solid Waste Management Department",
+    "status": "Under Review",
+    "days_open": 4,
+    "duplicate_matched": false,
+    "created_at": "2026-09-14T04:58:54.701Z",
+    "explanation": "Grievance classified as Sanitation & Garbage. High duration open (4 days)."
+  },
+  {
+    "id": "GRV-2026-5542",
+    "text": "வார்டு 5 பகுதியில் சாக்கடை நீர் பொங்கி வழிகிறது.",
+    "area": "Shanti Vihar",
+    "language": "ta",
+    "category": "Sanitation & Garbage",
+    "priority": "High",
+    "department": "Municipal Solid Waste Management Department",
+    "status": "In Progress",
+    "days_open": 2,
+    "duplicate_matched": false,
+    "created_at": "2026-09-13T04:58:54.701Z",
+    "explanation": "Grievance classified as Sanitation & Garbage. High urgency keywords detected."
+  }
+]

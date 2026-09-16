@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JanSeva - National Multilingual Grievance Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600&family=Noto+Sans+Tamil:wght@400;500;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- Minimalist Header -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="brand-mark">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 21h18" />
+            <path d="M3 7h18" />
+            <path d="M5 7v14" />
+            <path d="M19 7v14" />
+            <path d="M9 7v14" />
+            <path d="M15 7v14" />
+            <path d="M12 2L3 7h18z" />
+          </svg>
+        </div>
+        <div>
+          <h1 class="brand-name">JanSeva Portal</h1>
+          <p class="brand-sub">AI-Powered Citizen Grievance Redressal Platform</p>
+        </div>
+      </div>
+
+      <div class="header-right">
+        <div class="system-status">
+          <span class="dot-online"></span> Engine Active
+        </div>
+
+        <nav class="nav-segment">
+          <button class="segment-btn active" data-tab="citizen-tab">File Grievance</button>
+          <button class="segment-btn" data-tab="admin-tab">Operations Center</button>
+          <button class="segment-btn" data-tab="ai-architecture-tab">Model Metrics</button>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-wrapper">
+
+    <!-- Tab 1: Citizen Grievance Portal -->
+    <section id="citizen-tab" class="tab-pane active">
+      <div class="grid-layout">
+
+        <!-- Left Column: Form -->
+        <div class="panel">
+          <div class="panel-header">
+            <h2 class="panel-title">Submit a Complaint</h2>
+            <p class="panel-desc">Enter your grievance in English, Hindi, or Tamil. The system automatically classifies
+              category, priority, duplicate risk, and department routing.</p>
+          </div>
+
+          <!-- Quick Test Presets -->
+          <div class="preset-bar">
+            <span class="preset-label">Sample Inputs:</span>
+            <div class="preset-group">
+              <button class="btn-preset" data-lang="en"
+                data-text="Main water pipeline burst near Station Road. Heavy water logging and contamination.">Water
+                Burst (EN)</button>
+              <button class="btn-preset" data-lang="hi"
+                data-text="वार्ड 10 में पिछले 4 दिनों से कचरा नहीं उठाया गया है। अत्यंत दुर्गंध आ रही है।">Sanitation
+                (HI)</button>
+              <button class="btn-preset" data-lang="ta"
+                data-text="வார்டு 5 பகுதியில் சாக்கடை நீர் பொங்கி வழிகிறது. பேருந்து நிலையம் கழிப்பறை அடைபட்டுள்ளது.">Sewage
+                (TA)</button>
+              <button class="btn-preset" data-lang="en"
+                data-text="High voltage cable hanging low near park. Severe danger of electric shock.">Electrical
+                (EN)</button>
+            </div>
+          </div>
+
+          <form id="grievance-form" class="form-body">
+            <div class="field-group">
+              <label for="area-select" class="field-label">Locality / Municipal Division</label>
+              <select id="area-select" class="field-input" required>
+                <option value="Anna Nagar">Anna Nagar Division</option>
+                <option value="Gandhi Chowk">Gandhi Chowk Division</option>
+                <option value="Raja Nagar">Raja Nagar Division</option>
+                <option value="Shanti Vihar">Shanti Vihar Division</option>
+                <option value="Subhash Market">Subhash Market Division</option>
+                <option value="Nehru Enclave">Nehru Enclave Division</option>
+              </select>
+            </div>
+
+            <div class="field-group">
+              <label for="grievance-text" class="field-label">Grievance Description</label>
+              <textarea id="grievance-text" class="field-input textarea-input" rows="6"
+                placeholder="Provide clear details of the issue in English, Hindi (हिंदी), or Tamil (தமிழ்)..."
+                required></textarea>
+            </div>
+
+            <button type="submit" class="btn-submit" id="submit-btn">
+              <span id="btn-text">Submit Grievance</span>
+              <span id="btn-loader" class="loader-spinner hidden"></span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Right Column: AI Model Output -->
+        <div class="panel">
+          <div class="panel-header border-b">
+            <h2 class="panel-title">Automated AI Triage & Analysis</h2>
+            <p class="panel-desc">Real-time pipeline results from language detection, classification, and routing
+              models.</p>
+          </div>
+
+          <!-- Empty State -->
+          <div id="ai-empty-state" class="state-empty">
+            <div class="icon-placeholder">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </div>
+            <p class="empty-title">Awaiting Submission</p>
+            <p class="empty-sub">Fill out the form or select a sample input to view classification results.</p>
+          </div>
+
+          <!-- Active Results -->
+          <div id="ai-result-content" class="result-body hidden">
+
+            <!-- Reference Bar -->
+            <div class="ref-bar">
+              <div>
+                <span class="ref-caption">REFERENCE NUMBER</span>
+                <div class="ref-id" id="ticket-id">GRV-2026-XXXX</div>
+              </div>
+              <span id="ticket-status-badge" class="badge badge-neutral">Submitted</span>
+            </div>
+
+            <!-- Diagnostics Metrics Grid -->
+            <div class="metrics-grid">
+
+              <div class="metric-card">
+                <span class="metric-label">Language Identification</span>
+                <div class="metric-value" id="res-language">English</div>
+                <span class="metric-sub" id="res-lang-conf">99.0% Confidence</span>
+              </div>
+
+              <div class="metric-card">
+                <span class="metric-label">Assigned Category</span>
+                <div class="metric-value" id="res-category">Water Supply</div>
+                <span class="metric-sub" id="res-cat-conf">98.5% Confidence</span>
+              </div>
+
+              <div class="metric-card">
+                <span class="metric-label">Triage Priority</span>
+                <div>
+                  <span class="priority-pill" id="res-priority">Critical</span>
+                </div>
+                <span class="metric-sub text-truncate" id="res-prio-reason">Urgency keyword detected</span>
+              </div>
+
+              <div class="metric-card">
+                <span class="metric-label">Routing & SLA</span>
+                <div class="metric-value-sm" id="res-department">Water Resources</div>
+                <span class="metric-sub" id="res-sla">Target Resolution: 24h</span>
+              </div>
+
+            </div>
+
+            <!-- Duplicate Risk Notification -->
+            <div id="duplicate-alert" class="notice-box notice-warning hidden">
+              <div class="notice-header">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path
+                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                <strong>Duplicate Grievance Warning</strong>
+              </div>
+              <p id="dup-details" class="notice-text">Matches an existing complaint in this locality.</p>
+            </div>
+
+            <!-- Explainability & Model Justification -->
+            <div class="audit-card">
+              <h4 class="audit-title">Model Decision Audit</h4>
+              <p id="res-explanation-summary" class="audit-summary">Summary text...</p>
+              <div class="terms-group">
+                <span class="terms-caption">Diagnostic Key Terms:</span>
+                <div id="key-terms-tags" class="terms-chips"></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Tab 2: Admin Operations Center -->
+    <section id="admin-tab" class="tab-pane hidden">
+
+      <div class="stats-overview">
+        <div class="stat-tile">
+          <span class="tile-value" id="stat-total">0</span>
+          <span class="tile-caption">Total Received</span>
+        </div>
+        <div class="stat-tile">
+          <span class="tile-value text-rose" id="stat-critical">0</span>
+          <span class="tile-caption">Critical Severity</span>
+        </div>
+        <div class="stat-tile">
+          <span class="tile-value text-amber" id="stat-high">0</span>
+          <span class="tile-caption">High Priority</span>
+        </div>
+        <div class="stat-tile">
+          <span class="tile-value text-indigo" id="stat-duplicates">0</span>
+          <span class="tile-caption">Duplicates Flagged</span>
+        </div>
+        <div class="stat-tile">
+          <span class="tile-value text-emerald" id="stat-sla">100%</span>
+          <span class="tile-caption">On-Time Routing</span>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="table-header">
+          <div>
+            <h2 class="panel-title">Grievance Operational Queue</h2>
+            <p class="panel-desc">Real-time municipal dispatch and status tracker</p>
+          </div>
+
+          <div class="filter-bar">
+            <select id="filter-priority" class="filter-select">
+              <option value="">All Priorities</option>
+              <option value="Critical">Critical</option>
+              <option value="High">High</option>
+              <option value="Medium">Medium</option>
+              <option value="Low">Low</option>
+            </select>
+
+            <select id="filter-language" class="filter-select">
+              <option value="">All Languages</option>
+              <option value="en">English</option>
+              <option value="hi">Hindi</option>
+              <option value="ta">Tamil</option>
+            </select>
+
+            <input type="text" id="filter-search" class="filter-search" placeholder="Search reference, text...">
+          </div>
+        </div>
+
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Ref ID</th>
+                <th>Lang</th>
+                <th>Division</th>
+                <th>Description</th>
+                <th>Category</th>
+                <th>Priority</th>
+                <th>Department</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="grievances-tbody">
+              <!-- Dynamically Populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Tab 3: Model Performance Metrics -->
+    <section id="ai-architecture-tab" class="tab-pane hidden">
+      <div class="panel">
+        <div class="panel-header border-b">
+          <h2 class="panel-title">Model Layer Metrics & Fairness Evaluation</h2>
+          <p class="panel-desc">STAR Doc Performance Evaluation across English, Hindi, and Tamil test benchmarks.</p>
+        </div>
+
+        <div class="metrics-summary-table">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Language</th>
+                <th>Test Samples</th>
+                <th>Classification Macro-F1</th>
+                <th>Routing Accuracy</th>
+                <th>Demographic Parity</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>English (en)</strong></td>
+                <td>42</td>
+                <td><span class="badge badge-success">100.0%</span></td>
+                <td><span class="badge badge-success">100.0%</span></td>
+                <td>Baseline</td>
+                <td><span class="badge badge-neutral">VERIFIED</span></td>
+              </tr>
+              <tr>
+                <td><strong>Hindi (hi)</strong></td>
+                <td>43</td>
+                <td><span class="badge badge-success">100.0%</span></td>
+                <td><span class="badge badge-success">100.0%</span></td>
+                <td>Balanced (<0.05)< /td>
+                <td><span class="badge badge-neutral">VERIFIED</span></td>
+              </tr>
+              <tr>
+                <td><strong>Tamil (ta)</strong></td>
+                <td>42</td>
+                <td><span class="badge badge-success">100.0%</span></td>
+                <td><span class="badge badge-success">100.0%</span></td>
+                <td>Balanced (<0.05)< /td>
+                <td><span class="badge badge-neutral">VERIFIED</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="app.js"></script>
+</body>
+
+</html>
