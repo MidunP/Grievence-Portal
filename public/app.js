@@ -1,220 +1,364 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Tab Navigation
-    const navTabs = document.querySelectorAll('.segment-btn');
-    const tabContents = document.querySelectorAll('.tab-pane');
 
-    navTabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            const target = tab.getAttribute('data-tab');
-            navTabs.forEach(t => t.classList.remove('active'));
-            tabContents.forEach(c => c.classList.add('hidden'));
+    /* ── Toast ───────────────────────────────────────────────── */
+    function toast(msg, type = 'info') {
+        const c = document.getElementById('toast-container');
+        const el = document.createElement('div');
+        el.className = `toast toast-${type}`;
+        el.textContent = msg;
+        c.appendChild(el);
+        setTimeout(() => el.remove(), 4000);
+    }
 
-            tab.classList.add('active');
-            document.getElementById(target).classList.remove('hidden');
+    /* ── Tabs ────────────────────────────────────────────────── */
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabPanes = document.querySelectorAll('.tab-pane');
 
-            if (target === 'admin-tab') {
-                loadAdminDashboard();
-            }
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const target = btn.dataset.tab;
+            tabBtns.forEach(b => b.classList.remove('active'));
+            tabPanes.forEach(p => { p.classList.remove('active'); p.classList.add('hidden'); });
+            btn.classList.add('active');
+            const pane = document.getElementById(target);
+            pane.classList.remove('hidden');
+            pane.classList.add('active');
+            if (target === 'admin-tab') loadAdmin();
         });
     });
 
-    // Presets click handler
-    const presetBtns = document.querySelectorAll('.btn-preset');
-    const textarea = document.getElementById('grievance-text');
+    /* Make non-active tabs hidden on load */
+    document.querySelectorAll('.tab-pane:not(.active)').forEach(p => p.classList.add('hidden'));
 
-    presetBtns.forEach(btn => {
+    /* ── Character counter ───────────────────────────────────── */
+    const textarea = document.getElementById('grievance-text');
+    const charCount = document.getElementById('char-count');
+    textarea.addEventListener('input', () => { charCount.textContent = textarea.value.length; });
+
+    /* ── Sample inputs ───────────────────────────────────────── */
+    document.querySelectorAll('.sample-btn').forEach(btn => {
         btn.addEventListener('click', () => {
-            textarea.value = btn.getAttribute('data-text');
+            textarea.value = btn.dataset.text;
+            charCount.textContent = textarea.value.length;
             textarea.focus();
         });
     });
 
-    // Form Submission
+    /* ── Submit ──────────────────────────────────────────────── */
     const form = document.getElementById('grievance-form');
     const submitBtn = document.getElementById('submit-btn');
     const btnText = document.getElementById('btn-text');
     const btnLoader = document.getElementById('btn-loader');
-
     const emptyState = document.getElementById('ai-empty-state');
-    const resultPanel = document.getElementById('ai-result-content');
+    const result = document.getElementById('ai-result-content');
+
+    const LANG = { en: 'English (en)', hi: 'Hindi (hi)', ta: 'Tamil (ta)' };
 
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
         const text = textarea.value.trim();
         const area = document.getElementById('area-select').value;
+        if (!text) { toast('Enter a grievance description.', 'error'); return; }
 
-        if (!text) return;
-
-        // Loading State
-        btnText.textContent = 'Executing AI Triage...';
+        btnText.textContent = 'Processing...';
         btnLoader.classList.remove('hidden');
         submitBtn.disabled = true;
 
         try {
-            const response = await fetch('/api/process-grievance', {
+            const res = await fetch('/api/process-grievance', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ text, area })
             });
+            const data = await res.json();
 
-            const data = await response.json();
-
-            if (!response.ok || data.error) {
-                alert(`Error: ${data.error || 'Failed to process grievance'}`);
+            if (!res.ok || data.error) {
+                toast(data.error || 'AI pipeline failed.', 'error');
                 return;
             }
 
-            // Render Results
-            renderAIResult(data.ticket, data.ai_analysis);
-
-        } catch (err) {
-            console.error(err);
-            alert('Network or server error while executing AI pipeline.');
+            renderResult(data.ticket, data.ai_analysis);
+            toast(`Ticket ${data.ticket.id} filed.`, 'success');
+        } catch {
+            toast('Network error. Is the server running?', 'error');
         } finally {
-            btnText.textContent = 'Submit Grievance';
+            btnText.textContent = 'Submit to AI Triage Engine';
             btnLoader.classList.add('hidden');
             submitBtn.disabled = false;
         }
     });
 
-    function renderAIResult(ticket, ai) {
+    function renderResult(ticket, ai) {
         emptyState.classList.add('hidden');
-        resultPanel.classList.remove('hidden');
+        result.classList.remove('hidden');
 
         document.getElementById('ticket-id').textContent = ticket.id;
         document.getElementById('ticket-status-badge').textContent = ticket.status;
 
-        // Language
-        const langNames = { en: 'English (en)', hi: 'Hindi (हिंदी)', ta: 'Tamil (தமிழ்)' };
-        document.getElementById('res-language').textContent = langNames[ai.language_detection.language] || ai.language_detection.language;
-        document.getElementById('res-lang-conf').textContent = `${Math.round(ai.language_detection.confidence * 100)}% Confidence (${ai.language_detection.method})`;
+        document.getElementById('res-language').textContent = LANG[ai.language_detection.language] || ai.language_detection.language;
+        document.getElementById('res-lang-conf').textContent = `${Math.round(ai.language_detection.confidence * 100)}% -- ${ai.language_detection.method}`;
 
-        // Category
         document.getElementById('res-category').textContent = ai.classification.predicted_category;
-        document.getElementById('res-cat-conf').textContent = `${Math.round(ai.classification.confidence * 100)}% Confidence`;
+        document.getElementById('res-cat-conf').textContent = `${Math.round(ai.classification.confidence * 100)}% confidence`;
 
-        // Priority
-        const priorityEl = document.getElementById('res-priority');
-        priorityEl.textContent = ai.priority.priority;
-        priorityEl.className = `priority-pill prio-${ai.priority.priority.toLowerCase()}`;
+        const prioEl = document.getElementById('res-priority');
+        prioEl.textContent = ai.priority.priority;
+        prioEl.className = `prio-tag prio-${ai.priority.priority.toLowerCase()}`;
         document.getElementById('res-prio-reason').textContent = ai.priority.reason;
 
-        // Department & SLA
         document.getElementById('res-department').textContent = ai.routing.target_department;
-        document.getElementById('res-sla').textContent = `Target SLA: ${ai.routing.sla_target_hours}h`;
+        document.getElementById('res-sla').textContent = `SLA: ${ai.routing.sla_target_hours}h`;
 
-        // Duplicate Check Banner
-        const dupAlert = document.getElementById('duplicate-alert');
+        const dupEl = document.getElementById('duplicate-alert');
         if (ai.duplicate_check.is_duplicate) {
-            dupAlert.classList.remove('hidden');
-            const scorePct = Math.round(ai.duplicate_check.similarity_score * 100);
-            document.getElementById('dup-details').textContent = `Matches similar complaint in ${ticket.area} with ${scorePct}% vector match score.`;
+            dupEl.classList.remove('hidden');
+            const pct = Math.round(ai.duplicate_check.similarity_score * 100);
+            document.getElementById('dup-details').textContent = `Matches a similar complaint in ${ticket.area} -- ${pct}% vector similarity.`;
         } else {
-            dupAlert.classList.add('hidden');
+            dupEl.classList.add('hidden');
         }
 
-        // Explanation Summary & Diagnostic Terms
         document.getElementById('res-explanation-summary').textContent = ai.explanation.summary;
-        const termsContainer = document.getElementById('key-terms-tags');
-        termsContainer.innerHTML = '';
 
-        (ai.explanation.key_diagnostic_terms || []).forEach(term => {
+        const tags = document.getElementById('key-terms-tags');
+        tags.innerHTML = '';
+        (ai.explanation.key_diagnostic_terms || []).forEach(t => {
             const chip = document.createElement('span');
-            chip.className = 'chip';
-            chip.textContent = term;
-            termsContainer.appendChild(chip);
+            chip.className = 'term-chip';
+            chip.textContent = t;
+            tags.appendChild(chip);
         });
     }
 
-    // Admin Dashboard Loader
-    async function loadAdminDashboard() {
+    /* ── Track ticket ────────────────────────────────────────── */
+    const trackBtn = document.getElementById('track-btn');
+    const trackInput = document.getElementById('track-input');
+    const trackResult = document.getElementById('track-result');
+    const trackEmpty = document.getElementById('track-empty');
+
+    const STATUS_ORDER = ['Submitted', 'Under Review', 'In Progress', 'Dispatched', 'Resolved'];
+    const TL_IDS = ['tl-submitted', 'tl-review', 'tl-progress', 'tl-dispatched', 'tl-resolved'];
+    const TL_LINES = ['tl-line-1', 'tl-line-2', 'tl-line-3', 'tl-line-4'];
+
+    trackBtn.addEventListener('click', doTrack);
+    trackInput.addEventListener('keydown', e => { if (e.key === 'Enter') doTrack(); });
+
+    async function doTrack() {
+        const id = trackInput.value.trim().toUpperCase();
+        if (!id) { toast('Enter a reference number.', 'error'); return; }
         try {
-            const [analyticsRes, grievancesRes] = await Promise.all([
+            const res = await fetch('/api/grievances');
+            const data = await res.json();
+            const t = (data.grievances || []).find(g => g.id.toUpperCase() === id);
+            if (!t) {
+                toast(`Ticket "${id}" not found.`, 'error');
+                trackResult.classList.add('hidden');
+                trackEmpty.classList.remove('hidden');
+                return;
+            }
+            renderTrack(t);
+        } catch {
+            toast('Failed to fetch ticket data.', 'error');
+        }
+    }
+
+    function renderTrack(t) {
+        trackEmpty.classList.add('hidden');
+        trackResult.classList.remove('hidden');
+
+        document.getElementById('track-id').textContent = t.id;
+        document.getElementById('track-status-badge').textContent = t.status || '--';
+        document.getElementById('track-category').textContent = t.category || '--';
+        document.getElementById('track-area').textContent = t.area || '--';
+        document.getElementById('track-dept').textContent = t.department || '--';
+        document.getElementById('track-sla').textContent = t.sla_hours ? `${t.sla_hours}h` : '--';
+        document.getElementById('track-lang').textContent = LANG[t.language] || t.language || '--';
+        document.getElementById('track-text').textContent = t.text || '--';
+
+        const prioEl = document.getElementById('track-priority');
+        prioEl.textContent = t.priority || '--';
+        prioEl.className = `prio-tag prio-${(t.priority || 'low').toLowerCase()}`;
+
+        const d = t.created_at ? new Date(t.created_at) : null;
+        document.getElementById('track-date').textContent = d
+            ? d.toLocaleDateString('en-IN', { dateStyle: 'long' })
+            : '--';
+
+        const idx = STATUS_ORDER.indexOf(t.status);
+        TL_IDS.forEach((id, i) => {
+            const el = document.getElementById(id);
+            el.classList.remove('active', 'done');
+            if (i < idx) el.classList.add('done');
+            else if (i === idx) el.classList.add('active');
+        });
+        TL_LINES.forEach((id, i) => {
+            const el = document.getElementById(id);
+            if (el) el.classList.toggle('done', i < idx);
+        });
+    }
+
+    /* ── Admin ───────────────────────────────────────────────── */
+    let prioChart = null;
+    let langChart = null;
+
+    document.getElementById('admin-refresh-btn').addEventListener('click', loadAdmin);
+
+    async function loadAdmin() {
+        try {
+            const [aRes, gRes] = await Promise.all([
                 fetch('/api/analytics'),
                 fetch('/api/grievances')
             ]);
+            const analytics = await aRes.json();
+            const gData = await gRes.json();
 
-            const analytics = await analyticsRes.json();
-            const grievancesData = await grievancesRes.json();
-
-            // Stats
             document.getElementById('stat-total').textContent = analytics.total_complaints;
             document.getElementById('stat-critical').textContent = analytics.priority_breakdown.Critical || 0;
             document.getElementById('stat-high').textContent = analytics.priority_breakdown.High || 0;
             document.getElementById('stat-duplicates').textContent = analytics.duplicate_count || 0;
 
-            // Render Table
-            renderTable(grievancesData.grievances);
-
-        } catch (err) {
-            console.error('Failed to load admin stats:', err);
+            buildCharts(analytics);
+            buildTable(gData.grievances || []);
+        } catch {
+            toast('Failed to load dashboard.', 'error');
         }
     }
 
-    function renderTable(grievances) {
-        const tbody = document.getElementById('grievances-tbody');
-        tbody.innerHTML = '';
+    const CHART_OPTS = {
+        plugins: {
+            legend: {
+                labels: {
+                    color: '#6a6a6a',
+                    font: { family: 'system-ui', size: 11 },
+                    boxWidth: 10,
+                    padding: 8
+                }
+            }
+        },
+        cutout: '65%'
+    };
 
-        if (!grievances || grievances.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; padding: 1.5rem; color: var(--text-secondary);">No grievances found.</td></tr>';
+    function buildCharts(a) {
+        const pb = a.priority_breakdown || {};
+        const lb = a.language_breakdown || {};
+
+        if (prioChart) prioChart.destroy();
+        prioChart = new Chart(
+            document.getElementById('priority-chart').getContext('2d'),
+            {
+                type: 'doughnut',
+                data: {
+                    labels: ['Critical', 'High', 'Medium', 'Low'],
+                    datasets: [{
+                        data: [pb.Critical || 0, pb.High || 0, pb.Medium || 0, pb.Low || 0],
+                        backgroundColor: ['#7a2020', '#7a4a10', '#5a5a10', '#1d3452'],
+                        borderColor: ['#b33a3a', '#a06020', '#7a7a20', '#4a7fc1'],
+                        borderWidth: 1
+                    }]
+                },
+                options: CHART_OPTS
+            }
+        );
+
+        if (langChart) langChart.destroy();
+        langChart = new Chart(
+            document.getElementById('lang-chart').getContext('2d'),
+            {
+                type: 'doughnut',
+                data: {
+                    labels: ['English', 'Hindi', 'Tamil'],
+                    datasets: [{
+                        data: [lb.en || 0, lb.hi || 0, lb.ta || 0],
+                        backgroundColor: ['#1d3452', '#5a4a10', '#3a1d5a'],
+                        borderColor: ['#4a7fc1', '#a06020', '#7a50c1'],
+                        borderWidth: 1
+                    }]
+                },
+                options: CHART_OPTS
+            }
+        );
+    }
+
+    function buildTable(items) {
+        const tbody = document.getElementById('grievances-tbody');
+        const count = document.getElementById('queue-count');
+        tbody.innerHTML = '';
+        count.textContent = `${items.length} complaint${items.length !== 1 ? 's' : ''}`;
+
+        if (!items.length) {
+            tbody.innerHTML = '<tr><td colspan="9" class="table-empty">No grievances found.</td></tr>';
             return;
         }
 
-        grievances.forEach(item => {
+        items.forEach(item => {
             const tr = document.createElement('tr');
-            const langBadge = item.language === 'hi' ? 'hi' : item.language === 'ta' ? 'ta' : 'en';
-
             tr.innerHTML = `
-        <td><strong>${item.id}</strong></td>
-        <td><span class="badge badge-neutral">${langBadge}</span></td>
-        <td>${item.area}</td>
-        <td style="max-width: 260px;" class="text-truncate">${item.text}</td>
-        <td>${item.category}</td>
-        <td><span class="priority-pill prio-${item.priority.toLowerCase()}">${item.priority}</span></td>
-        <td style="max-width: 200px;" class="text-truncate">${item.department}</td>
-        <td><span class="badge badge-success">${item.status}</span></td>
+        <td class="ref-mono">${item.id}</td>
+        <td>${item.language || '--'}</td>
+        <td>${item.area || '--'}</td>
+        <td><span class="text-clip-td" title="${item.text}">${item.text}</span></td>
+        <td>${item.category || '--'}</td>
+        <td><span class="prio-tag prio-${(item.priority || 'low').toLowerCase()}">${item.priority}</span></td>
+        <td><span class="text-clip-td" title="${item.department}">${item.department || '--'}</span></td>
         <td>
-          <button class="btn-preset update-btn" data-id="${item.id}">Update</button>
+          <select class="status-select" data-id="${item.id}">
+            ${['Submitted', 'Under Review', 'In Progress', 'Dispatched', 'Resolved', 'Flagged Duplicate']
+                    .map(s => `<option${item.status === s ? ' selected' : ''}>${s}</option>`)
+                    .join('')}
+          </select>
+        </td>
+        <td>
+          <button class="save-btn" data-id="${item.id}">Save</button>
         </td>
       `;
             tbody.appendChild(tr);
         });
 
-        // Add status update handlers
-        document.querySelectorAll('.update-btn').forEach(btn => {
+        document.querySelectorAll('.save-btn').forEach(btn => {
             btn.addEventListener('click', async () => {
-                const id = btn.getAttribute('data-id');
-                const nextStatus = prompt('Update Ticket Status (e.g. Dispatched, In Progress, Resolved):', 'In Progress');
-                if (nextStatus) {
-                    await fetch(`/api/grievances/${id}`, {
+                const id = btn.dataset.id;
+                const select = btn.closest('tr').querySelector('.status-select');
+                btn.textContent = '...';
+                btn.disabled = true;
+                try {
+                    const res = await fetch(`/api/grievances/${id}`, {
                         method: 'PATCH',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ status: nextStatus })
+                        body: JSON.stringify({ status: select.value })
                     });
-                    loadAdminDashboard();
+                    if (res.ok) toast(`${id} updated.`, 'success');
+                    else toast(`Failed to update ${id}.`, 'error');
+                } catch {
+                    toast('Network error.', 'error');
+                } finally {
+                    btn.textContent = 'Save';
+                    btn.disabled = false;
                 }
             });
         });
     }
 
-    // Filter Listeners
+    /* ── Filters ─────────────────────────────────────────────── */
     ['filter-priority', 'filter-language', 'filter-search'].forEach(id => {
-        document.getElementById(id).addEventListener('change', filterTable);
-        document.getElementById(id).addEventListener('keyup', filterTable);
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.addEventListener('change', applyFilter);
+        el.addEventListener('keyup', applyFilter);
     });
 
-    async function filterTable() {
+    async function applyFilter() {
         const prio = document.getElementById('filter-priority').value;
         const lang = document.getElementById('filter-language').value;
         const search = document.getElementById('filter-search').value;
-
         const params = new URLSearchParams();
         if (prio) params.append('priority', prio);
         if (lang) params.append('language', lang);
         if (search) params.append('search', search);
-
-        const res = await fetch(`/api/grievances?${params.toString()}`);
-        const data = await res.json();
-        renderTable(data.grievances);
+        try {
+            const res = await fetch(`/api/grievances?${params}`);
+            const data = await res.json();
+            buildTable(data.grievances || []);
+        } catch { /* silent */ }
     }
+
 });
