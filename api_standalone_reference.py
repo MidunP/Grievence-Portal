@@ -1,6 +1,24 @@
 """
-Phase 8: FastAPI API Service.
-Wraps all grievance models behind standardized REST API endpoints.
+STANDALONE ML TESTING HARNESS — NOT THE PRODUCTION BACKEND
+============================================================
+This file (api_standalone_reference.py) is a FastAPI wrapper around the AI pipeline
+that was built for direct ML testing and development. It is NOT used by the frontend.
+
+CANONICAL PRODUCTION PATH:
+  Browser (public/index.html)
+    → Express server (server.js, port 3000)
+      → Python subprocess bridge (run_pipeline_bridge.py)
+        → AI Pipeline (pipeline.py)
+
+To run this standalone harness for ML testing only:
+  pip install fastapi uvicorn
+  uvicorn api_standalone_reference:app --reload --port 8000
+
+KNOWN LIMITATIONS:
+  - CORS is allow_origins=["*"] — fine for local testing, not production-safe.
+  - Uses deprecated @app.on_event("startup") — works but should be migrated
+    to a lifespan handler in FastAPI >=0.93.
+  - Does not own any ticket persistence or analytics endpoints.
 """
 
 from typing import Dict, List, Optional

@@ -140,27 +140,74 @@ TEMPLATES["ta"]["Public Healthcare & Clinics"] = [
 AREAS = ["Raja Nagar", "Gandhi Chowk", "Anna Nagar", "Shanti Vihar", "Subhash Market", "Nehru Enclave"]
 STREETS = ["MG Road", "Station Road", "Ring Road", "Church Street", "Main Bazaar"]
 
-def generate_synthetic_dataset(num_samples_per_cat_lang: int = 50) -> List[Dict]:
-    """Generates synthetic complaints balance-sampled across language and category."""
+def _generate_for_split(
+    lang: str,
+    category: str,
+    num_samples: int,
+    ward_range: tuple,
+    block_range: str
+) -> List[Dict]:
+    """Generates samples for one language/category using distinct parameterization ranges."""
+    templates = TEMPLATES[lang][category]
     records = []
-    
+    for _ in range(num_samples):
+        template = random.choice(templates)
+        ward = random.randint(*ward_range)
+        block = random.choice(block_range)
+        street = random.choice(STREETS)
+        area = random.choice(AREAS)
+        text = template.format(ward=ward, street=street, block=block, area=area)
+        text_lower = text.lower()
+        is_critical = any(kw in text_lower for kw in [
+            "burst", "explode", "bleeding", "hazard",
+            "फट गया", "अस्पताल", "ஆபத்து", "வெடித்து"
+        ])
+        is_high = any(kw in text_lower for kw in [
+            "no water", "12 hours", "foul", "गंदा", "12 घंटे", "மின்சாரம் இல்லை"
+        ])
+        if is_critical:
+            priority = "Critical"
+        elif is_high:
+            priority = "High"
+        elif random.random() > 0.5:
+            priority = "Medium"
+        else:
+            priority = "Low"
+        records.append({
+            "id": str(uuid.uuid4())[:8],
+            "text": text,
+            "language": lang,
+            "category": category,
+            "priority": priority,
+            "area": area,
+            "days_open": random.randint(0, 14)
+        })
+    return records
+
+
+def _gen_split_records(num_per_cat_lang: int, wards: range, street_indices: list, area_indices: list) -> List[Dict]:
+    """Generate records using a specific namespace of parameters to prevent text-level cross-split leakage."""
+    local_streets = [STREETS[i] for i in street_indices]
+    local_areas   = [AREAS[i]   for i in area_indices]
+    records = []
     for lang in ["en", "hi", "ta"]:
         for category in CATEGORIES:
             templates = TEMPLATES[lang][category]
-            for i in range(num_samples_per_cat_lang):
-                template = random.choice(templates)
-                text = template.format(
-                    ward=random.randint(1, 45),
-                    street=random.choice(STREETS),
-                    block=chr(65 + random.randint(0, 5)),
-                    area=random.choice(AREAS)
-                )
-                
-                # Determine initial priority heuristic
+            for _ in range(num_per_cat_lang):
+                template  = random.choice(templates)
+                ward      = random.choice(list(wards))
+                block     = random.choice("ABC" if wards.start < 26 else ("DE" if wards.start < 36 else "FG"))
+                street    = random.choice(local_streets)
+                area      = random.choice(local_areas)
+                text      = template.format(ward=ward, street=street, block=block, area=area)
                 text_lower = text.lower()
-                is_critical = any(kw in text_lower for kw in ["burst", "explode", "bleeding", "hazard", "फट गया", "अस्पताल", "ஆபத்து", "வெடித்து"])
-                is_high = any(kw in text_lower for kw in ["no water", "12 hours", "foul", "गंदा", "12 घंटे", "மின்சாரம் இல்லை"])
-                
+                is_critical = any(kw in text_lower for kw in [
+                    "burst", "explode", "bleeding", "hazard",
+                    "फट गया", "अस्पताल", "ஆபத்து", "வெடித்து"
+                ])
+                is_high = any(kw in text_lower for kw in [
+                    "no water", "12 hours", "foul", "गंदा", "12 घंटे", "மின்சாரம் இல்லை"
+                ])
                 if is_critical:
                     priority = "Critical"
                 elif is_high:
@@ -169,75 +216,136 @@ def generate_synthetic_dataset(num_samples_per_cat_lang: int = 50) -> List[Dict]
                     priority = "Medium"
                 else:
                     priority = "Low"
-
-                item = {
-                    "id": str(uuid.uuid4())[:8],
-                    "text": text,
-                    "language": lang,
-                    "category": category,
-                    "priority": priority,
-                    "area": random.choice(AREAS),
-                    "days_open": random.randint(0, 14)
-                }
-                records.append(item)
-                
-    # Introduce ~10% duplicate complaints with minor rephrasing or identical content
-    num_duplicates = int(len(records) * 0.1)
-    for _ in range(num_duplicates):
-        original = random.choice(records)
-        duplicate = dict(original)
-        duplicate["id"] = str(uuid.uuid4())[:8]
-        duplicate["text"] = "URGENT: " + original["text"] if original["language"] == "en" else "आपातकालीन: " + original["text"]
-        duplicate["is_duplicate_of"] = original["id"]
-        records.append(duplicate)
-        
+                records.append({
+                    "id":        str(uuid.uuid4())[:8],
+                    "text":      text,
+                    "language":  lang,
+                    "category":  category,
+                    "priority":  priority,
+                    "area":      area,
+                    "days_open": random.randint(0, 14),
+                })
     random.shuffle(records)
     return records
 
 
+def generate_synthetic_dataset(num_samples_per_cat_lang: int = 50) -> List[Dict]:
+    """Returns the full combined dataset (train + val + test combined, no split)."""
+    return _gen_split_records(num_samples_per_cat_lang, range(1, 46), [0, 1, 2, 3, 4], [0, 1, 2, 3, 4, 5])
+
+
 def train_val_test_split(dataset: List[Dict], train_ratio=0.7, val_ratio=0.15) -> Tuple[List[Dict], List[Dict], List[Dict]]:
-    """Splits dataset ensuring balanced language representation in test set."""
-    train, val, test = [], [], []
-    
-    # Group by language to guarantee balanced language splits
-    lang_groups = {}
+    """Legacy helper: random split used only when called externally. save_dataset() does not use this."""
+    lang_groups: Dict[str, List] = {}
     for item in dataset:
-        lang = item["language"]
-        lang_groups.setdefault(lang, []).append(item)
-        
-    for lang, items in lang_groups.items():
+        lang_groups.setdefault(item["language"], []).append(item)
+    train, val, test = [], [], []
+    for items in lang_groups.values():
         random.shuffle(items)
         n = len(items)
         n_train = int(n * train_ratio)
-        n_val = int(n * val_ratio)
-        
+        n_val   = int(n * val_ratio)
         train.extend(items[:n_train])
         val.extend(items[n_train:n_train + n_val])
         test.extend(items[n_train + n_val:])
-        
     return train, val, test
 
 
 def save_dataset(num_samples_per_cat_lang: int = 50):
-    """Generates and saves the datasets to JSON files."""
-    data = generate_synthetic_dataset(num_samples_per_cat_lang)
-    train, val, test = train_val_test_split(data)
-    
+    """
+    Generates and saves datasets with GUARANTEED zero text overlap
+    between train, val, and test.
+
+    Method: oversample each (lang, category) pair to 4x target, deduplicate
+    on exact text, then assign each unique text to exactly one split by
+    sequential slicing — so no text can appear in more than one split.
+    Duplicate pairs (for detector training) are injected into TRAIN ONLY as
+    prefixed versions, which are trivially absent from val/test.
+    """
+    pool_per = num_samples_per_cat_lang * 4          # oversample to survive dedup
+    n_train  = int(num_samples_per_cat_lang * 0.70)
+    n_val    = int(num_samples_per_cat_lang * 0.15)
+    n_test   = num_samples_per_cat_lang - n_train - n_val
+
+    train, val, test = [], [], []
+
+    for lang in ["en", "hi", "ta"]:
+        for category in CATEGORIES:
+            templates = TEMPLATES[lang][category]
+            seen_texts: set = set()
+            unique_items: List[Dict] = []
+            attempts = 0
+            while len(unique_items) < (n_train + n_val + n_test) and attempts < pool_per * 10:
+                attempts += 1
+                template  = random.choice(templates)
+                ward      = random.randint(1, 99)
+                block     = random.choice("ABCDEFGHIJ")
+                street    = random.choice(STREETS)
+                area      = random.choice(AREAS)
+                text      = template.format(ward=ward, street=street, block=block, area=area)
+                if text in seen_texts:
+                    continue
+                seen_texts.add(text)
+                text_lower = text.lower()
+                is_critical = any(kw in text_lower for kw in [
+                    "burst", "explode", "bleeding", "hazard",
+                    "फट गया", "अस्पताल", "ஆபத்து", "வெடித்து"
+                ])
+                is_high = any(kw in text_lower for kw in [
+                    "no water", "12 hours", "foul", "गंदा", "12 घंटे", "மின்சாரம் இல்லை"
+                ])
+                if is_critical:
+                    priority = "Critical"
+                elif is_high:
+                    priority = "High"
+                elif random.random() > 0.5:
+                    priority = "Medium"
+                else:
+                    priority = "Low"
+                unique_items.append({
+                    "id":        str(uuid.uuid4())[:8],
+                    "text":      text,
+                    "language":  lang,
+                    "category":  category,
+                    "priority":  priority,
+                    "area":      area,
+                    "days_open": random.randint(0, 14),
+                })
+
+            # Disjoint sequential slices — no overlap possible
+            random.shuffle(unique_items)
+            train.extend(unique_items[:n_train])
+            val.extend(unique_items[n_train:n_train + n_val])
+            test.extend(unique_items[n_train + n_val:n_train + n_val + n_test])
+
+    # Inject ~10% prefixed duplicate pairs into TRAIN ONLY
+    num_dup  = int(len(train) * 0.10)
+    dup_pool = list(train)
+    for _ in range(num_dup):
+        orig = random.choice(dup_pool)
+        dup  = dict(orig)
+        dup["id"]   = str(uuid.uuid4())[:8]
+        dup["text"] = ("URGENT: " + orig["text"]
+                       if orig["language"] == "en"
+                       else "आपातकालीन: " + orig["text"])
+        dup["is_duplicate_of"] = orig["id"]
+        train.append(dup)
+    random.shuffle(train)
+
+    full_data = train + val + test
+
     with open(DATA_DIR / "dataset_full.json", "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
-        
+        json.dump(full_data, f, ensure_ascii=False, indent=2)
     with open(DATA_DIR / "train.json", "w", encoding="utf-8") as f:
         json.dump(train, f, ensure_ascii=False, indent=2)
-
     with open(DATA_DIR / "val.json", "w", encoding="utf-8") as f:
         json.dump(val, f, ensure_ascii=False, indent=2)
-
     with open(DATA_DIR / "test.json", "w", encoding="utf-8") as f:
         json.dump(test, f, ensure_ascii=False, indent=2)
-        
-    print(f"Dataset generated successfully!")
-    print(f"Total: {len(data)} | Train: {len(train)} | Val: {len(val)} | Test: {len(test)}")
-    return data, train, val, test
+
+    print("Dataset generated successfully!")
+    print(f"Total: {len(full_data)} | Train: {len(train)} | Val: {len(val)} | Test: {len(test)}")
+    return full_data, train, val, test
 
 
 if __name__ == "__main__":

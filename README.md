@@ -1,6 +1,6 @@
-# Grievance Portal - AI Model Layer Architecture
+# JanSeva Grievance Portal — AI-Powered Triage & Resolution System
 
-A production-grade, multilingual AI model layer for citizen grievance systems supporting **English, Hindi, and Tamil** across 5 public administration categories:
+A full-stack, multilingual AI grievance triage system supporting **English, Hindi, and Tamil** across 5 public administration categories:
 1. **Water Supply & Quality**
 2. **Sanitation & Garbage**
 3. **Roads & Potholes**
@@ -9,122 +9,124 @@ A production-grade, multilingual AI model layer for citizen grievance systems su
 
 ---
 
-## 🚀 Architecture Overview (9 Phases Built)
+## 🏛️ System Architecture
 
-| Phase | Component | Technology / Implementation |
-|-------|-----------|-----------------------------|
-| **Phase 1** | **Data Foundation** | Multi-lingual synthetic dataset generator & `train/val/test` splitters for English, Hindi, and Tamil |
-| **Phase 2** | **Language Detection** | `langdetect` + script Unicode heuristic fallbacks (Devanagari, Tamil, Latin, Code-mixed Hinglish/Tanglish) |
-| **Phase 3** | **Complaint Classification** | Baseline Naive Bayes / TF-IDF + Logistic Regression & Hugging Face MuRIL / IndicBERT fine-tuning pipeline |
-| **Phase 4** | **Duplicate Detection** | Multilingual sentence embeddings (`paraphrase-multilingual-mpnet-base-v2`) with vector similarity thresholding (0.85) |
-| **Phase 5** | **Priority Prediction** | Hybrid urgency rule engine + ML classifier predicting **Critical, High, Medium, Low** with language bias auditing |
-| **Phase 6** | **Department Routing** | Category & SLA-based direct routing to target government departments |
-| **Phase 7** | **Explainability** | Diagnostic term extraction & confidence explanations for citizen & administrative auditing |
-| **Phase 8** | **API Integration** | Standardized FastAPI microservice with endpoints (`/detect-language`, `/classify`, `/duplicate-check`, `/priority`, `/route`, `/process-grievance`) |
-| **Phase 9** | **Evaluation & Fairness** | STAR research evaluation suite evaluating Accuracy, Macro-F1, Routing Accuracy, and Language Disparity |
+The project employs a hybrid Node.js + Python architecture designed for low-latency operational execution:
+
+```
+                  ┌────────────────────────────────────────┐
+                  │   Browser Frontend (Vanilla JS + CSS)  │
+                  │        public/index.html & app.js      │
+                  └──────────────────┬─────────────────────┘
+                                     │ REST APIs
+                                     ▼
+                  ┌────────────────────────────────────────┐
+                  │    Canonical Express Backend Server    │
+                  │               server.js                │
+                  └──────────────────┬─────────────────────┘
+                                     │ Subprocess Call (stdin/stdout)
+                                     ▼
+                  ┌────────────────────────────────────────┐
+                  │        Python AI Pipeline Bridge       │
+                  │          run_pipeline_bridge.py        │
+                  └──────────────────┬─────────────────────┘
+                                     │
+                                     ▼
+                  ┌────────────────────────────────────────┐
+                  │      Master 9-Phase AI Orchestrator    │
+                  │              pipeline.py               │
+                  └────────────────────────────────────────┘
+```
+
+> **Note on Backend Reconciliation:**  
+> The production entry point is `server.js` (Express on Port 3000). The `api_standalone_reference.py` file is a standalone FastAPI harness reserved for direct model testing and is NOT part of the production Web application flow.
 
 ---
 
-## 📁 Repository Structure
+## 🧩 9-Phase AI Pipeline
+
+| Phase | Component | Active Implementation & Fallback Mechanics |
+|-------|-----------|--------------------------------------------|
+| **Phase 1** | **Data Foundation** | Synthetic generator (`data_generator.py`) with guaranteed zero train/val/test text leakage. |
+| **Phase 2** | **Language Detection** | Script-based Unicode heuristics (Devanagari, Tamil, Latin) + `langdetect` fallback. |
+| **Phase 3** | **Complaint Classification** | Baseline Pure Python Naive Bayes / TF-IDF + Logistic Regression fallback. |
+| **Phase 4** | **Duplicate Detection** | Vector similarity using hybrid word+character 3-gram vectorizer (or `sentence-transformers`). |
+| **Phase 5** | **Priority Prediction** | Urgency keyword rule engine + fairness auditor (**Critical, High, Medium, Low**). |
+| **Phase 6** | **Department Routing** | Direct SLA and category mapping to responsible municipal departments. |
+| **Phase 7** | **Explainability** | Diagnostic term extractor & confidence rationale generator. |
+| **Phase 8** | **Integration Bridge** | Express JSON bridge (`run_pipeline_bridge.py`) for sub-second CLI invocation. |
+| **Phase 9** | **Evaluation & Auditing** | STAR suite (`evaluate.py`) evaluating Accuracy, Macro-F1, and Language Bias. |
+
+---
+
+## 📂 Repository Structure
 
 ```
-c:\Users\Midun\Documents\Grievance Portal\
-├── config.py                   # Central settings, categories, departments, language definitions
-├── data_generator.py           # Phase 1: Dataset generation & train/val/test split
-├── pipeline.py                 # Integrated Master AI Pipeline orchestrator
-├── api.py                      # Phase 8: FastAPI endpoints wrapper
-├── evaluate.py                 # Phase 9: Evaluation & fairness audit benchmark
-├── requirements.txt            # System dependencies
-└── models/
-    ├── language_detector.py    # Phase 2: Multilingual language detector
-    ├── complaint_classifier.py # Phase 3: Baseline & transformer classifier
-    ├── duplicate_detector.py   # Phase 4: Vector similarity & duplicate matching
-    ├── priority_predictor.py   # Phase 5: Priority prediction & fairness audit
-    ├── department_router.py    # Phase 6: Department routing table & SLA solver
-    └── explainer.py            # Phase 7: Explainability engine
+Grievance Portal/
+├── config.py                     # Central configuration & department mappings
+├── data_generator.py             # Synthetic dataset generator (leakage-safe split)
+├── pipeline.py                   # Master AI Pipeline orchestrator
+├── run_pipeline_bridge.py        # Express-to-Python JSON bridge script
+├── server.js                     # Canonical Express REST backend server
+├── api_standalone_reference.py   # Standalone FastAPI ML test harness
+├── evaluate.py                   # Comprehensive STAR evaluation suite
+├── test_e2e.py                   # Automated E2E integration test suite
+├── requirements.txt              # System dependencies
+├── data_store/
+│   ├── grievances_db.json        # File-backed ticket database (with write-mutex guard)
+│   ├── train.json                # Model training set
+│   ├── val.json                  # Validation set
+│   └── test.json                 # Uncontaminated test set
+├── public/                       # Frontend SPA (HTML5, Vanilla CSS, JS, Chart.js)
+│   ├── index.html
+│   ├── app.js
+│   └── style.css
+└── models/                       # Modular ML pipeline stages
+    ├── language_detector.py
+    ├── complaint_classifier.py
+    ├── duplicate_detector.py
+    ├── priority_predictor.py
+    ├── department_router.py
+    └── explainer.py
 ```
 
 ---
 
-## 🛠️ Quick Start & Execution
+## ⚡ Quick Start & Running the Application
 
-### 1. Run Data Generation & Train/Val/Test Split (Phase 1)
+### 1. Start the Production Server
+```bash
+node server.js
+```
+Open **`http://localhost:3000`** in your browser.
+
+### 2. Run Data Generation & Clean Split (Phase 1)
 ```bash
 python data_generator.py
 ```
 
-### 2. Run Language Detector Test (Phase 2)
-```bash
-python models/language_detector.py
-```
-
-### 3. Train & Evaluate Classification Baseline (Phase 3)
-```bash
-python -m models.complaint_classifier
-```
-
-### 4. Run Vector Duplicate Detection Check (Phase 4)
-```bash
-python -m models.duplicate_detector
-```
-
-### 5. Run Priority Prediction & Fairness Audit (Phase 5)
-```bash
-python -m models.priority_predictor
-```
-
-### 6. Run Integrated End-to-End Master Pipeline
-```bash
-python pipeline.py
-```
-
-### 7. Run Research Evaluation Suite (Phase 9 STAR Metrics)
+### 3. Run Pipeline Diagnostics & Evaluation (Phase 9)
 ```bash
 python evaluate.py
 ```
 
-### 8. Start FastAPI Server (Phase 8)
+### 4. Run Automated End-to-End Integration Tests
+Ensure `node server.js` is running, then in a separate terminal execute:
 ```bash
-uvicorn api:app --reload --port 8000
+python test_e2e.py
 ```
 
 ---
 
-## 📊 Sample API Response (`/process-grievance`)
+## 🔒 Concurrency & Data Safety
 
-```json
-{
-  "input_text": "वार्ड नंबर 10 में पानी की पाइपलाइन फट गई है और गंदा पानी सड़कों पर बह रहा है।",
-  "language_detection": {
-    "language": "hi",
-    "confidence": 0.99,
-    "method": "langdetect"
-  },
-  "classification": {
-    "predicted_category": "Water Supply & Quality",
-    "confidence": 0.98
-  },
-  "duplicate_check": {
-    "is_duplicate": false,
-    "similarity_score": 0.42
-  },
-  "priority": {
-    "priority": "Critical",
-    "confidence": 0.95,
-    "reason": "Triggered critical hazard/emergency keywords (पानी की पाइपलाइन फट गई)"
-  },
-  "routing": {
-    "target_department": "Department of Water Resources & Sanitation",
-    "sla_target_hours": 24
-  },
-  "explanation": {
-    "summary": "Grievance classified as 'Water Supply & Quality' with 98.0% confidence. Assigned priority 'Critical' (Triggered critical hazard/emergency keywords). Routed to 'Department of Water Resources & Sanitation'.",
-    "key_diagnostic_terms": ["पानी", "पाइपलाइन", "गंदा"]
-  }
-}
-```
+The server includes a Promise-based **write-mutex lock (`withWriteLock`)** on `data_store/grievances_db.json`. This guarantees atomic read/write operations during high-concurrency ticket submissions and prevents JSON corruption.
 
 ---
 
-## 🎯 Fairness & Research Metrics
-The system explicitly measures language disparity across English, Hindi, and Tamil test sets to ensure fair priority allocation and equal macro-F1 accuracy across all demographic segments.
+## 🎯 Verification & Audit Summary
+
+- **Backend Unified**: Single canonical backend (`server.js`).
+- **Data Leakage Eliminated**: Verified 0 text-level overlap between train, val, and test splits.
+- **Robust Fallbacks**: Pipeline runs seamlessly under minimal Python environments (numpy-only fallback mode supported).
+- **Automated Testing**: 100% passing E2E suite covering validation, processing, duplicate flagging, admin updates, and analytics.

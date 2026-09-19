@@ -1,5 +1,308 @@
 [
   {
+    "id": "GRV-2026-5025",
+    "text": "Main water pipeline burst near Station Road crossing. Thousands of gallons leaking.",
+    "area": "Anna Nagar",
+    "language": "en",
+    "category": "Water Supply & Quality",
+    "category_confidence": 0.9944,
+    "priority": "Critical",
+    "priority_reason": "Triggered critical hazard/emergency keywords or high urgency count",
+    "department": "Department of Water Resources & Sanitation",
+    "sla_hours": 24,
+    "status": "Flagged Duplicate",
+    "days_open": 0,
+    "duplicate_matched": true,
+    "matched_complaint": {
+      "id": "5815bb59",
+      "text": "Main water pipeline burst near MG Road crossing. Thousands of gallons leaking continuously.",
+      "category": "Water Supply & Quality",
+      "priority": "Critical"
+    },
+    "similarity_score": 0.9201,
+    "explanation": "Grievance classified as 'Water Supply & Quality' with 99.4% confidence. Assigned priority 'Critical' (Triggered critical hazard/emergency keywords or high urgency count). Routed to 'Department of Water Resources & Sanitation'.",
+    "key_terms": [
+      "burst",
+      "water",
+      "pipeline",
+      "road"
+    ],
+    "created_at": "2026-09-19T17:03:58.915Z"
+  },
+  {
+    "id": "GRV-2026-5203",
+    "text": "Main water pipeline burst near Station Road. Heavy water logging.",
+    "area": "Anna Nagar",
+    "language": "en",
+    "category": "Water Supply & Quality",
+    "category_confidence": 0.9806,
+    "priority": "High",
+    "priority_reason": "Triggered critical hazard/emergency keywords or high urgency count",
+    "department": "Department of Water Resources & Sanitation",
+    "sla_hours": 24,
+    "status": "In Progress",
+    "days_open": 0,
+    "duplicate_matched": false,
+    "matched_complaint": {
+      "id": "5815bb59",
+      "text": "Main water pipeline burst near MG Road crossing. Thousands of gallons leaking continuously.",
+      "category": "Water Supply & Quality",
+      "priority": "Critical"
+    },
+    "similarity_score": 0.7081,
+    "explanation": "Grievance classified as 'Water Supply & Quality' with 98.1% confidence. Assigned priority 'Critical' (Triggered critical hazard/emergency keywords or high urgency count). Routed to 'Department of Water Resources & Sanitation'.",
+    "key_terms": [
+      "burst",
+      "water",
+      "pipeline",
+      "road"
+    ],
+    "created_at": "2026-09-19T17:03:58.422Z",
+    "updated_at": "2026-09-19T17:03:58.922Z"
+  },
+  {
+    "id": "GRV-2026-9165",
+    "text": "Main water pipeline burst near Station Road crossing. Thousands of gallons leaking.",
+    "area": "Anna Nagar",
+    "language": "en",
+    "category": "Water Supply & Quality",
+    "category_confidence": 0.9944,
+    "priority": "Critical",
+    "priority_reason": "Triggered critical hazard/emergency keywords or high urgency count",
+    "department": "Department of Water Resources & Sanitation",
+    "sla_hours": 24,
+    "status": "Flagged Duplicate",
+    "days_open": 0,
+    "duplicate_matched": true,
+    "matched_complaint": {
+      "id": "5815bb59",
+      "text": "Main water pipeline burst near MG Road crossing. Thousands of gallons leaking continuously.",
+      "category": "Water Supply & Quality",
+      "priority": "Critical"
+    },
+    "similarity_score": 0.9201,
+    "explanation": "Grievance classified as 'Water Supply & Quality' with 99.4% confidence. Assigned priority 'Critical' (Triggered critical hazard/emergency keywords or high urgency count). Routed to 'Department of Water Resources & Sanitation'.",
+    "key_terms": [
+      "burst",
+      "water",
+      "pipeline",
+      "road"
+    ],
+    "created_at": "2026-09-19T17:03:26.226Z"
+  },
+  {
+    "id": "GRV-2026-1360",
+    "text": "Main water pipeline burst near Station Road. Heavy water logging.",
+    "area": "Anna Nagar",
+    "language": "en",
+    "category": "Water Supply & Quality",
+    "category_confidence": 0.9806,
+    "priority": "High",
+    "priority_reason": "Triggered critical hazard/emergency keywords or high urgency count",
+    "department": "Department of Water Resources & Sanitation",
+    "sla_hours": 24,
+    "status": "In Progress",
+    "days_open": 0,
+    "duplicate_matched": false,
+    "matched_complaint": {
+      "id": "5815bb59",
+      "text": "Main water pipeline burst near MG Road crossing. Thousands of gallons leaking continuously.",
+      "category": "Water Supply & Quality",
+      "priority": "Critical"
+    },
+    "similarity_score": 0.7081,
+    "explanation": "Grievance classified as 'Water Supply & Quality' with 98.1% confidence. Assigned priority 'Critical' (Triggered critical hazard/emergency keywords or high urgency count). Routed to 'Department of Water Resources & Sanitation'.",
+    "key_terms": [
+      "burst",
+      "water",
+      "pipeline",
+      "road"
+    ],
+    "created_at": "2026-09-19T17:03:25.899Z",
+    "updated_at": "2026-09-19T17:03:26.233Z"
+  },
+  {
+    "id": "GRV-2026-8931",
+    "text": "Main water pipeline burst near Station Road crossing. Thousands of gallons leaking.",
+    "area": "Anna Nagar",
+    "language": "en",
+    "category": "Water Supply & Quality",
+    "category_confidence": 0.9944,
+    "priority": "Critical",
+    "priority_reason": "Triggered critical hazard/emergency keywords or high urgency count",
+    "department": "Department of Water Resources & Sanitation",
+    "sla_hours": 24,
+    "status": "Flagged Duplicate",
+    "days_open": 0,
+    "duplicate_matched": true,
+    "matched_complaint": {
+      "id": "5815bb59",
+      "text": "Main water pipeline burst near MG Road crossing. Thousands of gallons leaking continuously.",
+      "category": "Water Supply & Quality",
+      "priority": "Critical"
+    },
+    "similarity_score": 0.9201,
+    "explanation": "Grievance classified as 'Water Supply & Quality' with 99.4% confidence. Assigned priority 'Critical' (Triggered critical hazard/emergency keywords or high urgency count). Routed to 'Department of Water Resources & Sanitation'.",
+    "key_terms": [
+      "burst",
+      "water",
+      "pipeline",
+      "road"
+    ],
+    "created_at": "2026-09-19T17:03:03.347Z"
+  },
+  {
+    "id": "GRV-2026-4429",
+    "text": "Main water pipeline burst near Station Road. Heavy water logging.",
+    "area": "Anna Nagar",
+    "language": "en",
+    "category": "Water Supply & Quality",
+    "category_confidence": 0.9806,
+    "priority": "High",
+    "priority_reason": "Triggered critical hazard/emergency keywords or high urgency count",
+    "department": "Department of Water Resources & Sanitation",
+    "sla_hours": 24,
+    "status": "In Progress",
+    "days_open": 0,
+    "duplicate_matched": false,
+    "matched_complaint": {
+      "id": "5815bb59",
+      "text": "Main water pipeline burst near MG Road crossing. Thousands of gallons leaking continuously.",
+      "category": "Water Supply & Quality",
+      "priority": "Critical"
+    },
+    "similarity_score": 0.7081,
+    "explanation": "Grievance classified as 'Water Supply & Quality' with 98.1% confidence. Assigned priority 'Critical' (Triggered critical hazard/emergency keywords or high urgency count). Routed to 'Department of Water Resources & Sanitation'.",
+    "key_terms": [
+      "burst",
+      "water",
+      "pipeline",
+      "road"
+    ],
+    "created_at": "2026-09-19T17:03:03.018Z",
+    "updated_at": "2026-09-19T17:03:03.356Z"
+  },
+  {
+    "id": "GRV-2026-3595",
+    "text": "Main water pipeline burst near Station Road crossing. Thousands of gallons leaking.",
+    "area": "Anna Nagar",
+    "language": "en",
+    "category": "Water Supply & Quality",
+    "category_confidence": 0.9944,
+    "priority": "Critical",
+    "priority_reason": "Triggered critical hazard/emergency keywords or high urgency count",
+    "department": "Department of Water Resources & Sanitation",
+    "sla_hours": 24,
+    "status": "Flagged Duplicate",
+    "days_open": 0,
+    "duplicate_matched": true,
+    "matched_complaint": {
+      "id": "5815bb59",
+      "text": "Main water pipeline burst near MG Road crossing. Thousands of gallons leaking continuously.",
+      "category": "Water Supply & Quality",
+      "priority": "Critical"
+    },
+    "similarity_score": 0.9201,
+    "explanation": "Grievance classified as 'Water Supply & Quality' with 99.4% confidence. Assigned priority 'Critical' (Triggered critical hazard/emergency keywords or high urgency count). Routed to 'Department of Water Resources & Sanitation'.",
+    "key_terms": [
+      "burst",
+      "water",
+      "pipeline",
+      "road"
+    ],
+    "created_at": "2026-09-19T17:02:41.410Z"
+  },
+  {
+    "id": "GRV-2026-5791",
+    "text": "Main water pipeline burst near Station Road. Heavy water logging.",
+    "area": "Anna Nagar",
+    "language": "en",
+    "category": "Water Supply & Quality",
+    "category_confidence": 0.9806,
+    "priority": "High",
+    "priority_reason": "Triggered critical hazard/emergency keywords or high urgency count",
+    "department": "Department of Water Resources & Sanitation",
+    "sla_hours": 24,
+    "status": "In Progress",
+    "days_open": 0,
+    "duplicate_matched": false,
+    "matched_complaint": {
+      "id": "5815bb59",
+      "text": "Main water pipeline burst near MG Road crossing. Thousands of gallons leaking continuously.",
+      "category": "Water Supply & Quality",
+      "priority": "Critical"
+    },
+    "similarity_score": 0.7081,
+    "explanation": "Grievance classified as 'Water Supply & Quality' with 98.1% confidence. Assigned priority 'Critical' (Triggered critical hazard/emergency keywords or high urgency count). Routed to 'Department of Water Resources & Sanitation'.",
+    "key_terms": [
+      "burst",
+      "water",
+      "pipeline",
+      "road"
+    ],
+    "created_at": "2026-09-19T17:02:41.082Z",
+    "updated_at": "2026-09-19T17:02:41.416Z"
+  },
+  {
+    "id": "GRV-2026-6526",
+    "text": "Water pipe broke near Station Road. Severe flooding on street.",
+    "area": "Anna Nagar",
+    "language": "en",
+    "category": "Roads & Potholes",
+    "category_confidence": 0.9952,
+    "priority": "Low",
+    "priority_reason": "Standard civic grievance priority",
+    "department": "Public Works Department (PWD) - Roads Division",
+    "sla_hours": 72,
+    "status": "Submitted",
+    "days_open": 0,
+    "duplicate_matched": false,
+    "matched_complaint": {
+      "id": "2b82a1f3",
+      "text": "URGENT: Huge pothole on main highway near Station Road causing severe traffic jams and minor accidents.",
+      "category": "Roads & Potholes",
+      "priority": "Low"
+    },
+    "similarity_score": 0.6444,
+    "explanation": "Grievance classified as 'Roads & Potholes' with 99.5% confidence. Assigned priority 'Low' (Standard civic grievance priority). Routed to 'Public Works Department (PWD) - Roads Division'.",
+    "key_terms": [
+      "water",
+      "road"
+    ],
+    "created_at": "2026-09-19T17:00:53.859Z"
+  },
+  {
+    "id": "GRV-2026-7610",
+    "text": "Main water pipeline burst near Station Road. Heavy water logging.",
+    "area": "Anna Nagar",
+    "language": "en",
+    "category": "Water Supply & Quality",
+    "category_confidence": 0.9806,
+    "priority": "High",
+    "priority_reason": "Triggered critical hazard/emergency keywords or high urgency count",
+    "department": "Department of Water Resources & Sanitation",
+    "sla_hours": 24,
+    "status": "In Progress",
+    "days_open": 0,
+    "duplicate_matched": false,
+    "matched_complaint": {
+      "id": "5815bb59",
+      "text": "Main water pipeline burst near MG Road crossing. Thousands of gallons leaking continuously.",
+      "category": "Water Supply & Quality",
+      "priority": "Critical"
+    },
+    "similarity_score": 0.7081,
+    "explanation": "Grievance classified as 'Water Supply & Quality' with 98.1% confidence. Assigned priority 'Critical' (Triggered critical hazard/emergency keywords or high urgency count). Routed to 'Department of Water Resources & Sanitation'.",
+    "key_terms": [
+      "burst",
+      "water",
+      "pipeline",
+      "road"
+    ],
+    "created_at": "2026-09-19T17:00:53.479Z",
+    "updated_at": "2026-09-19T17:00:53.866Z"
+  },
+  {
     "id": "GRV-2026-7297",
     "text": "Main water pipeline burst near Station Road. Heavy water logging and contamination.",
     "area": "Anna Nagar",

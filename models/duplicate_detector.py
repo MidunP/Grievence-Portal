@@ -27,14 +27,20 @@ from config import DUPLICATE_SIMILARITY_THRESHOLD, DATA_DIR, MODELS_DIR
 
 
 class FallbackEmbedder:
-    """Lightweight character 3-gram vectorizer when sentence-transformers is missing."""
+    """Character 3-gram and word 1-gram hybrid vectorizer for fallback vector similarity."""
 
     def embed(self, text: str) -> np.ndarray:
-        clean = re.sub(r'\s+', ' ', text.lower().strip())
+        clean = re.sub(r'[^\w\s]', '', text.lower().strip())
+        words = clean.split()
         ngrams = [clean[i:i+3] for i in range(len(clean)-2)]
-        vec = np.zeros(256, dtype=np.float32)
+        vec = np.zeros(512, dtype=np.float32)
+        # Word features (indices 0..255)
+        for w in words:
+            idx = sum(ord(c) for c in w) % 256
+            vec[idx] += 2.0  # give higher weight to word matches
+        # Char n-gram features (indices 256..511)
         for ng in ngrams:
-            idx = sum(ord(c) for c in ng) % 256
+            idx = 256 + (sum(ord(c) for c in ng) % 256)
             vec[idx] += 1.0
         norm = np.linalg.norm(vec)
         if norm > 0:
@@ -47,18 +53,22 @@ class DuplicateDetector:
     Multilingual duplicate complaint detector using vector embeddings & FAISS similarity.
     """
 
-    def __init__(self, similarity_threshold: float = DUPLICATE_SIMILARITY_THRESHOLD):
-        self.similarity_threshold = similarity_threshold
+    def __init__(self, similarity_threshold: Optional[float] = None):
         self.complaint_db: List[Dict] = []
         self.embeddings: Optional[np.ndarray] = None
         
         if SENTENCE_TRANSFORMERS_AVAILABLE:
             try:
                 self.model = SentenceTransformer("sentence-transformers/paraphrase-multilingual-mpnet-base-v2")
+                default_thresh = DUPLICATE_SIMILARITY_THRESHOLD
             except Exception:
                 self.model = FallbackEmbedder()
+                default_thresh = 0.75
         else:
             self.model = FallbackEmbedder()
+            default_thresh = 0.75
+
+        self.similarity_threshold = similarity_threshold if similarity_threshold is not None else default_thresh
 
     def get_embedding(self, text: str) -> np.ndarray:
         if isinstance(self.model, FallbackEmbedder):

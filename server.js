@@ -7,11 +7,28 @@ const { spawn } = require('child_process');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// ── Logging middleware ────────────────────────────────────────
+app.use((req, res, next) => {
+    const start = Date.now();
+    res.on('finish', () => {
+        const ms = Date.now() - start;
+        console.log(`[${new Date().toISOString()}] ${req.method} ${req.path} → ${res.statusCode} (${ms}ms)`);
+    });
+    next();
+});
+
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '1mb' }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 const DB_PATH = path.join(__dirname, 'data_store', 'grievances_db.json');
+
+// ── Write lock (prevents concurrent write corruption) ─────────
+let writeLock = Promise.resolve();
+function withWriteLock(fn) {
+    writeLock = writeLock.then(fn).catch(fn);
+    return writeLock;
+}
 
 // Ensure DB exists with seed samples if needed
 function loadDB() {
@@ -68,6 +85,7 @@ function loadDB() {
         const data = fs.readFileSync(DB_PATH, 'utf8');
         return JSON.parse(data);
     } catch (err) {
+        console.error('DB read error:', err.message);
         return [];
     }
 }
@@ -83,13 +101,8 @@ function runPythonPipeline(payload) {
         let output = '';
         let errorOutput = '';
 
-        py.stdout.on('data', (data) => {
-            output += data.toString();
-        });
-
-        py.stderr.on('data', (data) => {
-            errorOutput += data.toString();
-        });
+        py.stdout.on('data', (data) => { output += data.toString(); });
+        py.stderr.on('data', (data) => { errorOutput += data.toString(); });
 
         py.on('close', (code) => {
             if (code !== 0 && !output) {
@@ -97,34 +110,47 @@ function runPythonPipeline(payload) {
             }
             try {
                 const parsed = JSON.parse(output.trim());
+                if (parsed.error) return reject(new Error(`Pipeline error: ${parsed.error}`));
                 resolve(parsed);
             } catch (err) {
-                reject(new Error(`Failed to parse Python output: ${output} | Error: ${err.message}`));
+                reject(new Error(`Failed to parse Python output: ${output.slice(0, 200)} | Error: ${err.message}`));
             }
         });
 
+        py.on('error', (err) => reject(new Error(`Failed to spawn Python: ${err.message}`)));
         py.stdin.write(JSON.stringify(payload));
         py.stdin.end();
     });
 }
 
-// API Routes
+// ── Input validation helper ───────────────────────────────────
+const MAX_TEXT_LENGTH = 2000;
+const MIN_TEXT_LENGTH = 10;
+
+function validateGrievanceText(text) {
+    if (!text || typeof text !== 'string') return 'Grievance text is required.';
+    const trimmed = text.trim();
+    if (trimmed.length < MIN_TEXT_LENGTH) return `Grievance text must be at least ${MIN_TEXT_LENGTH} characters.`;
+    if (trimmed.length > MAX_TEXT_LENGTH) return `Grievance text must not exceed ${MAX_TEXT_LENGTH} characters (received ${trimmed.length}).`;
+    return null; // valid
+}
+
+// ── API Routes ────────────────────────────────────────────────
 
 // 1. Process New Grievance (Citizen Submission)
 app.post('/api/process-grievance', async (req, res) => {
     try {
         const { text, area } = req.body;
-        if (!text || !text.trim()) {
-            return res.status(400).json({ error: 'Grievance text is required.' });
-        }
+        const validationError = validateGrievanceText(text);
+        if (validationError) return res.status(400).json({ error: validationError });
 
-        const aiResult = await runPythonPipeline({ text, area: area || 'Unknown', days_open: 0 });
+        const trimmedText = text.trim();
+        const aiResult = await runPythonPipeline({ text: trimmedText, area: area || 'Unknown', days_open: 0 });
 
-        // Construct ticket record
         const ticketId = `GRV-2026-${Math.floor(1000 + Math.random() * 9000)}`;
         const newRecord = {
             id: ticketId,
-            text: text.trim(),
+            text: trimmedText,
             area: area || 'General Municipality',
             language: aiResult.language_detection.language,
             category: aiResult.classification.predicted_category,
@@ -143,93 +169,110 @@ app.post('/api/process-grievance', async (req, res) => {
             created_at: new Date().toISOString()
         };
 
-        const db = loadDB();
-        db.unshift(newRecord);
-        saveDB(db);
-
-        res.json({
-            success: true,
-            ticket: newRecord,
-            ai_analysis: aiResult
+        await withWriteLock(() => {
+            const db = loadDB();
+            db.unshift(newRecord);
+            saveDB(db);
         });
+
+        res.json({ success: true, ticket: newRecord, ai_analysis: aiResult });
     } catch (err) {
-        console.error('Error processing grievance:', err);
-        res.status(500).json({ error: err.message });
+        console.error('Error processing grievance:', err.message);
+        res.status(500).json({ error: 'The AI pipeline encountered an error. Please try again.' });
     }
 });
 
 // 2. Get All Grievances with Filtering
 app.get('/api/grievances', (req, res) => {
-    const db = loadDB();
-    const { priority, category, department, language, search } = req.query;
-
-    let filtered = db;
-    if (priority) filtered = filtered.filter(g => g.priority.toLowerCase() === priority.toLowerCase());
-    if (category) filtered = filtered.filter(g => g.category.toLowerCase() === category.toLowerCase());
-    if (department) filtered = filtered.filter(g => g.department.toLowerCase() === department.toLowerCase());
-    if (language) filtered = filtered.filter(g => g.language.toLowerCase() === language.toLowerCase());
-    if (search) {
-        const query = search.toLowerCase();
-        filtered = filtered.filter(g => g.text.toLowerCase().includes(query) || g.id.toLowerCase().includes(query) || g.area.toLowerCase().includes(query));
+    try {
+        const db = loadDB();
+        const { priority, category, department, language, search } = req.query;
+        let filtered = db;
+        if (priority) filtered = filtered.filter(g => g.priority && g.priority.toLowerCase() === priority.toLowerCase());
+        if (category) filtered = filtered.filter(g => g.category && g.category.toLowerCase() === category.toLowerCase());
+        if (department) filtered = filtered.filter(g => g.department && g.department.toLowerCase() === department.toLowerCase());
+        if (language) filtered = filtered.filter(g => g.language && g.language.toLowerCase() === language.toLowerCase());
+        if (search) {
+            const query = search.toLowerCase();
+            filtered = filtered.filter(g =>
+                (g.text && g.text.toLowerCase().includes(query)) ||
+                (g.id && g.id.toLowerCase().includes(query)) ||
+                (g.area && g.area.toLowerCase().includes(query))
+            );
+        }
+        res.json({ total: filtered.length, grievances: filtered });
+    } catch (err) {
+        console.error('Error fetching grievances:', err.message);
+        res.status(500).json({ error: 'Failed to load grievances.' });
     }
-
-    res.json({ total: filtered.length, grievances: filtered });
 });
 
 // 3. Update Grievance Status / Priority / Department (Admin Action)
 app.patch('/api/grievances/:id', (req, res) => {
-    const { id } = req.params;
-    const { status, priority, department } = req.body;
+    try {
+        const { id } = req.params;
+        const { status, priority, department } = req.body;
+        const db = loadDB();
+        const index = db.findIndex(g => g.id === id);
+        if (index === -1) return res.status(404).json({ error: 'Grievance ticket not found.' });
 
-    const db = loadDB();
-    const index = db.findIndex(g => g.id === id);
+        if (status) db[index].status = status;
+        if (priority) db[index].priority = priority;
+        if (department) db[index].department = department;
+        db[index].updated_at = new Date().toISOString();
 
-    if (index === -1) {
-        return res.status(404).json({ error: 'Grievance ticket not found' });
+        withWriteLock(() => saveDB(db));
+        res.json({ success: true, ticket: db[index] });
+    } catch (err) {
+        console.error('Error updating grievance:', err.message);
+        res.status(500).json({ error: 'Failed to update grievance.' });
     }
-
-    if (status) db[index].status = status;
-    if (priority) db[index].priority = priority;
-    if (department) db[index].department = department;
-
-    db[index].updated_at = new Date().toISOString();
-    saveDB(db);
-
-    res.json({ success: true, ticket: db[index] });
 });
 
 // 4. Analytics Summary Endpoint
 app.get('/api/analytics', (req, res) => {
-    const db = loadDB();
-    const total = db.length;
+    try {
+        const db = loadDB();
+        const total = db.length;
+        const critical = db.filter(g => g.priority === 'Critical').length;
+        const high = db.filter(g => g.priority === 'High').length;
+        const medium = db.filter(g => g.priority === 'Medium').length;
+        const low = db.filter(g => g.priority === 'Low').length;
+        const duplicates = db.filter(g => g.duplicate_matched).length;
+        const byLang = {
+            en: db.filter(g => g.language === 'en').length,
+            hi: db.filter(g => g.language === 'hi').length,
+            ta: db.filter(g => g.language === 'ta').length
+        };
+        const byDept = {};
+        db.forEach(g => { byDept[g.department] = (byDept[g.department] || 0) + 1; });
 
-    const critical = db.filter(g => g.priority === 'Critical').length;
-    const high = db.filter(g => g.priority === 'High').length;
-    const medium = db.filter(g => g.priority === 'Medium').length;
-    const low = db.filter(g => g.priority === 'Low').length;
-    const duplicates = db.filter(g => g.duplicate_matched).length;
+        res.json({
+            total_complaints: total,
+            priority_breakdown: { Critical: critical, High: high, Medium: medium, Low: low },
+            duplicate_count: duplicates,
+            duplicate_percentage: total > 0 ? Math.round((duplicates / total) * 100) : 0,
+            language_breakdown: byLang,
+            department_breakdown: byDept
+        });
+    } catch (err) {
+        console.error('Error computing analytics:', err.message);
+        res.status(500).json({ error: 'Failed to compute analytics.' });
+    }
+});
 
-    const byLang = {
-        en: db.filter(g => g.language === 'en').length,
-        hi: db.filter(g => g.language === 'hi').length,
-        ta: db.filter(g => g.language === 'ta').length
-    };
+// ── 404 handler ───────────────────────────────────────────────
+app.use((req, res) => {
+    res.status(404).json({ error: 'Endpoint not found.' });
+});
 
-    const byDept = {};
-    db.forEach(g => {
-        byDept[g.department] = (byDept[g.department] || 0) + 1;
-    });
-
-    res.json({
-        total_complaints: total,
-        priority_breakdown: { Critical: critical, High: high, Medium: medium, Low: low },
-        duplicate_count: duplicates,
-        duplicate_percentage: total > 0 ? Math.round((duplicates / total) * 100) : 0,
-        language_breakdown: byLang,
-        department_breakdown: byDept
-    });
+// ── Global error handler ──────────────────────────────────────
+app.use((err, req, res, next) => {
+    console.error('Unhandled error:', err);
+    res.status(500).json({ error: 'An unexpected error occurred.' });
 });
 
 app.listen(PORT, () => {
-    console.log(`Grievance Portal Full-Stack Server listening on http://localhost:${PORT}`);
+    console.log(`JanSeva Grievance Portal server running at http://localhost:${PORT}`);
+    console.log(`CORS: open (allow all origins) — suitable for local demo only`);
 });

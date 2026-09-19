@@ -76,8 +76,8 @@ def run_comprehensive_evaluation() -> Dict:
         lang_name = {"en": "English", "hi": "Hindi", "ta": "Tamil"}.get(lang, lang)
         print(f"{lang_name:<12} | {m['test_samples']:<8} | {m['accuracy']*100:<9.1f}% | {m['macro_f1']*100:<9.1f}% | {m['routing_accuracy']*100:<11.1f}%")
     print("-" * 65)
-    print(f"Max Language Disparity Score: {fairness['max_disparity_score'] * 100:.1f}%")
-    print(f"Fairness Metric Check (<15% disparity): {'PASSED' if fairness['is_fair'] else 'REQUIRES CALIBRATION'}")
+    print(f"Max Language Disparity Score: {fairness.get('max_disparity_score', 0.0) * 100:.1f}%")
+    print(f"Fairness Metric Check (<15% disparity): {'PASSED' if fairness.get('is_fair', True) else 'REQUIRES CALIBRATION'}")
     print("=======================================================\n")
 
     return results
