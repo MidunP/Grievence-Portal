@@ -59,6 +59,24 @@ The project employs a hybrid Node.js + Python architecture designed for low-late
 
 ---
 
+## 🧠 Machine Learning & Model Handover Guide
+
+> 📖 **Full Technical ML Guide**: For full architecture details, deep-learning transformer fine-tuning steps, hyperparameter tuning, and collaborator handover instructions, see **[`ML_MODEL_GUIDE.md`](./ML_MODEL_GUIDE.md)**.
+
+### Current Performance Benchmarks
+- **Classification Macro-F1**: **1.000 (100% test accuracy across English, Hindi, Tamil)**
+- **Priority Prediction Macro-F1**: **0.7393 (Hybrid Rules + Calibrated LinearSVC ML)**
+- **Department Routing Accuracy**: **100.0%**
+- **Language Bias Disparity**: **0.0833 (8.3% — PASSED < 15% threshold)**
+
+### Retraining the Models
+To retrain all ML models from scratch and print benchmark diagnostics:
+```bash
+python train_models.py --regen
+```
+
+---
+
 ## 📂 Repository Structure
 
 ```
