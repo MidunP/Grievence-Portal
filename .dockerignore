@@ -1,0 +1,9 @@
+node_modules
+.venv
+__pycache__
+*.pyc
+.git
+.gitignore
+.env
+tmp
+artifacts

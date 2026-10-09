@@ -1,844 +1,988 @@
 [
   {
-    "id": "c83682fa",
-    "text": "There is no drinking water supply in Ward 73 for the last 3 days. People are suffering.",
+    "id": "baf69ffc",
+    "text": "Doctors absent during working hours at municipal clinic Ward 44.",
     "language": "en",
-    "category": "Water Supply & Quality",
-    "priority": "Medium",
+    "category": "Public Healthcare & Clinics",
+    "priority": "High",
+    "area": "Raja Nagar",
+    "days_open": 12
+  },
+  {
+    "id": "4a8e7ef8",
+    "text": "Sparks from overhead wire junction near Church Street school.",
+    "language": "en",
+    "category": "Electricity & Power Cut",
+    "priority": "Critical",
     "area": "Anna Nagar",
+    "days_open": 1
+  },
+  {
+    "id": "7439c194",
+    "text": "ब्लॉक A में ट्रांसफार्मर फट गया। 24 घंटे से बिजली नहीं।",
+    "language": "hi",
+    "category": "Electricity & Power Cut",
+    "priority": "Critical",
+    "area": "Shanti Vihar",
+    "days_open": 13
+  },
+  {
+    "id": "5685a113",
+    "text": "Subhash Market பகுதியில் 7 நாட்களாக மூன்று கட்ட மின் இல்லை.",
+    "language": "ta",
+    "category": "Electricity & Power Cut",
+    "priority": "Low",
+    "area": "Subhash Market",
+    "days_open": 8
+  },
+  {
+    "id": "739ed270",
+    "text": "Gandhi Chowk की गली से एंबुलेंस नहीं निकल सकती, बहुत संकरी है।",
+    "language": "hi",
+    "category": "Roads & Potholes",
+    "priority": "Medium",
+    "area": "Gandhi Chowk",
+    "days_open": 9
+  },
+  {
+    "id": "12999c34",
+    "text": "Garbage truck not arriving in Ward 96 for past 6 days.",
+    "language": "en",
+    "category": "Sanitation & Garbage",
+    "priority": "High",
+    "area": "Lake View",
+    "days_open": 6
+  },
+  {
+    "id": "93e6d0fc",
+    "text": "Shanti Vihar பகுதியில் சட்டவிரோத இணைப்பால் கிளை சுமை அதிகம்.",
+    "language": "ta",
+    "category": "Electricity & Power Cut",
+    "priority": "Medium",
+    "area": "Shanti Vihar",
+    "days_open": 5
+  },
+  {
+    "id": "3e2995b3",
+    "text": "Electric pole leaning dangerously after heavy wind near MG Road.",
+    "language": "en",
+    "category": "Electricity & Power Cut",
+    "priority": "Critical",
+    "area": "Lake View",
+    "days_open": 7
+  },
+  {
+    "id": "7506bf4c",
+    "text": "वार्ड 60 में सीवेज का पानी पेयजल में मिल रहा है।",
+    "language": "hi",
+    "category": "Water Supply & Quality",
+    "priority": "High",
+    "area": "Lake View",
+    "days_open": 5
+  },
+  {
+    "id": "b516caba",
+    "text": "Raja Nagar துணை மையத்தில் கர்ப்பகால பரிசோதனை நிறுத்தப்பட்டது.",
+    "language": "ta",
+    "category": "Public Healthcare & Clinics",
+    "priority": "Medium",
+    "area": "Raja Nagar",
+    "days_open": 13
+  },
+  {
+    "id": "0d2fa3c1",
+    "text": "Shanti Vihar பகுதியில் திறந்த வெளியில் மலம் கழிக்கின்றனர்.",
+    "language": "ta",
+    "category": "Sanitation & Garbage",
+    "priority": "Low",
+    "area": "Shanti Vihar",
     "days_open": 0
   },
   {
-    "id": "39dfc35c",
-    "text": "Water tanker requested for Raja Nagar area due to acute shortage in summer.",
-    "language": "en",
+    "id": "8685a8ea",
+    "text": "Nehru Enclave சந்தில் ஆம்புலன்ஸ் நுழைய முடியாத சிறிய வழி.",
+    "language": "ta",
+    "category": "Roads & Potholes",
+    "priority": "Medium",
+    "area": "Nehru Enclave",
+    "days_open": 8
+  },
+  {
+    "id": "30a20a3b",
+    "text": "Nehru Enclave சிவில் மருத்துவமனை டயாலிசிஸ் இயந்திரம் 4 நாட்கள் பழுது.",
+    "language": "ta",
+    "category": "Public Healthcare & Clinics",
+    "priority": "High",
+    "area": "Nehru Enclave",
+    "days_open": 14
+  },
+  {
+    "id": "28437c82",
+    "text": "Main Bazaar पर कूड़े के ढेर में चूहे और मच्छर पनप रहे हैं।",
+    "language": "hi",
+    "category": "Sanitation & Garbage",
+    "priority": "Medium",
+    "area": "Lake View",
+    "days_open": 2
+  },
+  {
+    "id": "289e7b05",
+    "text": "Subhash Market में पानी में क्लोरीन की मात्रा बहुत अधिक है।",
+    "language": "hi",
     "category": "Water Supply & Quality",
-    "priority": "Low",
-    "area": "Raja Nagar",
+    "priority": "Medium",
+    "area": "Subhash Market",
     "days_open": 3
   },
   {
-    "id": "49abf23a",
-    "text": "There is no drinking water supply in Ward 26 for the last 3 days. People are suffering.",
+    "id": "95ecd9cc",
+    "text": "Subhash Market பகுதியில் தண்ணீர் தட்டுப்பாடு. லாரி தண்ணீர் தேவை.",
+    "language": "ta",
+    "category": "Water Supply & Quality",
+    "priority": "Critical",
+    "area": "Subhash Market",
+    "days_open": 6
+  },
+  {
+    "id": "ad47ac28",
+    "text": "Night soil disposal happening openly near Shanti Vihar residential area.",
+    "language": "en",
+    "category": "Sanitation & Garbage",
+    "priority": "Low",
+    "area": "Shanti Vihar",
+    "days_open": 3
+  },
+  {
+    "id": "7bfe868e",
+    "text": "Shanti Vihar PHC में एक्सपायर दवाइयाँ मिली हैं।",
+    "language": "hi",
+    "category": "Public Healthcare & Clinics",
+    "priority": "Low",
+    "area": "Shanti Vihar",
+    "days_open": 14
+  },
+  {
+    "id": "bafcbca8",
+    "text": "Hygiene severely degraded in government hospital ward Shanti Vihar.",
+    "language": "en",
+    "category": "Public Healthcare & Clinics",
+    "priority": "Low",
+    "area": "Shanti Vihar",
+    "days_open": 2
+  },
+  {
+    "id": "0ad6f813",
+    "text": "MG Road पर नल से गंदा और बदबूदार पानी आ रहा है।",
+    "language": "hi",
+    "category": "Water Supply & Quality",
+    "priority": "High",
+    "area": "Shanti Vihar",
+    "days_open": 9
+  },
+  {
+    "id": "d88b0aca",
+    "text": "Anna Nagar में दवा न मिलने पर मरीजों को निजी दुकान से खरीदनी पड़ती है।",
+    "language": "hi",
+    "category": "Public Healthcare & Clinics",
+    "priority": "Critical",
+    "area": "Anna Nagar",
+    "days_open": 13
+  },
+  {
+    "id": "e1b72d37",
+    "text": "Expired medicines found in Civil Lines PHC stock. Safety risk.",
+    "language": "en",
+    "category": "Public Healthcare & Clinics",
+    "priority": "Low",
+    "area": "Civil Lines",
+    "days_open": 7
+  },
+  {
+    "id": "f6ae0da9",
+    "text": "Sewage water mixing into drinking supply in Ward 91. Disease outbreak risk.",
     "language": "en",
     "category": "Water Supply & Quality",
+    "priority": "High",
+    "area": "Subhash Market",
+    "days_open": 4
+  },
+  {
+    "id": "ecfbad13",
+    "text": "भीषण गर्मी में 6 घंटे बिजली कट है।",
+    "language": "hi",
+    "category": "Electricity & Power Cut",
     "priority": "Low",
+    "area": "Nehru Enclave",
+    "days_open": 0
+  },
+  {
+    "id": "e20d0761",
+    "text": "Civil Lines பகுதியில் 7 நாட்களாக கட்டிட மலம் கிடக்கிறது.",
+    "language": "ta",
+    "category": "Sanitation & Garbage",
+    "priority": "Medium",
+    "area": "Civil Lines",
+    "days_open": 12
+  },
+  {
+    "id": "770bbd2c",
+    "text": "Municipal water supply off for 2 days in Nehru Enclave. Children and elderly badly affected.",
+    "language": "en",
+    "category": "Water Supply & Quality",
+    "priority": "Medium",
+    "area": "Nehru Enclave",
+    "days_open": 5
+  },
+  {
+    "id": "b4c21259",
+    "text": "Nehru Enclave பகுதியில் முன்அறிவிப்பு இல்லாமல் 24 மணி நேரம் மின் நிறுத்தம்.",
+    "language": "ta",
+    "category": "Electricity & Power Cut",
+    "priority": "High",
+    "area": "Nehru Enclave",
+    "days_open": 11
+  },
+  {
+    "id": "dfd7904c",
+    "text": "Sparks from overhead wire junction near MG Road school.",
+    "language": "en",
+    "category": "Electricity & Power Cut",
+    "priority": "Critical",
+    "area": "Raja Nagar",
+    "days_open": 5
+  },
+  {
+    "id": "4feabdc8",
+    "text": "Park Avenue के गड्ढे में पानी जमा है जिसमें मच्छर पनप रहे हैं।",
+    "language": "hi",
+    "category": "Sanitation & Garbage",
+    "priority": "Critical",
+    "area": "Civil Lines",
+    "days_open": 2
+  },
+  {
+    "id": "edb071bd",
+    "text": "Civil Lines சிவில் மருத்துவமனை டயாலிசிஸ் இயந்திரம் 10 நாட்கள் பழுது.",
+    "language": "ta",
+    "category": "Public Healthcare & Clinics",
+    "priority": "High",
+    "area": "Civil Lines",
+    "days_open": 11
+  },
+  {
+    "id": "3a261154",
+    "text": "Patients forced to buy medicines from private pharmacy due to shortage at Gandhi Chowk.",
+    "language": "en",
+    "category": "Public Healthcare & Clinics",
+    "priority": "Critical",
+    "area": "Gandhi Chowk",
+    "days_open": 5
+  },
+  {
+    "id": "e3a5e0a5",
+    "text": "Raja Nagar सरकारी अस्पताल का X-ray मशीन 10 दिनों से खराब है।",
+    "language": "hi",
+    "category": "Public Healthcare & Clinics",
+    "priority": "High",
+    "area": "Raja Nagar",
+    "days_open": 13
+  },
+  {
+    "id": "5db6d55b",
+    "text": "Nehru Enclave के प्राथमिक स्वास्थ्य केंद्र में दवाएं नहीं हैं।",
+    "language": "hi",
+    "category": "Public Healthcare & Clinics",
+    "priority": "Critical",
+    "area": "Nehru Enclave",
+    "days_open": 12
+  },
+  {
+    "id": "e0105a23",
+    "text": "Drainage water overflow mixing into water supply channel near E block.",
+    "language": "en",
+    "category": "Water Supply & Quality",
+    "priority": "Critical",
+    "area": "Nehru Enclave",
+    "days_open": 3
+  },
+  {
+    "id": "19111ec2",
+    "text": "Ambulance delayed by over an hour for cardiac patient.",
+    "language": "en",
+    "category": "Public Healthcare & Clinics",
+    "priority": "Critical",
+    "area": "Shanti Vihar",
+    "days_open": 1
+  },
+  {
+    "id": "27a681fb",
+    "text": "Park Avenue சாலையில் பள்ளங்கள் காரணமாக வாகனங்கள் ஆபத்தாக திரும்புகின்றன.",
+    "language": "ta",
+    "category": "Roads & Potholes",
+    "priority": "Critical",
+    "area": "Nehru Enclave",
+    "days_open": 6
+  },
+  {
+    "id": "f33c648d",
+    "text": "Construction debris occupying footpath at Shanti Vihar for 10 days.",
+    "language": "en",
+    "category": "Sanitation & Garbage",
+    "priority": "Medium",
+    "area": "Shanti Vihar",
+    "days_open": 2
+  },
+  {
+    "id": "55ea2d50",
+    "text": "Gandhi Street மீது பாலம் பிளவுகள் தெரிகின்றன. ஆபத்து.",
+    "language": "ta",
+    "category": "Roads & Potholes",
+    "priority": "High",
+    "area": "Nehru Enclave",
+    "days_open": 5
+  },
+  {
+    "id": "42db3779",
+    "text": "Gandhi Chowk சமுதாய மண்டபம் குப்பைத் தொட்டி 9 நாட்கள் காலியில்லை.",
+    "language": "ta",
+    "category": "Sanitation & Garbage",
+    "priority": "Medium",
+    "area": "Gandhi Chowk",
+    "days_open": 7
+  },
+  {
+    "id": "faad5ff0",
+    "text": "Raja Nagar ஆரம்ப சுகாதார நிலையத்தில் மருந்துகள் இல்லை.",
+    "language": "ta",
+    "category": "Public Healthcare & Clinics",
+    "priority": "Critical",
+    "area": "Raja Nagar",
+    "days_open": 2
+  },
+  {
+    "id": "5ea3c8a0",
+    "text": "Shanti Vihar चौराहे पर कोई सड़क संकेत नहीं है।",
+    "language": "hi",
+    "category": "Roads & Potholes",
+    "priority": "High",
+    "area": "Shanti Vihar",
+    "days_open": 12
+  },
+  {
+    "id": "0365cc9f",
+    "text": "Lake View அருகே தெருவிளக்கு எரியவில்லை.",
+    "language": "ta",
+    "category": "Roads & Potholes",
+    "priority": "Medium",
+    "area": "Lake View",
+    "days_open": 13
+  },
+  {
+    "id": "4934aab3",
+    "text": "Raja Nagar PHC இல் காலாவதியான மருந்துகள் கண்டுபிடிக்கப்பட்டன.",
+    "language": "ta",
+    "category": "Public Healthcare & Clinics",
+    "priority": "Low",
+    "area": "Raja Nagar",
+    "days_open": 14
+  },
+  {
+    "id": "11c2d269",
+    "text": "வார்டு 30 பகுதியில் சாக்கடை தண்ணீர் குடிநீரில் கலக்கிறது.",
+    "language": "ta",
+    "category": "Water Supply & Quality",
+    "priority": "High",
+    "area": "Raja Nagar",
+    "days_open": 7
+  },
+  {
+    "id": "e0b4cb03",
+    "text": "PHC in Anna Nagar lacks anti-snake venom and emergency medicines.",
+    "language": "en",
+    "category": "Public Healthcare & Clinics",
+    "priority": "Critical",
+    "area": "Anna Nagar",
+    "days_open": 1
+  },
+  {
+    "id": "6ecaa12b",
+    "text": "बारिश के बाद Church Street पर 10 दिनों से जलभराव है।",
+    "language": "hi",
+    "category": "Roads & Potholes",
+    "priority": "Medium",
+    "area": "Gandhi Chowk",
+    "days_open": 13
+  },
+  {
+    "id": "a3401ced",
+    "text": "वार्ड 30 के सरकारी अस्पताल में डॉक्टर नहीं आते।",
+    "language": "hi",
+    "category": "Public Healthcare & Clinics",
+    "priority": "High",
+    "area": "Raja Nagar",
+    "days_open": 13
+  },
+  {
+    "id": "455dfc3d",
+    "text": "Gandhi Chowk பகுதியில் நடைபாதை வியாபாரிகளால் ஆக்கிரமிக்கப்பட்டுள்ளது.",
+    "language": "ta",
+    "category": "Roads & Potholes",
+    "priority": "Medium",
+    "area": "Gandhi Chowk",
+    "days_open": 3
+  },
+  {
+    "id": "a1b00d98",
+    "text": "Non-functional X-ray machine in Civil Lines government hospital for 6 days.",
+    "language": "en",
+    "category": "Public Healthcare & Clinics",
+    "priority": "High",
+    "area": "Civil Lines",
+    "days_open": 3
+  },
+  {
+    "id": "74f675ce",
+    "text": "மழைக்கு பிறகு Ring Road சாலையில் 9 நாட்களாக நீர் தேக்கம்.",
+    "language": "ta",
+    "category": "Roads & Potholes",
+    "priority": "Medium",
+    "area": "Nehru Enclave",
+    "days_open": 7
+  },
+  {
+    "id": "6c045a04",
+    "text": "Footpath encroached by vendors at Subhash Market. Pedestrians forced onto road.",
+    "language": "en",
+    "category": "Roads & Potholes",
+    "priority": "Medium",
+    "area": "Subhash Market",
+    "days_open": 9
+  },
+  {
+    "id": "658b3809",
+    "text": "ब्लॉक E में ट्रांसफार्मर तेल सड़क पर बहा है।",
+    "language": "hi",
+    "category": "Electricity & Power Cut",
+    "priority": "Critical",
     "area": "Subhash Market",
     "days_open": 14
   },
   {
-    "id": "53dd3b15",
-    "text": "Water pressure is extremely low in block E since yesterday morning.",
+    "id": "dd71d523",
+    "text": "Municipal water supply off for 7 days in Nehru Enclave. Children and elderly badly affected.",
     "language": "en",
     "category": "Water Supply & Quality",
+    "priority": "Medium",
+    "area": "Nehru Enclave",
+    "days_open": 3
+  },
+  {
+    "id": "fd558874",
+    "text": "Dialysis machine at Gandhi Chowk civil hospital out of order for 1 days.",
+    "language": "en",
+    "category": "Public Healthcare & Clinics",
+    "priority": "High",
+    "area": "Gandhi Chowk",
+    "days_open": 14
+  },
+  {
+    "id": "d9bdb5b6",
+    "text": "वार्ड 11 में सीवेज का पानी पेयजल में मिल रहा है।",
+    "language": "hi",
+    "category": "Water Supply & Quality",
+    "priority": "High",
+    "area": "Anna Nagar",
+    "days_open": 8
+  },
+  {
+    "id": "f00c2d14",
+    "text": "Raja Nagar में दवा न मिलने पर मरीजों को निजी दुकान से खरीदनी पड़ती है।",
+    "language": "hi",
+    "category": "Public Healthcare & Clinics",
+    "priority": "Critical",
+    "area": "Raja Nagar",
+    "days_open": 8
+  },
+  {
+    "id": "a23e68f6",
+    "text": "Community hall dustbin at Nehru Enclave not emptied for 6 days. Overflowing.",
+    "language": "en",
+    "category": "Sanitation & Garbage",
     "priority": "Medium",
     "area": "Nehru Enclave",
     "days_open": 9
   },
   {
-    "id": "1fee995f",
-    "text": "There is no drinking water supply in Ward 10 for the last 3 days. People are suffering.",
-    "language": "en",
+    "id": "59140509",
+    "text": "Shanti Vihar क्षेत्र में जल संकट है, तुरंत टैंकर भेजा जाए।",
+    "language": "hi",
     "category": "Water Supply & Quality",
-    "priority": "Low",
-    "area": "Subhash Market",
-    "days_open": 6
-  },
-  {
-    "id": "1a5007ac",
-    "text": "There is no drinking water supply in Ward 64 for the last 3 days. People are suffering.",
-    "language": "en",
-    "category": "Water Supply & Quality",
-    "priority": "Medium",
-    "area": "Nehru Enclave",
-    "days_open": 0
-  },
-  {
-    "id": "8c8ac0a0",
-    "text": "Water tanker requested for Subhash Market area due to acute shortage in summer.",
-    "language": "en",
-    "category": "Water Supply & Quality",
-    "priority": "Low",
-    "area": "Subhash Market",
-    "days_open": 0
-  },
-  {
-    "id": "60f65276",
-    "text": "There is no drinking water supply in Ward 47 for the last 3 days. People are suffering.",
-    "language": "en",
-    "category": "Water Supply & Quality",
-    "priority": "Medium",
-    "area": "Anna Nagar",
-    "days_open": 1
-  },
-  {
-    "id": "4af0680d",
-    "text": "There is no drinking water supply in Ward 66 for the last 3 days. People are suffering.",
-    "language": "en",
-    "category": "Water Supply & Quality",
-    "priority": "Low",
-    "area": "Raja Nagar",
-    "days_open": 12
-  },
-  {
-    "id": "996bd85b",
-    "text": "Water pressure is extremely low in block H since yesterday morning.",
-    "language": "en",
-    "category": "Water Supply & Quality",
-    "priority": "Low",
-    "area": "Nehru Enclave",
+    "priority": "Critical",
+    "area": "Shanti Vihar",
     "days_open": 14
   },
   {
-    "id": "ad3ec087",
-    "text": "Water tanker requested for Anna Nagar area due to acute shortage in summer.",
+    "id": "d537b67e",
+    "text": "Road contractor left sand and gravel on carriageway in Block C.",
     "language": "en",
-    "category": "Water Supply & Quality",
-    "priority": "Medium",
-    "area": "Anna Nagar",
-    "days_open": 12
-  },
-  {
-    "id": "87c005fb",
-    "text": "There is no drinking water supply in Ward 61 for the last 3 days. People are suffering.",
-    "language": "en",
-    "category": "Water Supply & Quality",
-    "priority": "Medium",
-    "area": "Shanti Vihar",
-    "days_open": 8
-  },
-  {
-    "id": "ad9bd724",
-    "text": "Open sewer drain overflowing on main road in Ward 6, creating health hazards.",
-    "language": "en",
-    "category": "Sanitation & Garbage",
+    "category": "Roads & Potholes",
     "priority": "Critical",
-    "area": "Shanti Vihar",
+    "area": "Raja Nagar",
+    "days_open": 2
+  },
+  {
+    "id": "f4bce4d0",
+    "text": "Raja Nagar में बिना सूचना 4 घंटे बिजली बंद रही।",
+    "language": "hi",
+    "category": "Electricity & Power Cut",
+    "priority": "High",
+    "area": "Raja Nagar",
+    "days_open": 13
+  },
+  {
+    "id": "4174d981",
+    "text": "Power restored only for 4 hours per day in Lake View during summer.",
+    "language": "en",
+    "category": "Electricity & Power Cut",
+    "priority": "High",
+    "area": "Lake View",
     "days_open": 10
   },
   {
-    "id": "a6ee6847",
-    "text": "Dead animal decaying near market square in Gandhi Chowk. Unbearable smell and disease risk.",
-    "language": "en",
-    "category": "Sanitation & Garbage",
-    "priority": "Medium",
-    "area": "Gandhi Chowk",
-    "days_open": 4
-  },
-  {
-    "id": "6380efde",
-    "text": "Garbage overflow in open dustbin at MG Road. Stray dogs spreading trash all over the road.",
-    "language": "en",
-    "category": "Sanitation & Garbage",
-    "priority": "Medium",
-    "area": "Gandhi Chowk",
-    "days_open": 2
-  },
-  {
-    "id": "35c32944",
-    "text": "Open sewer drain overflowing on main road in Ward 84, creating health hazards.",
-    "language": "en",
-    "category": "Sanitation & Garbage",
-    "priority": "Critical",
-    "area": "Nehru Enclave",
-    "days_open": 2
-  },
-  {
-    "id": "67a25477",
-    "text": "Garbage overflow in open dustbin at Church Street. Stray dogs spreading trash all over the road.",
-    "language": "en",
+    "id": "40dfd2af",
+    "text": "Anna Nagar में खुले में शौच हो रहा है।",
+    "language": "hi",
     "category": "Sanitation & Garbage",
     "priority": "Low",
+    "area": "Anna Nagar",
+    "days_open": 13
+  },
+  {
+    "id": "20907e72",
+    "text": "Narrow lane in Lake View impossible for ambulance or fire truck to pass.",
+    "language": "en",
+    "category": "Roads & Potholes",
+    "priority": "Medium",
+    "area": "Lake View",
+    "days_open": 14
+  },
+  {
+    "id": "ec149405",
+    "text": "Electricity bill inflated by 300% without new meter reading in Ward 16.",
+    "language": "en",
+    "category": "Electricity & Power Cut",
+    "priority": "Medium",
+    "area": "Gandhi Chowk",
+    "days_open": 9
+  },
+  {
+    "id": "fb1ed28f",
+    "text": "Road construction abandoned. Deep trench uncovered in Block A.",
+    "language": "en",
+    "category": "Roads & Potholes",
+    "priority": "High",
+    "area": "Civil Lines",
+    "days_open": 0
+  },
+  {
+    "id": "25b3e209",
+    "text": "Nehru Enclave का लैंडफिल भर गया है। जहरीली गैस की शिकायत।",
+    "language": "hi",
+    "category": "Sanitation & Garbage",
+    "priority": "High",
     "area": "Nehru Enclave",
+    "days_open": 12
+  },
+  {
+    "id": "91c36353",
+    "text": "Civil Lines பகுதியில் முன்அறிவிப்பு இல்லாமல் 16 மணி நேரம் மின் நிறுத்தம்.",
+    "language": "ta",
+    "category": "Electricity & Power Cut",
+    "priority": "High",
+    "area": "Civil Lines",
+    "days_open": 13
+  },
+  {
+    "id": "25ff09e8",
+    "text": "பிளாக் H பகுதியில் சாலை பணி அரைகுறை நிறுத்தப்பட்டது.",
+    "language": "ta",
+    "category": "Roads & Potholes",
+    "priority": "High",
+    "area": "Lake View",
     "days_open": 11
   },
   {
-    "id": "33c747cc",
-    "text": "Open sewer drain overflowing on main road in Ward 36, creating health hazards.",
+    "id": "4cd6e96b",
+    "text": "Garbage overflow at Park Avenue dustbin. Stray dogs spreading waste.",
     "language": "en",
     "category": "Sanitation & Garbage",
     "priority": "Critical",
-    "area": "Anna Nagar",
+    "area": "Nehru Enclave",
+    "days_open": 13
+  },
+  {
+    "id": "21b55227",
+    "text": "Shanti Vihar औषधालय में 8 दिनों से मुफ्त दवाएं नहीं हैं।",
+    "language": "hi",
+    "category": "Public Healthcare & Clinics",
+    "priority": "High",
+    "area": "Shanti Vihar",
     "days_open": 12
   },
   {
-    "id": "4811cbdd",
-    "text": "Open sewer drain overflowing on main road in Ward 57, creating health hazards.",
+    "id": "22c51ff7",
+    "text": "Lake View பகுதியில் 3 நாட்களாக மூன்று கட்ட மின் இல்லை.",
+    "language": "ta",
+    "category": "Electricity & Power Cut",
+    "priority": "Low",
+    "area": "Lake View",
+    "days_open": 2
+  },
+  {
+    "id": "e11b11f4",
+    "text": "No road signage at Raja Nagar intersection. Accidents increasing.",
     "language": "en",
-    "category": "Sanitation & Garbage",
-    "priority": "Critical",
+    "category": "Roads & Potholes",
+    "priority": "High",
     "area": "Raja Nagar",
-    "days_open": 12
+    "days_open": 1
   },
   {
-    "id": "3b110f43",
-    "text": "Open sewer drain overflowing on main road in Ward 68, creating health hazards.",
-    "language": "en",
-    "category": "Sanitation & Garbage",
+    "id": "b4388df6",
+    "text": "பிளாக் I பகுதியில் கழிவு நீர் குடிநீர் கால்வாயில் கலக்கிறது.",
+    "language": "ta",
+    "category": "Water Supply & Quality",
     "priority": "Critical",
     "area": "Nehru Enclave",
     "days_open": 1
   },
   {
-    "id": "d5a76b72",
-    "text": "Open sewer drain overflowing on main road in Ward 48, creating health hazards.",
-    "language": "en",
-    "category": "Sanitation & Garbage",
-    "priority": "Critical",
-    "area": "Shanti Vihar",
-    "days_open": 8
-  },
-  {
-    "id": "d266fe75",
-    "text": "Sanitation workers have not cleared garbage dump near school in Raja Nagar for a week.",
-    "language": "en",
+    "id": "6815f975",
+    "text": "Gandhi Chowk में 6 दिनों से निर्माण मलबा पड़ा है।",
+    "language": "hi",
     "category": "Sanitation & Garbage",
     "priority": "Medium",
-    "area": "Raja Nagar",
-    "days_open": 9
-  },
-  {
-    "id": "585fb584",
-    "text": "Open sewer drain overflowing on main road in Ward 60, creating health hazards.",
-    "language": "en",
-    "category": "Sanitation & Garbage",
-    "priority": "Critical",
-    "area": "Shanti Vihar",
-    "days_open": 6
-  },
-  {
-    "id": "e65697c4",
-    "text": "Open sewer drain overflowing on main road in Ward 25, creating health hazards.",
-    "language": "en",
-    "category": "Sanitation & Garbage",
-    "priority": "Critical",
-    "area": "Anna Nagar",
-    "days_open": 6
-  },
-  {
-    "id": "99b1c2ee",
-    "text": "Frequent low voltage supply damaging electronic appliances in Ward 12.",
-    "language": "en",
-    "category": "Electricity & Power Cut",
-    "priority": "Medium",
-    "area": "Raja Nagar",
-    "days_open": 4
-  },
-  {
-    "id": "6ad09e20",
-    "text": "Frequent low voltage supply damaging electronic appliances in Ward 8.",
-    "language": "en",
-    "category": "Electricity & Power Cut",
-    "priority": "Medium",
-    "area": "Nehru Enclave",
-    "days_open": 13
-  },
-  {
-    "id": "e8959148",
-    "text": "Frequent low voltage supply damaging electronic appliances in Ward 21.",
-    "language": "en",
-    "category": "Electricity & Power Cut",
-    "priority": "Low",
-    "area": "Nehru Enclave",
-    "days_open": 6
-  },
-  {
-    "id": "c6c3db77",
-    "text": "Frequent low voltage supply damaging electronic appliances in Ward 45.",
-    "language": "en",
-    "category": "Electricity & Power Cut",
-    "priority": "Low",
-    "area": "Shanti Vihar",
-    "days_open": 6
-  },
-  {
-    "id": "ace3707f",
-    "text": "Electric pole leaning dangerously after yesterday heavy wind near MG Road.",
-    "language": "en",
-    "category": "Electricity & Power Cut",
-    "priority": "Medium",
-    "area": "Raja Nagar",
-    "days_open": 2
-  },
-  {
-    "id": "f1279388",
-    "text": "Frequent low voltage supply damaging electronic appliances in Ward 9.",
-    "language": "en",
-    "category": "Electricity & Power Cut",
-    "priority": "Low",
-    "area": "Anna Nagar",
-    "days_open": 12
-  },
-  {
-    "id": "b0f8d704",
-    "text": "Transformer sparked and exploded in block J. Entire area without power for 12 hours.",
-    "language": "en",
-    "category": "Electricity & Power Cut",
-    "priority": "Critical",
     "area": "Gandhi Chowk",
     "days_open": 9
   },
   {
-    "id": "aa91b3e7",
-    "text": "Frequent low voltage supply damaging electronic appliances in Ward 31.",
-    "language": "en",
-    "category": "Electricity & Power Cut",
-    "priority": "Medium",
-    "area": "Gandhi Chowk",
-    "days_open": 11
-  },
-  {
-    "id": "4f99d91f",
-    "text": "Transformer sparked and exploded in block F. Entire area without power for 12 hours.",
-    "language": "en",
-    "category": "Electricity & Power Cut",
-    "priority": "Critical",
-    "area": "Subhash Market",
+    "id": "277be592",
+    "text": "Nehru Enclave PHC में एक्सपायर दवाइयाँ मिली हैं।",
+    "language": "hi",
+    "category": "Public Healthcare & Clinics",
+    "priority": "Low",
+    "area": "Nehru Enclave",
     "days_open": 7
   },
   {
-    "id": "c3b8e122",
-    "text": "Electric pole leaning dangerously after yesterday heavy wind near Church Street.",
-    "language": "en",
-    "category": "Electricity & Power Cut",
+    "id": "32bd6ba2",
+    "text": "Gandhi Chowk அரசு மருத்துவமனையில் சுகாதாரம் மோசம்.",
+    "language": "ta",
+    "category": "Public Healthcare & Clinics",
     "priority": "Low",
     "area": "Gandhi Chowk",
-    "days_open": 4
+    "days_open": 6
   },
   {
-    "id": "24b2572c",
-    "text": "Frequent low voltage supply damaging electronic appliances in Ward 24.",
+    "id": "53b6efa2",
+    "text": "Overhead tank near Subhash Market community hall cracked. Water lost before reaching homes.",
     "language": "en",
-    "category": "Electricity & Power Cut",
-    "priority": "Medium",
+    "category": "Water Supply & Quality",
+    "priority": "High",
     "area": "Subhash Market",
-    "days_open": 0
+    "days_open": 3
   },
   {
-    "id": "c2ca1f88",
-    "text": "Frequent low voltage supply damaging electronic appliances in Ward 44.",
-    "language": "en",
+    "id": "434e33d6",
+    "text": "Anna Nagar பகுதியில் 4 இரவுகளாக தெரு விளக்கு எரியவில்லை.",
+    "language": "ta",
     "category": "Electricity & Power Cut",
-    "priority": "Low",
+    "priority": "High",
+    "area": "Anna Nagar",
+    "days_open": 10
+  },
+  {
+    "id": "d6ba8f0b",
+    "text": "Park Avenue पर कूड़े के ढेर में चूहे और मच्छर पनप रहे हैं।",
+    "language": "hi",
+    "category": "Sanitation & Garbage",
+    "priority": "Medium",
     "area": "Gandhi Chowk",
     "days_open": 5
   },
   {
-    "id": "68d5f727",
-    "text": "Doctors not present during working hours at municipal clinic in Ward 99.",
-    "language": "en",
+    "id": "b19c45bb",
+    "text": "Shanti Vihar பகுதி நோயாளிகள் தனியார் மருந்தகத்தில் வாங்க கட்டாயப்படுத்தப்படுகின்றனர்.",
+    "language": "ta",
     "category": "Public Healthcare & Clinics",
-    "priority": "Low",
+    "priority": "Critical",
     "area": "Shanti Vihar",
-    "days_open": 9
-  },
-  {
-    "id": "ffc2bfd4",
-    "text": "Doctors not present during working hours at municipal clinic in Ward 36.",
-    "language": "en",
-    "category": "Public Healthcare & Clinics",
-    "priority": "Medium",
-    "area": "Gandhi Chowk",
-    "days_open": 14
-  },
-  {
-    "id": "25b12522",
-    "text": "Doctors not present during working hours at municipal clinic in Ward 69.",
-    "language": "en",
-    "category": "Public Healthcare & Clinics",
-    "priority": "Medium",
-    "area": "Anna Nagar",
     "days_open": 1
   },
   {
-    "id": "2c7ccd90",
-    "text": "Doctors not present during working hours at municipal clinic in Ward 7.",
-    "language": "en",
-    "category": "Public Healthcare & Clinics",
-    "priority": "Low",
-    "area": "Anna Nagar",
-    "days_open": 14
-  },
-  {
-    "id": "823f7b0d",
-    "text": "Primary Health Center in Nehru Enclave lacks basic anti-snake venom and emergency medicines.",
-    "language": "en",
-    "category": "Public Healthcare & Clinics",
-    "priority": "Low",
-    "area": "Nehru Enclave",
-    "days_open": 9
-  },
-  {
-    "id": "2dd6e385",
-    "text": "Doctors not present during working hours at municipal clinic in Ward 70.",
-    "language": "en",
-    "category": "Public Healthcare & Clinics",
-    "priority": "Low",
-    "area": "Shanti Vihar",
-    "days_open": 4
-  },
-  {
-    "id": "a44ffe08",
-    "text": "Primary Health Center in Gandhi Chowk lacks basic anti-snake venom and emergency medicines.",
-    "language": "en",
-    "category": "Public Healthcare & Clinics",
-    "priority": "Medium",
-    "area": "Gandhi Chowk",
-    "days_open": 6
-  },
-  {
-    "id": "d01baa82",
-    "text": "Doctors not present during working hours at municipal clinic in Ward 73.",
-    "language": "en",
-    "category": "Public Healthcare & Clinics",
-    "priority": "Low",
-    "area": "Anna Nagar",
-    "days_open": 0
-  },
-  {
-    "id": "6d7943ba",
-    "text": "Hygiene conditions inside government hospital ward in Nehru Enclave are severely degraded.",
-    "language": "en",
-    "category": "Public Healthcare & Clinics",
-    "priority": "Low",
-    "area": "Nehru Enclave",
-    "days_open": 9
-  },
-  {
-    "id": "79d289f3",
-    "text": "Doctors not present during working hours at municipal clinic in Ward 11.",
-    "language": "en",
-    "category": "Public Healthcare & Clinics",
-    "priority": "Medium",
-    "area": "Anna Nagar",
-    "days_open": 2
-  },
-  {
-    "id": "8771c5e8",
-    "text": "Doctors not present during working hours at municipal clinic in Ward 72.",
-    "language": "en",
-    "category": "Public Healthcare & Clinics",
-    "priority": "Medium",
-    "area": "Anna Nagar",
-    "days_open": 2
-  },
-  {
-    "id": "288c7b95",
-    "text": "Primary Health Center in Raja Nagar lacks basic anti-snake venom and emergency medicines.",
-    "language": "en",
-    "category": "Public Healthcare & Clinics",
-    "priority": "Medium",
-    "area": "Raja Nagar",
-    "days_open": 6
-  },
-  {
-    "id": "90d298bf",
-    "text": "वार्ड नंबर 98 में पिछले 3 दिनों से पीने का पानी नहीं आ रहा है। नागरिक परेशान हैं।",
-    "language": "hi",
+    "id": "c8242b3e",
+    "text": "Subhash Market பகுதியில் தண்ணீர் மீட்டர் கசிவில் சொத்து சேதம்.",
+    "language": "ta",
     "category": "Water Supply & Quality",
     "priority": "Medium",
-    "area": "Shanti Vihar",
+    "area": "Subhash Market",
     "days_open": 8
   },
   {
-    "id": "773c1894",
-    "text": "गर्मी के कारण Gandhi Chowk क्षेत्र में गंभीर जल संकट है, तुरंत टैंकर भेजा जाए।",
-    "language": "hi",
-    "category": "Water Supply & Quality",
-    "priority": "Low",
-    "area": "Gandhi Chowk",
+    "id": "41d8dc05",
+    "text": "Civil Lines பகுதியில் 8 இரவுகளாக தெரு விளக்கு எரியவில்லை.",
+    "language": "ta",
+    "category": "Electricity & Power Cut",
+    "priority": "High",
+    "area": "Civil Lines",
     "days_open": 2
   },
   {
-    "id": "69557982",
-    "text": "वार्ड नंबर 8 में पिछले 3 दिनों से पीने का पानी नहीं आ रहा है। नागरिक परेशान हैं।",
-    "language": "hi",
+    "id": "d370b408",
+    "text": "2 நாட்களாக Anna Nagar பகுதியில் தண்ணீர் நிறுத்தப்பட்டுள்ளது.",
+    "language": "ta",
     "category": "Water Supply & Quality",
     "priority": "Medium",
-    "area": "Shanti Vihar",
-    "days_open": 4
-  },
-  {
-    "id": "66799f4d",
-    "text": "वार्ड नंबर 25 में पिछले 3 दिनों से पीने का पानी नहीं आ रहा है। नागरिक परेशान हैं।",
-    "language": "hi",
-    "category": "Water Supply & Quality",
-    "priority": "Medium",
-    "area": "Gandhi Chowk",
-    "days_open": 12
-  },
-  {
-    "id": "0b847129",
-    "text": "वार्ड नंबर 69 में पिछले 3 दिनों से पीने का पानी नहीं आ रहा है। नागरिक परेशान हैं।",
-    "language": "hi",
-    "category": "Water Supply & Quality",
-    "priority": "Medium",
-    "area": "Raja Nagar",
-    "days_open": 6
-  },
-  {
-    "id": "7ba8813c",
-    "text": "वार्ड नंबर 35 में पिछले 3 दिनों से पीने का पानी नहीं आ रहा है। नागरिक परेशान हैं।",
-    "language": "hi",
-    "category": "Water Supply & Quality",
-    "priority": "Low",
-    "area": "Raja Nagar",
-    "days_open": 4
-  },
-  {
-    "id": "41fd5af3",
-    "text": "ब्लॉक G में पानी का दबाव बहुत कम है, दैनिक कार्य बाधित हो रहे हैं।",
-    "language": "hi",
-    "category": "Water Supply & Quality",
-    "priority": "Low",
-    "area": "Subhash Market",
-    "days_open": 11
-  },
-  {
-    "id": "6ad8cabd",
-    "text": "वार्ड नंबर 12 में पिछले 3 दिनों से पीने का पानी नहीं आ रहा है। नागरिक परेशान हैं।",
-    "language": "hi",
-    "category": "Water Supply & Quality",
-    "priority": "Medium",
-    "area": "Raja Nagar",
-    "days_open": 5
-  },
-  {
-    "id": "4363ee00",
-    "text": "वार्ड नंबर 68 में पिछले 3 दिनों से पीने का पानी नहीं आ रहा है। नागरिक परेशान हैं।",
-    "language": "hi",
-    "category": "Water Supply & Quality",
-    "priority": "Low",
-    "area": "Subhash Market",
-    "days_open": 9
-  },
-  {
-    "id": "7a01a446",
-    "text": "वार्ड नंबर 96 में पिछले 3 दिनों से पीने का पानी नहीं आ रहा है। नागरिक परेशान हैं।",
-    "language": "hi",
-    "category": "Water Supply & Quality",
-    "priority": "Low",
-    "area": "Nehru Enclave",
-    "days_open": 13
-  },
-  {
-    "id": "8b12674b",
-    "text": "गर्मी के कारण Nehru Enclave क्षेत्र में गंभीर जल संकट है, तुरंत टैंकर भेजा जाए।",
-    "language": "hi",
-    "category": "Water Supply & Quality",
-    "priority": "Low",
-    "area": "Nehru Enclave",
-    "days_open": 6
-  },
-  {
-    "id": "29c561c5",
-    "text": "वार्ड नंबर 1 में पिछले 3 दिनों से पीने का पानी नहीं आ रहा है। नागरिक परेशान हैं।",
-    "language": "hi",
-    "category": "Water Supply & Quality",
-    "priority": "Medium",
-    "area": "Nehru Enclave",
-    "days_open": 12
-  },
-  {
-    "id": "2448e91d",
-    "text": "वार्ड 25 में मुख्य सड़क पर नाला ओवरफ्लो हो रहा है, जिससे दुर्गंध फैल रही है।",
-    "language": "hi",
-    "category": "Sanitation & Garbage",
-    "priority": "Medium",
-    "area": "Subhash Market",
-    "days_open": 6
-  },
-  {
-    "id": "e6f742bb",
-    "text": "वार्ड 68 में मुख्य सड़क पर नाला ओवरफ्लो हो रहा है, जिससे दुर्गंध फैल रही है।",
-    "language": "hi",
-    "category": "Sanitation & Garbage",
-    "priority": "Low",
-    "area": "Gandhi Chowk",
-    "days_open": 12
-  },
-  {
-    "id": "000bdbcf",
-    "text": "वार्ड 27 में मुख्य सड़क पर नाला ओवरफ्लो हो रहा है, जिससे दुर्गंध फैल रही है।",
-    "language": "hi",
-    "category": "Sanitation & Garbage",
-    "priority": "Low",
-    "area": "Subhash Market",
-    "days_open": 13
-  },
-  {
-    "id": "97f8b530",
-    "text": "वार्ड 50 में मुख्य सड़क पर नाला ओवरफ्लो हो रहा है, जिससे दुर्गंध फैल रही है।",
-    "language": "hi",
-    "category": "Sanitation & Garbage",
-    "priority": "Medium",
-    "area": "Raja Nagar",
-    "days_open": 5
-  },
-  {
-    "id": "9fdbfdde",
-    "text": "वार्ड 66 में मुख्य सड़क पर नाला ओवरफ्लो हो रहा है, जिससे दुर्गंध फैल रही है।",
-    "language": "hi",
-    "category": "Sanitation & Garbage",
-    "priority": "Medium",
-    "area": "Raja Nagar",
-    "days_open": 3
-  },
-  {
-    "id": "7b351b83",
-    "text": "Shanti Vihar में स्कूल के पास पिछले एक हफ्ते से कचरा नहीं उठाया गया है।",
-    "language": "hi",
-    "category": "Sanitation & Garbage",
-    "priority": "Medium",
-    "area": "Shanti Vihar",
-    "days_open": 9
-  },
-  {
-    "id": "61c5d87b",
-    "text": "वार्ड 36 में मुख्य सड़क पर नाला ओवरफ्लो हो रहा है, जिससे दुर्गंध फैल रही है।",
-    "language": "hi",
-    "category": "Sanitation & Garbage",
-    "priority": "Medium",
-    "area": "Shanti Vihar",
-    "days_open": 5
-  },
-  {
-    "id": "cd5f7971",
-    "text": "वार्ड 44 में मुख्य सड़क पर नाला ओवरफ्लो हो रहा है, जिससे दुर्गंध फैल रही है।",
-    "language": "hi",
-    "category": "Sanitation & Garbage",
-    "priority": "Low",
-    "area": "Raja Nagar",
-    "days_open": 4
-  },
-  {
-    "id": "3b7f4f0a",
-    "text": "Ring Road के पास खुले कचरा डिब्बे से कूड़ा सड़क पर फैल रहा है। अविलंब सफाई कराएं।",
-    "language": "hi",
-    "category": "Sanitation & Garbage",
-    "priority": "Medium",
-    "area": "Raja Nagar",
-    "days_open": 4
-  },
-  {
-    "id": "b37b5b31",
-    "text": "वार्ड 41 में मुख्य सड़क पर नाला ओवरफ्लो हो रहा है, जिससे दुर्गंध फैल रही है।",
-    "language": "hi",
-    "category": "Sanitation & Garbage",
-    "priority": "Low",
-    "area": "Subhash Market",
+    "area": "Anna Nagar",
     "days_open": 0
   },
   {
-    "id": "53ae7fad",
-    "text": "Nehru Enclave में स्कूल के पास पिछले एक हफ्ते से कचरा नहीं उठाया गया है।",
+    "id": "95c2e45e",
+    "text": "Church Street के पास स्कूल के निकट खुली नाली है।",
     "language": "hi",
     "category": "Sanitation & Garbage",
     "priority": "Medium",
-    "area": "Nehru Enclave",
-    "days_open": 5
+    "area": "Anna Nagar",
+    "days_open": 6
   },
   {
-    "id": "a0b842a6",
-    "text": "वार्ड 63 में मुख्य सड़क पर नाला ओवरफ्लो हो रहा है, जिससे दुर्गंध फैल रही है।",
+    "id": "2b6b65d6",
+    "text": "Station Road हाईवे पर बड़ा गड्ढा है जिससे दुर्घटनाएं हो रही हैं।",
     "language": "hi",
-    "category": "Sanitation & Garbage",
-    "priority": "Medium",
-    "area": "Shanti Vihar",
-    "days_open": 13
-  },
-  {
-    "id": "b6a413ed",
-    "text": "वार्ड 40 में लो वोल्टेज के कारण घर के बिजली उपकरण खराब हो रहे हैं।",
-    "language": "hi",
-    "category": "Electricity & Power Cut",
-    "priority": "Medium",
-    "area": "Nehru Enclave",
-    "days_open": 3
-  },
-  {
-    "id": "1634729c",
-    "text": "वार्ड 11 में लो वोल्टेज के कारण घर के बिजली उपकरण खराब हो रहे हैं।",
-    "language": "hi",
-    "category": "Electricity & Power Cut",
-    "priority": "Medium",
-    "area": "Gandhi Chowk",
-    "days_open": 9
-  },
-  {
-    "id": "3ec159c5",
-    "text": "वार्ड 10 में लो वोल्टेज के कारण घर के बिजली उपकरण खराब हो रहे हैं।",
-    "language": "hi",
-    "category": "Electricity & Power Cut",
-    "priority": "Low",
+    "category": "Roads & Potholes",
+    "priority": "Critical",
     "area": "Nehru Enclave",
     "days_open": 7
   },
   {
-    "id": "f1fc5321",
-    "text": "वार्ड 85 में लो वोल्टेज के कारण घर के बिजली उपकरण खराब हो रहे हैं।",
+    "id": "47cb336b",
+    "text": "Raja Nagar सामुदायिक हॉल का डस्टबिन 1 दिनों से खाली नहीं।",
     "language": "hi",
-    "category": "Electricity & Power Cut",
+    "category": "Sanitation & Garbage",
     "priority": "Medium",
+    "area": "Raja Nagar",
+    "days_open": 5
+  },
+  {
+    "id": "7f8e4973",
+    "text": "Electric pole leaning dangerously after heavy wind near Gandhi Street.",
+    "language": "en",
+    "category": "Electricity & Power Cut",
+    "priority": "Critical",
     "area": "Shanti Vihar",
     "days_open": 4
   },
   {
-    "id": "8b3dd27e",
-    "text": "ब्लॉक E में ट्रांसफार्मर में शॉर्ट सर्किट हुआ और बिजली 12 घंटे से ठप है।",
+    "id": "060763a6",
+    "text": "Water pipeline laid 20 years ago in Station Road corroded and bursting repeatedly.",
+    "language": "en",
+    "category": "Water Supply & Quality",
+    "priority": "Critical",
+    "area": "Nehru Enclave",
+    "days_open": 9
+  },
+  {
+    "id": "c18509b4",
+    "text": "Speed-breaker missing on school zone road in Gandhi Chowk. Children at risk.",
+    "language": "en",
+    "category": "Roads & Potholes",
+    "priority": "Low",
+    "area": "Gandhi Chowk",
+    "days_open": 3
+  },
+  {
+    "id": "22917366",
+    "text": "बारिश के बाद MG Road पर 4 दिनों से जलभराव है।",
+    "language": "hi",
+    "category": "Roads & Potholes",
+    "priority": "Medium",
+    "area": "Raja Nagar",
+    "days_open": 8
+  },
+  {
+    "id": "d26dfdc6",
+    "text": "Shanti Vihar की टंकी में दरार है जिससे पानी बर्बाद हो रहा है।",
+    "language": "hi",
+    "category": "Water Supply & Quality",
+    "priority": "High",
+    "area": "Shanti Vihar",
+    "days_open": 0
+  },
+  {
+    "id": "d7826662",
+    "text": "Nehru Enclave में 1 रातों से स्ट्रीट लाइट बंद है।",
     "language": "hi",
     "category": "Electricity & Power Cut",
     "priority": "High",
     "area": "Nehru Enclave",
-    "days_open": 2
+    "days_open": 5
   },
   {
-    "id": "1d11509e",
-    "text": "वार्ड 75 में लो वोल्टेज के कारण घर के बिजली उपकरण खराब हो रहे हैं।",
+    "id": "81c00053",
+    "text": "Pavement completely broken near Lake View market. Senior citizens at risk.",
+    "language": "en",
+    "category": "Roads & Potholes",
+    "priority": "Critical",
+    "area": "Lake View",
+    "days_open": 5
+  },
+  {
+    "id": "c9052a4f",
+    "text": "Subhash Market में पानी मीटर टूटा हुआ है और पानी बर्बाद हो रहा है।",
+    "language": "hi",
+    "category": "Water Supply & Quality",
+    "priority": "Medium",
+    "area": "Subhash Market",
+    "days_open": 5
+  },
+  {
+    "id": "3bc77138",
+    "text": "Nehru Enclave में अवैध कनेक्शन से फीडर ट्रिप हो रहा है।",
     "language": "hi",
     "category": "Electricity & Power Cut",
     "priority": "Medium",
     "area": "Nehru Enclave",
-    "days_open": 10
+    "days_open": 4
   },
   {
-    "id": "996e6720",
-    "text": "ब्लॉक J में ट्रांसफार्मर में शॉर्ट सर्किट हुआ और बिजली 12 घंटे से ठप है।",
+    "id": "92b1f521",
+    "text": "Raja Nagar அரசு மருத்துவமனை X-ray இயந்திரம் 6 நாட்கள் பழுது.",
+    "language": "ta",
+    "category": "Public Healthcare & Clinics",
+    "priority": "High",
+    "area": "Raja Nagar",
+    "days_open": 1
+  },
+  {
+    "id": "64299084",
+    "text": "MG Road அருகே பாலம் கம்பி முற்றும் உடைந்தது.",
+    "language": "ta",
+    "category": "Roads & Potholes",
+    "priority": "High",
+    "area": "Shanti Vihar",
+    "days_open": 0
+  },
+  {
+    "id": "96b3c9ef",
+    "text": "Park Avenue के पास पाइपलाइन फट गई है, पानी सड़क पर बह रहा है।",
+    "language": "hi",
+    "category": "Water Supply & Quality",
+    "priority": "Medium",
+    "area": "Nehru Enclave",
+    "days_open": 4
+  },
+  {
+    "id": "d14525cb",
+    "text": "Dialysis machine at Subhash Market civil hospital out of order for 8 days.",
+    "language": "en",
+    "category": "Public Healthcare & Clinics",
+    "priority": "High",
+    "area": "Subhash Market",
+    "days_open": 9
+  },
+  {
+    "id": "2bc6951b",
+    "text": "வார்டு 2 தடுப்பூசி முகாம் அறிவிப்பு இன்றி ரத்து.",
+    "language": "ta",
+    "category": "Public Healthcare & Clinics",
+    "priority": "Medium",
+    "area": "Nehru Enclave",
+    "days_open": 7
+  },
+  {
+    "id": "ed9c2729",
+    "text": "Subhash Market में बिना सूचना 16 घंटे बिजली बंद रही।",
     "language": "hi",
     "category": "Electricity & Power Cut",
     "priority": "High",
-    "area": "Nehru Enclave",
-    "days_open": 2
-  },
-  {
-    "id": "c837f4cd",
-    "text": "वार्ड 67 में लो वोल्टेज के कारण घर के बिजली उपकरण खराब हो रहे हैं।",
-    "language": "hi",
-    "category": "Electricity & Power Cut",
-    "priority": "Medium",
-    "area": "Nehru Enclave",
-    "days_open": 1
-  },
-  {
-    "id": "5676dc1f",
-    "text": "वार्ड 39 में लो वोल्टेज के कारण घर के बिजली उपकरण खराब हो रहे हैं।",
-    "language": "hi",
-    "category": "Electricity & Power Cut",
-    "priority": "Medium",
     "area": "Subhash Market",
-    "days_open": 6
+    "days_open": 8
   },
   {
-    "id": "92d13619",
-    "text": "वार्ड 77 में लो वोल्टेज के कारण घर के बिजली उपकरण खराब हो रहे हैं।",
+    "id": "6891e75b",
+    "text": "Park Avenue के पास स्कूल के निकट खुली नाली है।",
     "language": "hi",
+    "category": "Sanitation & Garbage",
+    "priority": "Medium",
+    "area": "Civil Lines",
+    "days_open": 7
+  },
+  {
+    "id": "25ac878e",
+    "text": "No power for 24 hours due to maintenance with zero prior notice in Shanti Vihar.",
+    "language": "en",
     "category": "Electricity & Power Cut",
-    "priority": "Low",
+    "priority": "High",
     "area": "Shanti Vihar",
-    "days_open": 0
+    "days_open": 14
   },
   {
-    "id": "4f3443b4",
-    "text": "वार्ड 88 में लो वोल्टेज के कारण घर के बिजली उपकरण खराब हो रहे हैं।",
-    "language": "hi",
-    "category": "Electricity & Power Cut",
+    "id": "6a4010a8",
+    "text": "Open sewer drain overflowing on main road Ward 25.",
+    "language": "en",
+    "category": "Sanitation & Garbage",
     "priority": "Medium",
+    "area": "Civil Lines",
+    "days_open": 5
+  },
+  {
+    "id": "06be9ee4",
+    "text": "வார்டு 93 பகுதியில் தினமும் 15 நிமிடம் மட்டுமே தண்ணீர்.",
+    "language": "ta",
+    "category": "Water Supply & Quality",
+    "priority": "High",
     "area": "Anna Nagar",
-    "days_open": 0
-  },
-  {
-    "id": "01d718bf",
-    "text": "वार्ड 48 में लो वोल्टेज के कारण घर के बिजली उपकरण खराब हो रहे हैं।",
-    "language": "hi",
-    "category": "Electricity & Power Cut",
-    "priority": "Medium",
-    "area": "Gandhi Chowk",
-    "days_open": 6
-  },
-  {
-    "id": "dc4eb6e3",
-    "text": "वार्ड 29 के सरकारी अस्पताल में ड्यूटी के समय डॉक्टर अनुपस्थित रहते हैं।",
-    "language": "hi",
-    "category": "Public Healthcare & Clinics",
-    "priority": "Critical",
-    "area": "Nehru Enclave",
     "days_open": 13
   },
   {
-    "id": "40151b1d",
-    "text": "वार्ड 28 के सरकारी अस्पताल में ड्यूटी के समय डॉक्टर अनुपस्थित रहते हैं।",
-    "language": "hi",
-    "category": "Public Healthcare & Clinics",
-    "priority": "Critical",
-    "area": "Gandhi Chowk",
-    "days_open": 9
-  },
-  {
-    "id": "b26a3705",
-    "text": "वार्ड 41 के सरकारी अस्पताल में ड्यूटी के समय डॉक्टर अनुपस्थित रहते हैं।",
-    "language": "hi",
-    "category": "Public Healthcare & Clinics",
-    "priority": "Critical",
-    "area": "Gandhi Chowk",
-    "days_open": 10
-  },
-  {
-    "id": "17d4a3af",
-    "text": "वार्ड 88 के सरकारी अस्पताल में ड्यूटी के समय डॉक्टर अनुपस्थित रहते हैं।",
-    "language": "hi",
-    "category": "Public Healthcare & Clinics",
-    "priority": "Critical",
-    "area": "Shanti Vihar",
-    "days_open": 2
-  },
-  {
-    "id": "2c54c0b5",
-    "text": "वार्ड 10 के सरकारी अस्पताल में ड्यूटी के समय डॉक्टर अनुपस्थित रहते हैं।",
-    "language": "hi",
-    "category": "Public Healthcare & Clinics",
-    "priority": "Critical",
-    "area": "Gandhi Chowk",
-    "days_open": 6
-  },
-  {
-    "id": "70cf5150",
-    "text": "Gandhi Chowk प्राथमिक स्वास्थ्य केंद्र में जरूरी दवाएं और आपातकालीन टीके उपलब्ध नहीं हैं।",
-    "language": "hi",
-    "category": "Public Healthcare & Clinics",
+    "id": "fd9b759a",
+    "text": "Meter room in Gandhi Chowk society unlocked and open. Electrocution risk.",
+    "language": "en",
+    "category": "Electricity & Power Cut",
     "priority": "Medium",
     "area": "Gandhi Chowk",
-    "days_open": 9
+    "days_open": 14
   },
   {
-    "id": "d4f40067",
-    "text": "वार्ड 5 के सरकारी अस्पताल में ड्यूटी के समय डॉक्टर अनुपस्थित रहते हैं।",
-    "language": "hi",
-    "category": "Public Healthcare & Clinics",
+    "id": "4d10b24d",
+    "text": "பிளாக் A தெருவில் மின்மாற்றி எண்ணெய் கசிவு. தீ அபாயம்.",
+    "language": "ta",
+    "category": "Electricity & Power Cut",
     "priority": "Critical",
-    "area": "Shanti Vihar",
-    "days_open": 6
+    "area": "Lake View",
+    "days_open": 4
   },
   {
-    "id": "9930253d",
-    "text": "वार्ड 96 के सरकारी अस्पताल में ड्यूटी के समय डॉक्टर अनुपस्थित रहते हैं।",
+    "id": "8b7cd27a",
+    "text": "Water pressure critically low in Block D since yesterday morning.",
+    "language": "en",
+    "category": "Water Supply & Quality",
+    "priority": "Low",
+    "area": "Gandhi Chowk",
+    "days_open": 4
+  },
+  {
+    "id": "341de360",
+    "text": "बारिश के बाद Ring Road पर 3 दिनों से जलभराव है।",
     "language": "hi",
-    "category": "Public Healthcare & Clinics",
-    "priority": "Critical",
-    "area": "Shanti Vihar",
-    "days_open": 2
+    "category": "Roads & Potholes",
+    "priority": "Medium",
+    "area": "Gandhi Chowk",
+    "days_open": 7
   },
   {
-    "id": "4459bcbc",
-    "text": "वार्ड 85 के सरकारी अस्पताल में ड्यूटी के समय डॉक्टर अनुपस्थित रहते हैं।",
-    "language": "hi",
-    "category": "Public Healthcare & Clinics",
-    "priority": "Critical",
-    "area": "Anna Nagar",
-    "days_open": 11
-  },
-  {
-    "id": "afc2f322",
-    "text": "Nehru Enclave प्राथमिक स्वास्थ्य केंद्र में जरूरी दवाएं और आपातकालीन टीके उपलब्ध नहीं हैं।",
+    "id": "57f0d7e3",
+    "text": "Nehru Enclave सरकारी अस्पताल में साफ-सफाई नहीं है।",
     "language": "hi",
     "category": "Public Healthcare & Clinics",
     "priority": "Low",
@@ -846,453 +990,633 @@
     "days_open": 5
   },
   {
-    "id": "e2a0f8bb",
-    "text": "वार्ड 79 के सरकारी अस्पताल में ड्यूटी के समय डॉक्टर अनुपस्थित रहते हैं।",
+    "id": "fbed7877",
+    "text": "Shanti Vihar बाजार के पास मृत जानवर पड़ा है जिससे दुर्गंध है।",
     "language": "hi",
-    "category": "Public Healthcare & Clinics",
-    "priority": "Critical",
-    "area": "Anna Nagar",
+    "category": "Sanitation & Garbage",
+    "priority": "Low",
+    "area": "Shanti Vihar",
+    "days_open": 9
+  },
+  {
+    "id": "9bc916e1",
+    "text": "Gandhi Chowk सोसाइटी का मीटर रूम खुला है।",
+    "language": "hi",
+    "category": "Electricity & Power Cut",
+    "priority": "Medium",
+    "area": "Gandhi Chowk",
+    "days_open": 14
+  },
+  {
+    "id": "78ccee9a",
+    "text": "வார்டு 64 பகுதியில் குப்பை லாரி 2 நாட்களாக வரவில்லை.",
+    "language": "ta",
+    "category": "Sanitation & Garbage",
+    "priority": "High",
+    "area": "Nehru Enclave",
+    "days_open": 1
+  },
+  {
+    "id": "2849e31d",
+    "text": "Raja Nagar பகுதியில் 4 நாட்களாக மூன்று கட்ட மின் இல்லை.",
+    "language": "ta",
+    "category": "Electricity & Power Cut",
+    "priority": "Low",
+    "area": "Raja Nagar",
     "days_open": 12
   },
   {
-    "id": "c32c9a40",
-    "text": "वार्ड 6 के सरकारी अस्पताल में ड्यूटी के समय डॉक्टर अनुपस्थित रहते हैं।",
-    "language": "hi",
+    "id": "c337ec3c",
+    "text": "Hygiene severely degraded in government hospital ward Nehru Enclave.",
+    "language": "en",
     "category": "Public Healthcare & Clinics",
-    "priority": "Critical",
-    "area": "Raja Nagar",
-    "days_open": 10
-  },
-  {
-    "id": "9c799d76",
-    "text": "வார்டு 72 பகுதியில் கடந்த 3 நாட்களாக குடிநீர் விநியோகம் முற்றிலும் நிறுத்தப்பட்டுள்ளது.",
-    "language": "ta",
-    "category": "Water Supply & Quality",
     "priority": "Low",
-    "area": "Anna Nagar",
-    "days_open": 3
+    "area": "Nehru Enclave",
+    "days_open": 12
   },
   {
-    "id": "adae5e0e",
-    "text": "வார்டு 89 பகுதியில் கடந்த 3 நாட்களாக குடிநீர் விநியோகம் முற்றிலும் நிறுத்தப்பட்டுள்ளது.",
+    "id": "af8d5a8f",
+    "text": "वार्ड 65 की मुख्य सड़क पर नाला उफन रहा है।",
+    "language": "hi",
+    "category": "Sanitation & Garbage",
+    "priority": "Medium",
+    "area": "Shanti Vihar",
+    "days_open": 11
+  },
+  {
+    "id": "ccce6df6",
+    "text": "Lake View की गली से एंबुलेंस नहीं निकल सकती, बहुत संकरी है।",
+    "language": "hi",
+    "category": "Roads & Potholes",
+    "priority": "Medium",
+    "area": "Lake View",
+    "days_open": 2
+  },
+  {
+    "id": "84a7da21",
+    "text": "Park Avenue அருகே குடிநீர் குழாய் உடைந்து தண்ணீர் வீணாகிறது.",
     "language": "ta",
     "category": "Water Supply & Quality",
     "priority": "Medium",
     "area": "Subhash Market",
-    "days_open": 13
+    "days_open": 10
   },
   {
-    "id": "112f9195",
-    "text": "வார்டு 87 பகுதியில் கடந்த 3 நாட்களாக குடிநீர் விநியோகம் முற்றிலும் நிறுத்தப்பட்டுள்ளது.",
+    "id": "62e30d9d",
+    "text": "Bridge railing completely broken near Park Avenue. Fall risk.",
+    "language": "en",
+    "category": "Roads & Potholes",
+    "priority": "High",
+    "area": "Raja Nagar",
+    "days_open": 12
+  },
+  {
+    "id": "02fb28d7",
+    "text": "Nehru Enclave தண்ணீரில் குடல்வால் கிருமி. ஆய்வு அவசரம்.",
     "language": "ta",
     "category": "Water Supply & Quality",
-    "priority": "Low",
+    "priority": "Medium",
     "area": "Nehru Enclave",
     "days_open": 14
   },
   {
-    "id": "f6c368f3",
-    "text": "வார்டு 15 பகுதியில் கடந்த 3 நாட்களாக குடிநீர் விநியோகம் முற்றிலும் நிறுத்தப்பட்டுள்ளது.",
+    "id": "b4571a48",
+    "text": "भीषण गर्मी में 16 घंटे बिजली कट है।",
+    "language": "hi",
+    "category": "Electricity & Power Cut",
+    "priority": "Low",
+    "area": "Raja Nagar",
+    "days_open": 1
+  },
+  {
+    "id": "3c82e643",
+    "text": "Church Street के गड्ढे में पानी जमा है जिसमें मच्छर पनप रहे हैं।",
+    "language": "hi",
+    "category": "Sanitation & Garbage",
+    "priority": "Critical",
+    "area": "Raja Nagar",
+    "days_open": 12
+  },
+  {
+    "id": "9657484a",
+    "text": "MG Road அருகே குடிநீர் குழாய் உடைந்து தண்ணீர் வீணாகிறது.",
     "language": "ta",
     "category": "Water Supply & Quality",
     "priority": "Medium",
-    "area": "Anna Nagar",
+    "area": "Gandhi Chowk",
+    "days_open": 0
+  },
+  {
+    "id": "f2b6c704",
+    "text": "Community hall dustbin at Lake View not emptied for 8 days. Overflowing.",
+    "language": "en",
+    "category": "Sanitation & Garbage",
+    "priority": "Medium",
+    "area": "Lake View",
+    "days_open": 5
+  },
+  {
+    "id": "00d3e13a",
+    "text": "Meter room in Nehru Enclave society unlocked and open. Electrocution risk.",
+    "language": "en",
+    "category": "Electricity & Power Cut",
+    "priority": "Medium",
+    "area": "Nehru Enclave",
     "days_open": 11
   },
   {
-    "id": "491cbf45",
-    "text": "வார்டு 10 பகுதியில் கடந்த 3 நாட்களாக குடிநீர் விநியோகம் முற்றிலும் நிறுத்தப்பட்டுள்ளது.",
-    "language": "ta",
-    "category": "Water Supply & Quality",
-    "priority": "Medium",
-    "area": "Shanti Vihar",
-    "days_open": 9
+    "id": "9940c53c",
+    "text": "Gandhi Chowk चौराहे पर कोई सड़क संकेत नहीं है।",
+    "language": "hi",
+    "category": "Roads & Potholes",
+    "priority": "High",
+    "area": "Gandhi Chowk",
+    "days_open": 13
   },
   {
-    "id": "e70d4a8b",
-    "text": "வார்டு 50 பகுதியில் கடந்த 3 நாட்களாக குடிநீர் விநியோகம் முற்றிலும் நிறுத்தப்பட்டுள்ளது.",
+    "id": "9c4f0621",
+    "text": "Market Road அருகே நகராட்சி கம்பியில் மின் தாக்கம்.",
     "language": "ta",
-    "category": "Water Supply & Quality",
+    "category": "Electricity & Power Cut",
+    "priority": "Medium",
+    "area": "Nehru Enclave",
+    "days_open": 1
+  },
+  {
+    "id": "b40ccdb4",
+    "text": "Anna Nagar सरकारी अस्पताल में साफ-सफाई नहीं है।",
+    "language": "hi",
+    "category": "Public Healthcare & Clinics",
     "priority": "Low",
+    "area": "Anna Nagar",
+    "days_open": 3
+  },
+  {
+    "id": "f936c71a",
+    "text": "Huge pothole near Ring Road highway causing accidents.",
+    "language": "en",
+    "category": "Roads & Potholes",
+    "priority": "Critical",
+    "area": "Lake View",
+    "days_open": 8
+  },
+  {
+    "id": "2ae82e8e",
+    "text": "வார்டு 35 மருத்துவமனையில் மருத்துவர்கள் வருவதில்லை.",
+    "language": "ta",
+    "category": "Public Healthcare & Clinics",
+    "priority": "High",
+    "area": "Raja Nagar",
+    "days_open": 11
+  },
+  {
+    "id": "e550dbfd",
+    "text": "Nehru Enclave के पास स्ट्रीट लाइट बंद है।",
+    "language": "hi",
+    "category": "Roads & Potholes",
+    "priority": "Medium",
     "area": "Nehru Enclave",
     "days_open": 0
   },
   {
-    "id": "679665be",
-    "text": "வார்டு 63 பகுதியில் கடந்த 3 நாட்களாக குடிநீர் விநியோகம் முற்றிலும் நிறுத்தப்பட்டுள்ளது.",
-    "language": "ta",
+    "id": "86feab24",
+    "text": "Water quality report from Civil Lines shows E-coli contamination. Urgent lab testing needed.",
+    "language": "en",
     "category": "Water Supply & Quality",
     "priority": "Medium",
-    "area": "Nehru Enclave",
-    "days_open": 7
-  },
-  {
-    "id": "e9fc17d4",
-    "text": "வார்டு 2 பகுதியில் கடந்த 3 நாட்களாக குடிநீர் விநியோகம் முற்றிலும் நிறுத்தப்பட்டுள்ளது.",
-    "language": "ta",
-    "category": "Water Supply & Quality",
-    "priority": "Low",
-    "area": "Subhash Market",
+    "area": "Civil Lines",
     "days_open": 4
   },
   {
-    "id": "17c64f7d",
-    "text": "Nehru Enclave பகுதியில் கடுமையான தண்ணீர் தட்டுப்பாடு ஏற்பட்டுள்ளதால் உடனடியாக லாரி தண்ணீர் தேவை.",
-    "language": "ta",
-    "category": "Water Supply & Quality",
-    "priority": "Low",
-    "area": "Nehru Enclave",
-    "days_open": 13
-  },
-  {
-    "id": "58858f38",
-    "text": "வார்டு 38 பகுதியில் கடந்த 3 நாட்களாக குடிநீர் விநியோகம் முற்றிலும் நிறுத்தப்பட்டுள்ளது.",
-    "language": "ta",
-    "category": "Water Supply & Quality",
-    "priority": "Medium",
-    "area": "Gandhi Chowk",
-    "days_open": 13
-  },
-  {
-    "id": "3c2199d0",
-    "text": "Main Bazaar பகுதியில் உள்ள நகராட்சி குழாயில் சாக்கடை கலந்து துர்நாற்றத்துடன் தண்ணீர் வருகிறது.",
-    "language": "ta",
-    "category": "Water Supply & Quality",
-    "priority": "Medium",
-    "area": "Nehru Enclave",
-    "days_open": 4
-  },
-  {
-    "id": "a9d195c6",
-    "text": "Ring Road பகுதியில் உள்ள நகராட்சி குழாயில் சாக்கடை கலந்து துர்நாற்றத்துடன் தண்ணீர் வருகிறது.",
-    "language": "ta",
-    "category": "Water Supply & Quality",
-    "priority": "Medium",
-    "area": "Nehru Enclave",
-    "days_open": 6
-  },
-  {
-    "id": "d467c6be",
-    "text": "வார்டு 29 பிரதான சாலையில் திறந்தவெளி கழிவுநீர் கால்வாய் பொங்கி வழிகிறது.",
-    "language": "ta",
-    "category": "Sanitation & Garbage",
-    "priority": "Low",
-    "area": "Nehru Enclave",
-    "days_open": 4
-  },
-  {
-    "id": "eb755292",
-    "text": "வார்டு 70 பிரதான சாலையில் திறந்தவெளி கழிவுநீர் கால்வாய் பொங்கி வழிகிறது.",
-    "language": "ta",
-    "category": "Sanitation & Garbage",
-    "priority": "Low",
-    "area": "Shanti Vihar",
-    "days_open": 2
-  },
-  {
-    "id": "d970f363",
-    "text": "வார்டு 82 பிரதான சாலையில் திறந்தவெளி கழிவுநீர் கால்வாய் பொங்கி வழிகிறது.",
-    "language": "ta",
-    "category": "Sanitation & Garbage",
-    "priority": "Low",
-    "area": "Anna Nagar",
-    "days_open": 2
-  },
-  {
-    "id": "9a9c47d7",
-    "text": "வார்டு 45 பிரதான சாலையில் திறந்தவெளி கழிவுநீர் கால்வாய் பொங்கி வழிகிறது.",
-    "language": "ta",
-    "category": "Sanitation & Garbage",
-    "priority": "Low",
-    "area": "Anna Nagar",
-    "days_open": 4
-  },
-  {
-    "id": "5b4abc95",
-    "text": "வார்டு 33 பிரதான சாலையில் திறந்தவெளி கழிவுநீர் கால்வாய் பொங்கி வழிகிறது.",
-    "language": "ta",
-    "category": "Sanitation & Garbage",
-    "priority": "Low",
-    "area": "Gandhi Chowk",
-    "days_open": 4
-  },
-  {
-    "id": "8548820d",
-    "text": "வார்டு 90 பிரதான சாலையில் திறந்தவெளி கழிவுநீர் கால்வாய் பொங்கி வழிகிறது.",
-    "language": "ta",
-    "category": "Sanitation & Garbage",
-    "priority": "Low",
-    "area": "Gandhi Chowk",
-    "days_open": 4
-  },
-  {
-    "id": "58a6d677",
-    "text": "வார்டு 56 பிரதான சாலையில் திறந்தவெளி கழிவுநீர் கால்வாய் பொங்கி வழிகிறது.",
-    "language": "ta",
-    "category": "Sanitation & Garbage",
-    "priority": "Low",
-    "area": "Subhash Market",
-    "days_open": 13
-  },
-  {
-    "id": "e9928b5c",
-    "text": "Church Street தெருவில் உள்ள குப்பை தொட்டி நிரம்பி வழிந்து சாலையில் குப்பைகள் சிதறியுள்ளன.",
-    "language": "ta",
-    "category": "Sanitation & Garbage",
-    "priority": "Low",
-    "area": "Nehru Enclave",
-    "days_open": 1
-  },
-  {
-    "id": "a67d00f2",
-    "text": "Gandhi Chowk பள்ளி அருகே ஒரு வாரமாக நகராட்சி ஊழியர்கள் குப்பை அள்ளவில்லை.",
-    "language": "ta",
-    "category": "Sanitation & Garbage",
-    "priority": "Low",
-    "area": "Gandhi Chowk",
-    "days_open": 2
-  },
-  {
-    "id": "fcd51b60",
-    "text": "Anna Nagar சந்தை பகுதியில் இறந்துபோன விலங்கு கிடப்பதால் கடுமையான துர்நாற்றம் வீசுகிறது.",
-    "language": "ta",
-    "category": "Sanitation & Garbage",
-    "priority": "Medium",
-    "area": "Anna Nagar",
-    "days_open": 8
-  },
-  {
-    "id": "714b62f9",
-    "text": "வார்டு 80 பிரதான சாலையில் திறந்தவெளி கழிவுநீர் கால்வாய் பொங்கி வழிகிறது.",
-    "language": "ta",
-    "category": "Sanitation & Garbage",
-    "priority": "Low",
-    "area": "Shanti Vihar",
-    "days_open": 2
-  },
-  {
-    "id": "fb670fc5",
-    "text": "வார்டு 36 பிரதான சாலையில் திறந்தவெளி கழிவுநீர் கால்வாய் பொங்கி வழிகிறது.",
-    "language": "ta",
-    "category": "Sanitation & Garbage",
-    "priority": "Low",
-    "area": "Nehru Enclave",
-    "days_open": 10
-  },
-  {
-    "id": "e4a5177b",
-    "text": "வார்டு 68 பகுதியில் அடிக்கடி ஏற்படும் குறைந்த மின் அழுத்தம் (Low Voltage) காரணமாக மின் சாதனங்கள் பழுதாகின்றன.",
-    "language": "ta",
+    "id": "2fb52c5d",
+    "text": "Electricity bill inflated by 300% without new meter reading in Ward 10.",
+    "language": "en",
     "category": "Electricity & Power Cut",
     "priority": "Medium",
     "area": "Gandhi Chowk",
-    "days_open": 12
+    "days_open": 13
   },
   {
-    "id": "dd7dea52",
-    "text": "வார்டு 13 பகுதியில் அடிக்கடி ஏற்படும் குறைந்த மின் அழுத்தம் (Low Voltage) காரணமாக மின் சாதனங்கள் பழுதாகின்றன.",
+    "id": "6e340880",
+    "text": "வார்டு 63 பகுதியில் குப்பை லாரி 4 நாட்களாக வரவில்லை.",
     "language": "ta",
-    "category": "Electricity & Power Cut",
-    "priority": "Medium",
-    "area": "Subhash Market",
+    "category": "Sanitation & Garbage",
+    "priority": "High",
+    "area": "Shanti Vihar",
+    "days_open": 0
+  },
+  {
+    "id": "a9cc0a2c",
+    "text": "Ring Road हाईवे पर बड़ा गड्ढा है जिससे दुर्घटनाएं हो रही हैं।",
+    "language": "hi",
+    "category": "Roads & Potholes",
+    "priority": "Critical",
+    "area": "Shanti Vihar",
     "days_open": 9
   },
   {
-    "id": "c2bcd901",
-    "text": "வார்டு 39 பகுதியில் அடிக்கடி ஏற்படும் குறைந்த மின் அழுத்தம் (Low Voltage) காரணமாக மின் சாதனங்கள் பழுதாகின்றன.",
-    "language": "ta",
-    "category": "Electricity & Power Cut",
-    "priority": "Medium",
+    "id": "66135916",
+    "text": "No drinking water in Ward 79 for 3 days. Residents are suffering.",
+    "language": "en",
+    "category": "Water Supply & Quality",
+    "priority": "Critical",
+    "area": "Raja Nagar",
+    "days_open": 6
+  },
+  {
+    "id": "00ce30af",
+    "text": "Plastic waste dumped illegally near Station Road riverbank. Blocking flow.",
+    "language": "en",
+    "category": "Sanitation & Garbage",
+    "priority": "High",
     "area": "Nehru Enclave",
+    "days_open": 9
+  },
+  {
+    "id": "987d4b35",
+    "text": "வார்டு 45 பகுதியில் குப்பை லாரி 7 நாட்களாக வரவில்லை.",
+    "language": "ta",
+    "category": "Sanitation & Garbage",
+    "priority": "High",
+    "area": "Lake View",
+    "days_open": 2
+  },
+  {
+    "id": "1f255814",
+    "text": "वार्ड 83 में पिछले 6 दिनों से पीने का पानी नहीं आ रहा है।",
+    "language": "hi",
+    "category": "Water Supply & Quality",
+    "priority": "Critical",
+    "area": "Civil Lines",
+    "days_open": 8
+  },
+  {
+    "id": "0da9e572",
+    "text": "வார்டு 41 பகுதியில் குப்பை லாரி 10 நாட்களாக வரவில்லை.",
+    "language": "ta",
+    "category": "Sanitation & Garbage",
+    "priority": "High",
+    "area": "Lake View",
+    "days_open": 3
+  },
+  {
+    "id": "97a48531",
+    "text": "Civil Lines सिविल अस्पताल की डायलिसिस मशीन 3 दिनों से खराब है।",
+    "language": "hi",
+    "category": "Public Healthcare & Clinics",
+    "priority": "High",
+    "area": "Civil Lines",
+    "days_open": 6
+  },
+  {
+    "id": "cf31005b",
+    "text": "Station Road पर गड्ढों के कारण वाहन खतरनाक तरीके से मुड़ते हैं।",
+    "language": "hi",
+    "category": "Roads & Potholes",
+    "priority": "Critical",
+    "area": "Gandhi Chowk",
     "days_open": 13
   },
   {
-    "id": "1ff14ba8",
-    "text": "வார்டு 84 பகுதியில் அடிக்கடி ஏற்படும் குறைந்த மின் அழுத்தம் (Low Voltage) காரணமாக மின் சாதனங்கள் பழுதாகின்றன.",
+    "id": "b7148da9",
+    "text": "Ring Road அருகே சட்டவிரோத குழாய் இணைப்பு காரணமாக அழுத்தம் குறைகிறது.",
     "language": "ta",
-    "category": "Electricity & Power Cut",
-    "priority": "Medium",
-    "area": "Shanti Vihar",
-    "days_open": 12
-  },
-  {
-    "id": "99c4f2f0",
-    "text": "வார்டு 16 பகுதியில் அடிக்கடி ஏற்படும் குறைந்த மின் அழுத்தம் (Low Voltage) காரணமாக மின் சாதனங்கள் பழுதாகின்றன.",
-    "language": "ta",
-    "category": "Electricity & Power Cut",
-    "priority": "Medium",
-    "area": "Nehru Enclave",
-    "days_open": 12
-  },
-  {
-    "id": "a2f1a034",
-    "text": "வார்டு 12 பகுதியில் அடிக்கடி ஏற்படும் குறைந்த மின் அழுத்தம் (Low Voltage) காரணமாக மின் சாதனங்கள் பழுதாகின்றன.",
-    "language": "ta",
-    "category": "Electricity & Power Cut",
+    "category": "Water Supply & Quality",
     "priority": "Low",
-    "area": "Subhash Market",
-    "days_open": 7
+    "area": "Anna Nagar",
+    "days_open": 13
   },
   {
-    "id": "9cac9c96",
-    "text": "பிளாக் E பகுதியில் மின்மாற்றி வெடித்து சிதறியதால் கடந்த 12 மணி நேரமாக மின்சாரம் இல்லை.",
+    "id": "c0890ee2",
+    "text": "Gandhi Street அருகே குடிநீர் குழாய் உடைந்து தண்ணீர் வீணாகிறது.",
     "language": "ta",
-    "category": "Electricity & Power Cut",
+    "category": "Water Supply & Quality",
+    "priority": "Medium",
+    "area": "Lake View",
+    "days_open": 0
+  },
+  {
+    "id": "c45119e4",
+    "text": "Gandhi Chowk सरकारी अस्पताल का X-ray मशीन 8 दिनों से खराब है।",
+    "language": "hi",
+    "category": "Public Healthcare & Clinics",
+    "priority": "High",
+    "area": "Gandhi Chowk",
+    "days_open": 12
+  },
+  {
+    "id": "f5e2a3bb",
+    "text": "Anna Nagar அரசு மருத்துவமனை X-ray இயந்திரம் 1 நாட்கள் பழுது.",
+    "language": "ta",
+    "category": "Public Healthcare & Clinics",
+    "priority": "High",
+    "area": "Anna Nagar",
+    "days_open": 11
+  },
+  {
+    "id": "3898d206",
+    "text": "Waterlogging on Church Street after rains making road impassable for 3 days.",
+    "language": "en",
+    "category": "Roads & Potholes",
+    "priority": "Medium",
+    "area": "Civil Lines",
+    "days_open": 9
+  },
+  {
+    "id": "7ed14d0f",
+    "text": "Gandhi Street பள்ளத்தில் தேங்கிய நீரில் கொசு வளர்கிறது.",
+    "language": "ta",
+    "category": "Sanitation & Garbage",
     "priority": "Critical",
-    "area": "Anna Nagar",
-    "days_open": 8
+    "area": "Civil Lines",
+    "days_open": 6
   },
   {
-    "id": "23e6e219",
-    "text": "வார்டு 35 பகுதியில் அடிக்கடி ஏற்படும் குறைந்த மின் அழுத்தம் (Low Voltage) காரணமாக மின் சாதனங்கள் பழுதாகின்றன.",
+    "id": "7ae1b39e",
+    "text": "4 நாட்களாக Shanti Vihar பகுதியில் தண்ணீர் நிறுத்தப்பட்டுள்ளது.",
     "language": "ta",
-    "category": "Electricity & Power Cut",
-    "priority": "Low",
-    "area": "Raja Nagar",
-    "days_open": 5
-  },
-  {
-    "id": "28aaeb65",
-    "text": "வார்டு 11 பகுதியில் அடிக்கடி ஏற்படும் குறைந்த மின் அழுத்தம் (Low Voltage) காரணமாக மின் சாதனங்கள் பழுதாகின்றன.",
-    "language": "ta",
-    "category": "Electricity & Power Cut",
-    "priority": "Low",
-    "area": "Nehru Enclave",
-    "days_open": 4
-  },
-  {
-    "id": "f39d8aa6",
-    "text": "வார்டு 2 பகுதியில் அடிக்கடி ஏற்படும் குறைந்த மின் அழுத்தம் (Low Voltage) காரணமாக மின் சாதனங்கள் பழுதாகின்றன.",
-    "language": "ta",
-    "category": "Electricity & Power Cut",
-    "priority": "Low",
-    "area": "Nehru Enclave",
-    "days_open": 2
-  },
-  {
-    "id": "30069183",
-    "text": "வார்டு 38 பகுதியில் அடிக்கடி ஏற்படும் குறைந்த மின் அழுத்தம் (Low Voltage) காரணமாக மின் சாதனங்கள் பழுதாகின்றன.",
-    "language": "ta",
-    "category": "Electricity & Power Cut",
+    "category": "Water Supply & Quality",
     "priority": "Medium",
-    "area": "Anna Nagar",
-    "days_open": 12
+    "area": "Shanti Vihar",
+    "days_open": 10
   },
   {
-    "id": "74f5cf5d",
-    "text": "Church Street தெருவில் உள்ள மின்கம்பம் சாய்ந்து விழும் ஆபத்தான நிலையில் உள்ளது.",
+    "id": "cb0395d8",
+    "text": "Park Avenue फ्लाईओवर में दरारें दिख रही हैं।",
+    "language": "hi",
+    "category": "Roads & Potholes",
+    "priority": "High",
+    "area": "Gandhi Chowk",
+    "days_open": 11
+  },
+  {
+    "id": "227fef4a",
+    "text": "Overhead tank near Lake View community hall cracked. Water lost before reaching homes.",
+    "language": "en",
+    "category": "Water Supply & Quality",
+    "priority": "High",
+    "area": "Lake View",
+    "days_open": 11
+  },
+  {
+    "id": "6f4e9848",
+    "text": "மருத்துவமனை சாலையில் வெள்ளைக் கோடு இல்லாத வேகத்தடை.",
     "language": "ta",
-    "category": "Electricity & Power Cut",
+    "category": "Roads & Potholes",
     "priority": "Low",
-    "area": "Anna Nagar",
-    "days_open": 3
-  },
-  {
-    "id": "2b83b1ce",
-    "text": "வார்டு 12 நகராட்சி மருத்துவமனையில் வேலை நேரத்தில் மருத்துவர்கள் இருப்பதில்லை.",
-    "language": "ta",
-    "category": "Public Healthcare & Clinics",
-    "priority": "Medium",
     "area": "Shanti Vihar",
     "days_open": 5
   },
   {
-    "id": "fc390f53",
-    "text": "வார்டு 44 நகராட்சி மருத்துவமனையில் வேலை நேரத்தில் மருத்துவர்கள் இருப்பதில்லை.",
-    "language": "ta",
+    "id": "75840513",
+    "text": "Non-functional X-ray machine in Shanti Vihar government hospital for 7 days.",
+    "language": "en",
     "category": "Public Healthcare & Clinics",
-    "priority": "Medium",
-    "area": "Subhash Market",
-    "days_open": 2
-  },
-  {
-    "id": "b282beeb",
-    "text": "வார்டு 92 நகராட்சி மருத்துவமனையில் வேலை நேரத்தில் மருத்துவர்கள் இருப்பதில்லை.",
-    "language": "ta",
-    "category": "Public Healthcare & Clinics",
-    "priority": "Low",
-    "area": "Anna Nagar",
-    "days_open": 3
-  },
-  {
-    "id": "7206588c",
-    "text": "வார்டு 89 நகராட்சி மருத்துவமனையில் வேலை நேரத்தில் மருத்துவர்கள் இருப்பதில்லை.",
-    "language": "ta",
-    "category": "Public Healthcare & Clinics",
-    "priority": "Medium",
-    "area": "Nehru Enclave",
-    "days_open": 8
-  },
-  {
-    "id": "ddc9721d",
-    "text": "வார்டு 22 நகராட்சி மருத்துவமனையில் வேலை நேரத்தில் மருத்துவர்கள் இருப்பதில்லை.",
-    "language": "ta",
-    "category": "Public Healthcare & Clinics",
-    "priority": "Low",
-    "area": "Shanti Vihar",
-    "days_open": 7
-  },
-  {
-    "id": "a9ec38a5",
-    "text": "வார்டு 36 நகராட்சி மருத்துவமனையில் வேலை நேரத்தில் மருத்துவர்கள் இருப்பதில்லை.",
-    "language": "ta",
-    "category": "Public Healthcare & Clinics",
-    "priority": "Medium",
+    "priority": "High",
     "area": "Shanti Vihar",
     "days_open": 11
   },
   {
-    "id": "4c6aa85a",
-    "text": "வார்டு 8 நகராட்சி மருத்துவமனையில் வேலை நேரத்தில் மருத்துவர்கள் இருப்பதில்லை.",
-    "language": "ta",
+    "id": "e6e52748",
+    "text": "Immunisation camp cancelled without notice in Ward 1.",
+    "language": "en",
     "category": "Public Healthcare & Clinics",
     "priority": "Medium",
-    "area": "Anna Nagar",
-    "days_open": 13
-  },
-  {
-    "id": "ed6844ff",
-    "text": "வார்டு 3 நகராட்சி மருத்துவமனையில் வேலை நேரத்தில் மருத்துவர்கள் இருப்பதில்லை.",
-    "language": "ta",
-    "category": "Public Healthcare & Clinics",
-    "priority": "Medium",
-    "area": "Gandhi Chowk",
+    "area": "Lake View",
     "days_open": 1
   },
   {
-    "id": "a6d79687",
-    "text": "வார்டு 4 நகராட்சி மருத்துவமனையில் வேலை நேரத்தில் மருத்துவர்கள் இருப்பதில்லை.",
-    "language": "ta",
-    "category": "Public Healthcare & Clinics",
+    "id": "9aea782e",
+    "text": "Nehru Enclave में पानी मीटर टूटा हुआ है और पानी बर्बाद हो रहा है।",
+    "language": "hi",
+    "category": "Water Supply & Quality",
     "priority": "Medium",
-    "area": "Raja Nagar",
-    "days_open": 13
+    "area": "Nehru Enclave",
+    "days_open": 9
   },
   {
-    "id": "ef10da39",
-    "text": "வார்டு 42 நகராட்சி மருத்துவமனையில் வேலை நேரத்தில் மருத்துவர்கள் இருப்பதில்லை.",
+    "id": "7aaf1f15",
+    "text": "Subhash Market பூங்கா அருகிலான உயர் மின்னழுத்த கம்பி தொங்குகிறது.",
     "language": "ta",
-    "category": "Public Healthcare & Clinics",
-    "priority": "Low",
-    "area": "Gandhi Chowk",
-    "days_open": 11
-  },
-  {
-    "id": "db269bb0",
-    "text": "வார்டு 80 நகராட்சி மருத்துவமனையில் வேலை நேரத்தில் மருத்துவர்கள் இருப்பதில்லை.",
-    "language": "ta",
-    "category": "Public Healthcare & Clinics",
-    "priority": "Low",
-    "area": "Anna Nagar",
+    "category": "Electricity & Power Cut",
+    "priority": "Medium",
+    "area": "Subhash Market",
     "days_open": 8
   },
   {
-    "id": "07cd33fb",
-    "text": "Gandhi Chowk ஆரம்ப சுகாதார நிலையத்தில் அவசியமான அவசர மருந்துகள் மற்றும் தடுப்பூசிகள் இல்லை.",
+    "id": "1cf4292b",
+    "text": "வார்டு 38 சாலையில் திறந்தவெளி கழிவுநீர் பொங்குகிறது.",
+    "language": "ta",
+    "category": "Sanitation & Garbage",
+    "priority": "Medium",
+    "area": "Shanti Vihar",
+    "days_open": 13
+  },
+  {
+    "id": "878175d3",
+    "text": "ब्लॉक F में पानी का दबाव बहुत कम है।",
+    "language": "hi",
+    "category": "Water Supply & Quality",
+    "priority": "Low",
+    "area": "Anna Nagar",
+    "days_open": 3
+  },
+  {
+    "id": "5deb200c",
+    "text": "High voltage cable hanging dangerously low near Raja Nagar park.",
+    "language": "en",
+    "category": "Electricity & Power Cut",
+    "priority": "Medium",
+    "area": "Raja Nagar",
+    "days_open": 2
+  },
+  {
+    "id": "73536643",
+    "text": "பிளாக் C பகுதியில் ஒப்பந்தக்காரர் மணல் கிடக்கவிட்டுள்ளார்.",
+    "language": "ta",
+    "category": "Roads & Potholes",
+    "priority": "Critical",
+    "area": "Anna Nagar",
+    "days_open": 13
+  },
+  {
+    "id": "99c31de5",
+    "text": "Tap water in Shanti Vihar smells like chlorine excessive. Undrinkable.",
+    "language": "en",
+    "category": "Water Supply & Quality",
+    "priority": "Medium",
+    "area": "Shanti Vihar",
+    "days_open": 3
+  },
+  {
+    "id": "bb2ef357",
+    "text": "ब्लॉक D में ट्रांसफार्मर तेल सड़क पर बहा है।",
+    "language": "hi",
+    "category": "Electricity & Power Cut",
+    "priority": "Critical",
+    "area": "Shanti Vihar",
+    "days_open": 9
+  },
+  {
+    "id": "1cedae4e",
+    "text": "Lake View சிவில் மருத்துவமனை டயாலிசிஸ் இயந்திரம் 3 நாட்கள் பழுது.",
     "language": "ta",
     "category": "Public Healthcare & Clinics",
+    "priority": "High",
+    "area": "Lake View",
+    "days_open": 9
+  },
+  {
+    "id": "bfa96cee",
+    "text": "Civil Lines சந்தையில் இறந்த விலங்கு கிடக்கிறது. துர்நாற்றம்.",
+    "language": "ta",
+    "category": "Sanitation & Garbage",
+    "priority": "Low",
+    "area": "Civil Lines",
+    "days_open": 5
+  },
+  {
+    "id": "e8afcd38",
+    "text": "மழைக்கு பிறகு Market Road சாலையில் 2 நாட்களாக நீர் தேக்கம்.",
+    "language": "ta",
+    "category": "Roads & Potholes",
     "priority": "Medium",
+    "area": "Lake View",
+    "days_open": 9
+  },
+  {
+    "id": "103a921c",
+    "text": "Shanti Vihar பள்ளி அருகே 10 நாட்களாக குப்பை அள்ளவில்லை.",
+    "language": "ta",
+    "category": "Sanitation & Garbage",
+    "priority": "High",
+    "area": "Shanti Vihar",
+    "days_open": 5
+  },
+  {
+    "id": "68df0a54",
+    "text": "Raja Nagar में अवैध कनेक्शन से फीडर ट्रिप हो रहा है।",
+    "language": "hi",
+    "category": "Electricity & Power Cut",
+    "priority": "Medium",
+    "area": "Raja Nagar",
+    "days_open": 7
+  },
+  {
+    "id": "de0d56f3",
+    "text": "Rats and mosquitoes breeding in open garbage pile at Market Road.",
+    "language": "en",
+    "category": "Sanitation & Garbage",
+    "priority": "Medium",
+    "area": "Civil Lines",
+    "days_open": 7
+  },
+  {
+    "id": "4b7ba21a",
+    "text": "Garbage overflow at Church Street dustbin. Stray dogs spreading waste.",
+    "language": "en",
+    "category": "Sanitation & Garbage",
+    "priority": "Critical",
     "area": "Gandhi Chowk",
+    "days_open": 7
+  },
+  {
+    "id": "bee918fa",
+    "text": "वार्ड 74 में सीवेज का पानी पेयजल में मिल रहा है।",
+    "language": "hi",
+    "category": "Water Supply & Quality",
+    "priority": "High",
+    "area": "Nehru Enclave",
+    "days_open": 9
+  },
+  {
+    "id": "82a6d3a9",
+    "text": "Open sewer drain overflowing on main road Ward 69.",
+    "language": "en",
+    "category": "Sanitation & Garbage",
+    "priority": "Medium",
+    "area": "Subhash Market",
+    "days_open": 3
+  },
+  {
+    "id": "322a1616",
+    "text": "Shanti Vihar सोसाइटी का मीटर रूम खुला है।",
+    "language": "hi",
+    "category": "Electricity & Power Cut",
+    "priority": "Medium",
+    "area": "Shanti Vihar",
+    "days_open": 1
+  },
+  {
+    "id": "31ec4aec",
+    "text": "பிளாக் C பகுதியில் சாலை பணி அரைகுறை நிறுத்தப்பட்டது.",
+    "language": "ta",
+    "category": "Roads & Potholes",
+    "priority": "High",
+    "area": "Nehru Enclave",
     "days_open": 14
+  },
+  {
+    "id": "b82f588f",
+    "text": "Water quality report from Lake View shows E-coli contamination. Urgent lab testing needed.",
+    "language": "en",
+    "category": "Water Supply & Quality",
+    "priority": "Medium",
+    "area": "Lake View",
+    "days_open": 3
+  },
+  {
+    "id": "4e20be87",
+    "text": "Transformer exploded in Block I. No power for 8 hours.",
+    "language": "en",
+    "category": "Electricity & Power Cut",
+    "priority": "Critical",
+    "area": "Subhash Market",
+    "days_open": 12
+  },
+  {
+    "id": "6280efc0",
+    "text": "Stagnant water in pothole near Ring Road causing mosquito breeding.",
+    "language": "en",
+    "category": "Sanitation & Garbage",
+    "priority": "Critical",
+    "area": "Lake View",
+    "days_open": 11
+  },
+  {
+    "id": "2a32d77f",
+    "text": "Potholes on Ring Road main road causing vehicles to swerve dangerously.",
+    "language": "en",
+    "category": "Roads & Potholes",
+    "priority": "Critical",
+    "area": "Raja Nagar",
+    "days_open": 3
+  },
+  {
+    "id": "3d117a94",
+    "text": "Main Bazaar குப்பை குவியலில் எலி மற்றும் கொசு வளர்கிறது.",
+    "language": "ta",
+    "category": "Sanitation & Garbage",
+    "priority": "Medium",
+    "area": "Subhash Market",
+    "days_open": 8
+  },
+  {
+    "id": "d3026257",
+    "text": "Raja Nagar பூங்கா அருகிலான உயர் மின்னழுத்த கம்பி தொங்குகிறது.",
+    "language": "ta",
+    "category": "Electricity & Power Cut",
+    "priority": "Medium",
+    "area": "Raja Nagar",
+    "days_open": 11
+  },
+  {
+    "id": "a04ab36b",
+    "text": "Road divider damaged at MG Road junction causing head-on collision risk.",
+    "language": "en",
+    "category": "Roads & Potholes",
+    "priority": "Medium",
+    "area": "Raja Nagar",
+    "days_open": 1
   }
 ]

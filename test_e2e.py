@@ -20,20 +20,20 @@ def http_post(endpoint, data):
     url = f"{BASE_URL}{endpoint}"
     payload = json.dumps(data).encode("utf-8")
     req = urllib.request.Request(url, data=payload, headers={"Content-Type": "application/json"}, method="POST")
-    with urllib.request.urlopen(req) as resp:
+    with urllib.request.urlopen(req, timeout=60) as resp:
         return json.loads(resp.read().decode("utf-8")), resp.status
 
 def http_get(endpoint):
     url = f"{BASE_URL}{endpoint}"
     req = urllib.request.Request(url, method="GET")
-    with urllib.request.urlopen(req) as resp:
+    with urllib.request.urlopen(req, timeout=60) as resp:
         return json.loads(resp.read().decode("utf-8")), resp.status
 
 def http_patch(endpoint, data):
     url = f"{BASE_URL}{endpoint}"
     payload = json.dumps(data).encode("utf-8")
     req = urllib.request.Request(url, data=payload, headers={"Content-Type": "application/json"}, method="PATCH")
-    with urllib.request.urlopen(req) as resp:
+    with urllib.request.urlopen(req, timeout=60) as resp:
         return json.loads(resp.read().decode("utf-8")), resp.status
 
 

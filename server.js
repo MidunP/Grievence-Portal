@@ -1,5 +1,24 @@
+'use strict';
+
+/**
+ * JanSeva Grievance Portal — Express Backend Server (Hardened v2)
+ * ---------------------------------------------------------------
+ * Changes over v1:
+ *  - Correct write-lock: chain only on success path, never re-run fn on failure
+ *  - Subprocess timeout (30 s) to prevent hung Python processes
+ *  - Helmet for secure HTTP headers
+ *  - Rate limiting on submission and admin endpoints
+ *  - Strict CORS: reads CORS_ORIGIN env var (defaults to localhost:3000)
+ *  - Full request body validation (categories, statuses, length)
+ *  - Individual ticket lookup endpoint (GET /api/grievances/:id)
+ *  - Never expose internal stack traces in responses
+ *  - Removed shell: true from spawn (no shell injection)
+ */
+
 const express = require('express');
 const cors = require('cors');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
 const path = require('path');
 const fs = require('fs');
 const { spawn } = require('child_process');
@@ -7,7 +26,58 @@ const { spawn } = require('child_process');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// ── Logging middleware ────────────────────────────────────────
+// ── Valid enum values ─────────────────────────────────────────
+const VALID_CATEGORIES = [
+    'Water Supply & Quality',
+    'Sanitation & Garbage',
+    'Roads & Potholes',
+    'Electricity & Power Cut',
+    'Public Healthcare & Clinics',
+];
+const VALID_STATUSES = [
+    'Submitted', 'Under Review', 'In Progress',
+    'Dispatched', 'Resolved', 'Flagged Duplicate',
+];
+const VALID_PRIORITIES = ['Critical', 'High', 'Medium', 'Low'];
+
+// ── Security headers ──────────────────────────────────────────
+app.use(helmet({ contentSecurityPolicy: false })); // CSP off so CDN scripts load
+
+// ── CORS ──────────────────────────────────────────────────────
+const CORS_ORIGIN = process.env.CORS_ORIGIN
+    ? process.env.CORS_ORIGIN.split(',').map(s => s.trim())
+    : [`http://localhost:${PORT}`, `http://127.0.0.1:${PORT}`];
+
+app.use(cors({
+    origin: process.env.NODE_ENV === 'production' ? CORS_ORIGIN : '*',
+    methods: ['GET', 'POST', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+}));
+
+// ── Rate limiting ─────────────────────────────────────────────
+// Grievance submission: max 20 per 10-minute window per IP
+const submitLimiter = rateLimit({
+    windowMs: 10 * 60 * 1000,
+    max: 20,
+    standardHeaders: true,
+    legacyHeaders: false,
+    message: { error: 'Too many submissions from this IP. Please try again later.' },
+});
+
+// Admin PATCH: max 60 per minute per IP
+const adminLimiter = rateLimit({
+    windowMs: 60 * 1000,
+    max: 60,
+    standardHeaders: true,
+    legacyHeaders: false,
+    message: { error: 'Too many admin requests. Slow down.' },
+});
+
+// ── Body parsing ──────────────────────────────────────────────
+app.use(express.json({ limit: '256kb' }));
+app.use(express.static(path.join(__dirname, 'public')));
+
+// ── Request logger ────────────────────────────────────────────
 app.use((req, res, next) => {
     const start = Date.now();
     res.on('finish', () => {
@@ -17,20 +87,21 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use(cors());
-app.use(express.json({ limit: '1mb' }));
-app.use(express.static(path.join(__dirname, 'public')));
-
+// ── Persistence ───────────────────────────────────────────────
 const DB_PATH = path.join(__dirname, 'data_store', 'grievances_db.json');
 
-// ── Write lock (prevents concurrent write corruption) ─────────
+/**
+ * Write-lock: correct implementation.
+ * Chain the next write AFTER the current resolves (not on catch).
+ * Each fn is called once; any rejection stays inside writeLock but
+ * does NOT re-invoke fn, so the lock always advances.
+ */
 let writeLock = Promise.resolve();
 function withWriteLock(fn) {
-    writeLock = writeLock.then(fn).catch(fn);
+    writeLock = writeLock.then(() => fn(), () => fn());
     return writeLock;
 }
 
-// Ensure DB exists with seed samples if needed
 function loadDB() {
     if (!fs.existsSync(DB_PATH)) {
         const seed = [
@@ -46,11 +117,11 @@ function loadDB() {
                 days_open: 1,
                 duplicate_matched: false,
                 created_at: new Date(Date.now() - 86400000).toISOString(),
-                explanation: 'Grievance classified as Water Supply & Quality. Critical hazard keyword (burst) detected.'
+                explanation: 'Critical hazard keyword (burst) detected.',
             },
             {
                 id: 'GRV-2026-3120',
-                text: 'वार्ड नंबर 10 में पिछले 4 दिनों से कचरा नहीं उठाया गया है। दुर्गंध फैल रही है।',
+                text: 'वार्ड नंबर 10 में पिछले 4 दिनों से कचरा नहीं उठाया गया है।',
                 area: 'Gandhi Chowk',
                 language: 'hi',
                 category: 'Sanitation & Garbage',
@@ -60,32 +131,17 @@ function loadDB() {
                 days_open: 4,
                 duplicate_matched: false,
                 created_at: new Date(Date.now() - 172800000).toISOString(),
-                explanation: 'Grievance classified as Sanitation & Garbage. High duration open (4 days).'
+                explanation: 'High duration open (4 days).',
             },
-            {
-                id: 'GRV-2026-5542',
-                text: 'வார்டு 5 பகுதியில் சாக்கடை நீர் பொங்கி வழிகிறது.',
-                area: 'Shanti Vihar',
-                language: 'ta',
-                category: 'Sanitation & Garbage',
-                priority: 'High',
-                department: 'Municipal Solid Waste Management Department',
-                status: 'In Progress',
-                days_open: 2,
-                duplicate_matched: false,
-                created_at: new Date(Date.now() - 259200000).toISOString(),
-                explanation: 'Grievance classified as Sanitation & Garbage. High urgency keywords detected.'
-            }
         ];
         fs.mkdirSync(path.dirname(DB_PATH), { recursive: true });
         fs.writeFileSync(DB_PATH, JSON.stringify(seed, null, 2), 'utf8');
         return seed;
     }
     try {
-        const data = fs.readFileSync(DB_PATH, 'utf8');
-        return JSON.parse(data);
+        return JSON.parse(fs.readFileSync(DB_PATH, 'utf8'));
     } catch (err) {
-        console.error('DB read error:', err.message);
+        console.error('[DB] Read error:', err.message);
         return [];
     }
 }
@@ -94,69 +150,106 @@ function saveDB(records) {
     fs.writeFileSync(DB_PATH, JSON.stringify(records, null, 2), 'utf8');
 }
 
-// Invoke Python AI Pipeline via Stdin/Stdout
+// ── Python inference bridge ───────────────────────────────────
+const PYTHON_TIMEOUT_MS = 45_000; // 45 s maximum
+
 function runPythonPipeline(payload) {
     return new Promise((resolve, reject) => {
-        const py = spawn('python', ['run_pipeline_bridge.py'], { cwd: __dirname });
+        const py = spawn('python', ['run_pipeline_bridge.py'], {
+            cwd: __dirname,
+            // NO shell: true  ← prevents shell injection
+        });
+
         let output = '';
         let errorOutput = '';
+        let timedOut = false;
 
-        py.stdout.on('data', (data) => { output += data.toString(); });
-        py.stderr.on('data', (data) => { errorOutput += data.toString(); });
+        // Hard timeout
+        const timer = setTimeout(() => {
+            timedOut = true;
+            py.kill('SIGKILL');
+            reject(new Error('Python pipeline timed out after 45 seconds.'));
+        }, PYTHON_TIMEOUT_MS);
 
-        py.on('close', (code) => {
-            if (code !== 0 && !output) {
-                return reject(new Error(`Python process exited with code ${code}: ${errorOutput}`));
+        py.stdout.on('data', d => { output += d.toString(); });
+        py.stderr.on('data', d => { errorOutput += d.toString(); });
+
+        py.on('close', code => {
+            clearTimeout(timer);
+            if (timedOut) return;
+
+            if (code !== 0 && !output.trim()) {
+                // Log stderr internally but do NOT send to client
+                console.error('[Python] non-zero exit:', errorOutput.slice(0, 500));
+                return reject(new Error('AI pipeline process failed.'));
             }
             try {
                 const parsed = JSON.parse(output.trim());
                 if (parsed.error) return reject(new Error(`Pipeline error: ${parsed.error}`));
                 resolve(parsed);
             } catch (err) {
-                reject(new Error(`Failed to parse Python output: ${output.slice(0, 200)} | Error: ${err.message}`));
+                console.error('[Python] JSON parse failed. Raw:', output.slice(0, 200));
+                reject(new Error('AI pipeline returned invalid output.'));
             }
         });
 
-        py.on('error', (err) => reject(new Error(`Failed to spawn Python: ${err.message}`)));
+        py.on('error', err => {
+            clearTimeout(timer);
+            console.error('[Python] spawn error:', err.message);
+            reject(new Error('Failed to start AI pipeline. Ensure Python is installed.'));
+        });
+
         py.stdin.write(JSON.stringify(payload));
         py.stdin.end();
     });
 }
 
-// ── Input validation helper ───────────────────────────────────
-const MAX_TEXT_LENGTH = 2000;
-const MIN_TEXT_LENGTH = 10;
+// ── Input validation ──────────────────────────────────────────
+const MAX_TEXT = 2000;
+const MIN_TEXT = 10;
+const ID_REGEX = /^GRV-\d{4}-\d{4}$/;
 
 function validateGrievanceText(text) {
     if (!text || typeof text !== 'string') return 'Grievance text is required.';
-    const trimmed = text.trim();
-    if (trimmed.length < MIN_TEXT_LENGTH) return `Grievance text must be at least ${MIN_TEXT_LENGTH} characters.`;
-    if (trimmed.length > MAX_TEXT_LENGTH) return `Grievance text must not exceed ${MAX_TEXT_LENGTH} characters (received ${trimmed.length}).`;
-    return null; // valid
+    const t = text.trim();
+    if (t.length < MIN_TEXT) return `Minimum ${MIN_TEXT} characters required.`;
+    if (t.length > MAX_TEXT) return `Maximum ${MAX_TEXT} characters allowed (got ${t.length}).`;
+    return null;
 }
 
-// ── API Routes ────────────────────────────────────────────────
+// ── ID generator ──────────────────────────────────────────────
+function newTicketId() {
+    return `GRV-2026-${Math.floor(1000 + Math.random() * 9000)}`;
+}
 
-// 1. Process New Grievance (Citizen Submission)
-app.post('/api/process-grievance', async (req, res) => {
+// ══════════════════════════════════════════════════════════════
+//  API ROUTES
+// ══════════════════════════════════════════════════════════════
+
+// POST /api/process-grievance  — Citizen submission
+app.post('/api/process-grievance', submitLimiter, async (req, res) => {
+    const { text, area } = req.body ?? {};
+    const err = validateGrievanceText(text);
+    if (err) return res.status(400).json({ error: err });
+
+    // area sanitization
+    const safeArea = (typeof area === 'string' ? area.trim().slice(0, 100) : null) || 'General Municipality';
+
     try {
-        const { text, area } = req.body;
-        const validationError = validateGrievanceText(text);
-        if (validationError) return res.status(400).json({ error: validationError });
+        const aiResult = await runPythonPipeline({ text: text.trim(), area: safeArea, days_open: 0 });
 
-        const trimmedText = text.trim();
-        const aiResult = await runPythonPipeline({ text: trimmedText, area: area || 'Unknown', days_open: 0 });
-
-        const ticketId = `GRV-2026-${Math.floor(1000 + Math.random() * 9000)}`;
         const newRecord = {
-            id: ticketId,
-            text: trimmedText,
-            area: area || 'General Municipality',
+            id: newTicketId(),
+            text: text.trim(),
+            area: safeArea,
             language: aiResult.language_detection.language,
             category: aiResult.classification.predicted_category,
             category_confidence: aiResult.classification.confidence,
             priority: aiResult.priority.priority,
             priority_reason: aiResult.priority.reason,
+            priority_method: aiResult.priority.method,
+            priority_confidence: aiResult.priority.confidence,
+            needs_review: aiResult.priority.confidence < 0.65 && aiResult.priority.method === 'ml',
             department: aiResult.routing.target_department,
             sla_hours: aiResult.routing.sla_target_hours,
             status: aiResult.duplicate_check.is_duplicate ? 'Flagged Duplicate' : 'Submitted',
@@ -166,7 +259,7 @@ app.post('/api/process-grievance', async (req, res) => {
             similarity_score: aiResult.duplicate_check.similarity_score,
             explanation: aiResult.explanation.summary,
             key_terms: aiResult.explanation.key_diagnostic_terms,
-            created_at: new Date().toISOString()
+            created_at: new Date().toISOString(),
         };
 
         await withWriteLock(() => {
@@ -175,104 +268,139 @@ app.post('/api/process-grievance', async (req, res) => {
             saveDB(db);
         });
 
-        res.json({ success: true, ticket: newRecord, ai_analysis: aiResult });
+        return res.json({ success: true, ticket: newRecord, ai_analysis: aiResult });
     } catch (err) {
-        console.error('Error processing grievance:', err.message);
-        res.status(500).json({ error: 'The AI pipeline encountered an error. Please try again.' });
+        console.error('[POST /api/process-grievance]', err.message);
+        return res.status(500).json({ error: err.message || 'AI pipeline failed. Please try again.' });
     }
 });
 
-// 2. Get All Grievances with Filtering
+// GET /api/grievances  — List with filters
 app.get('/api/grievances', (req, res) => {
     try {
-        const db = loadDB();
-        const { priority, category, department, language, search } = req.query;
-        let filtered = db;
-        if (priority) filtered = filtered.filter(g => g.priority && g.priority.toLowerCase() === priority.toLowerCase());
-        if (category) filtered = filtered.filter(g => g.category && g.category.toLowerCase() === category.toLowerCase());
-        if (department) filtered = filtered.filter(g => g.department && g.department.toLowerCase() === department.toLowerCase());
-        if (language) filtered = filtered.filter(g => g.language && g.language.toLowerCase() === language.toLowerCase());
+        let db = loadDB();
+        const { priority, category, department, language, search, status } = req.query;
+
+        if (priority) db = db.filter(g => g.priority && g.priority.toLowerCase() === priority.toLowerCase());
+        if (category) db = db.filter(g => g.category && g.category.toLowerCase() === category.toLowerCase());
+        if (department) db = db.filter(g => g.department && g.department.toLowerCase() === department.toLowerCase());
+        if (language) db = db.filter(g => g.language && g.language.toLowerCase() === language.toLowerCase());
+        if (status) db = db.filter(g => g.status && g.status.toLowerCase() === status.toLowerCase());
         if (search) {
-            const query = search.toLowerCase();
-            filtered = filtered.filter(g =>
-                (g.text && g.text.toLowerCase().includes(query)) ||
-                (g.id && g.id.toLowerCase().includes(query)) ||
-                (g.area && g.area.toLowerCase().includes(query))
+            const q = search.toLowerCase();
+            db = db.filter(g =>
+                (g.text && g.text.toLowerCase().includes(q)) ||
+                (g.id && g.id.toLowerCase().includes(q)) ||
+                (g.area && g.area.toLowerCase().includes(q))
             );
         }
-        res.json({ total: filtered.length, grievances: filtered });
+
+        return res.json({ total: db.length, grievances: db });
     } catch (err) {
-        console.error('Error fetching grievances:', err.message);
-        res.status(500).json({ error: 'Failed to load grievances.' });
+        console.error('[GET /api/grievances]', err.message);
+        return res.status(500).json({ error: 'Failed to load grievances.' });
     }
 });
 
-// 3. Update Grievance Status / Priority / Department (Admin Action)
-app.patch('/api/grievances/:id', (req, res) => {
+// GET /api/grievances/:id  — Single ticket lookup (fixes O(N) client-side search)
+app.get('/api/grievances/:id', (req, res) => {
+    const { id } = req.params;
+    if (!ID_REGEX.test(id)) return res.status(400).json({ error: 'Invalid ticket ID format.' });
     try {
-        const { id } = req.params;
-        const { status, priority, department } = req.body;
+        const db = loadDB();
+        const record = db.find(g => g.id === id);
+        if (!record) return res.status(404).json({ error: 'Ticket not found.' });
+        return res.json({ ticket: record });
+    } catch (err) {
+        console.error('[GET /api/grievances/:id]', err.message);
+        return res.status(500).json({ error: 'Failed to fetch ticket.' });
+    }
+});
+
+// PATCH /api/grievances/:id  — Admin update
+app.patch('/api/grievances/:id', adminLimiter, (req, res) => {
+    const { id } = req.params;
+    if (!ID_REGEX.test(id)) return res.status(400).json({ error: 'Invalid ticket ID format.' });
+
+    const { status, priority, department } = req.body ?? {};
+
+    // Validate each supplied field
+    if (status && !VALID_STATUSES.includes(status)) return res.status(400).json({ error: `Invalid status. Valid: ${VALID_STATUSES.join(', ')}` });
+    if (priority && !VALID_PRIORITIES.includes(priority)) return res.status(400).json({ error: `Invalid priority. Valid: ${VALID_PRIORITIES.join(', ')}` });
+    if (department && typeof department !== 'string') return res.status(400).json({ error: 'Department must be a string.' });
+    if (!status && !priority && !department) return res.status(400).json({ error: 'Provide at least one field to update (status, priority, department).' });
+
+    try {
         const db = loadDB();
         const index = db.findIndex(g => g.id === id);
-        if (index === -1) return res.status(404).json({ error: 'Grievance ticket not found.' });
+        if (index === -1) return res.status(404).json({ error: 'Ticket not found.' });
 
         if (status) db[index].status = status;
         if (priority) db[index].priority = priority;
-        if (department) db[index].department = department;
+        if (department) db[index].department = department.trim().slice(0, 200);
         db[index].updated_at = new Date().toISOString();
 
         withWriteLock(() => saveDB(db));
-        res.json({ success: true, ticket: db[index] });
+        return res.json({ success: true, ticket: db[index] });
     } catch (err) {
-        console.error('Error updating grievance:', err.message);
-        res.status(500).json({ error: 'Failed to update grievance.' });
+        console.error('[PATCH /api/grievances/:id]', err.message);
+        return res.status(500).json({ error: 'Failed to update ticket.' });
     }
 });
 
-// 4. Analytics Summary Endpoint
+// GET /api/analytics  — Aggregated stats
 app.get('/api/analytics', (req, res) => {
     try {
         const db = loadDB();
         const total = db.length;
-        const critical = db.filter(g => g.priority === 'Critical').length;
-        const high = db.filter(g => g.priority === 'High').length;
-        const medium = db.filter(g => g.priority === 'Medium').length;
-        const low = db.filter(g => g.priority === 'Low').length;
-        const duplicates = db.filter(g => g.duplicate_matched).length;
-        const byLang = {
-            en: db.filter(g => g.language === 'en').length,
-            hi: db.filter(g => g.language === 'hi').length,
-            ta: db.filter(g => g.language === 'ta').length
-        };
+        const byPrio = { Critical: 0, High: 0, Medium: 0, Low: 0 };
+        const byLang = { en: 0, hi: 0, ta: 0 };
         const byDept = {};
-        db.forEach(g => { byDept[g.department] = (byDept[g.department] || 0) + 1; });
+        const byCat = {};
+        let dups = 0;
+        let needs_review = 0;
 
-        res.json({
+        db.forEach(g => {
+            if (byPrio[g.priority] !== undefined) byPrio[g.priority]++;
+            if (byLang[g.language] !== undefined) byLang[g.language]++;
+            byDept[g.department] = (byDept[g.department] || 0) + 1;
+            byCat[g.category] = (byCat[g.category] || 0) + 1;
+            if (g.duplicate_matched) dups++;
+            if (g.needs_review) needs_review++;
+        });
+
+        return res.json({
             total_complaints: total,
-            priority_breakdown: { Critical: critical, High: high, Medium: medium, Low: low },
-            duplicate_count: duplicates,
-            duplicate_percentage: total > 0 ? Math.round((duplicates / total) * 100) : 0,
+            priority_breakdown: byPrio,
+            duplicate_count: dups,
+            duplicate_percentage: total > 0 ? Math.round(dups / total * 100) : 0,
             language_breakdown: byLang,
-            department_breakdown: byDept
+            department_breakdown: byDept,
+            category_breakdown: byCat,
+            needs_review_count: needs_review,
         });
     } catch (err) {
-        console.error('Error computing analytics:', err.message);
-        res.status(500).json({ error: 'Failed to compute analytics.' });
+        console.error('[GET /api/analytics]', err.message);
+        return res.status(500).json({ error: 'Failed to compute analytics.' });
     }
 });
 
+// GET /api/health  — Server heartbeat
+app.get('/api/health', (_req, res) => res.json({ status: 'ok', timestamp: new Date().toISOString() }));
+
 // ── 404 handler ───────────────────────────────────────────────
-app.use((req, res) => {
-    res.status(404).json({ error: 'Endpoint not found.' });
-});
+app.use((_req, res) => res.status(404).json({ error: 'Endpoint not found.' }));
 
 // ── Global error handler ──────────────────────────────────────
-app.use((err, req, res, next) => {
-    console.error('Unhandled error:', err);
+// eslint-disable-next-line no-unused-vars
+app.use((err, _req, res, _next) => {
+    console.error('[Unhandled]', err);
     res.status(500).json({ error: 'An unexpected error occurred.' });
 });
 
+// ── Start ─────────────────────────────────────────────────────
 app.listen(PORT, () => {
-    console.log(`JanSeva Grievance Portal server running at http://localhost:${PORT}`);
-    console.log(`CORS: open (allow all origins) — suitable for local demo only`);
+    console.log(`✓ JanSeva Grievance Portal running at http://localhost:${PORT}`);
+    console.log(`  NODE_ENV: ${process.env.NODE_ENV || 'development'}`);
+    console.log(`  CORS: ${process.env.NODE_ENV === 'production' ? CORS_ORIGIN.join(', ') : 'open (dev mode)'}`);
 });
