@@ -18,11 +18,14 @@ def detect_script_heuristic(text: str) -> str:
     """Fallback script detector using Unicode ranges."""
     devanagari_count = len(re.findall(r'[\u0900-\u097F]', text)) # Hindi
     tamil_count = len(re.findall(r'[\u0B80-\u0BFF]', text))      # Tamil
-    latin_count = len(re.findall(r'[a-zA-Z]', text))           # English
+    telugu_count = len(re.findall(r'[\u0C00-\u0C7F]', text))     # Telugu
+    latin_count = len(re.findall(r'[a-zA-Z]', text))              # English
 
     total_chars = max(len(text.strip()), 1)
 
-    if tamil_count / total_chars > 0.15:
+    if telugu_count / total_chars > 0.15:
+        return "te"
+    elif tamil_count / total_chars > 0.15:
         return "ta"
     elif devanagari_count / total_chars > 0.15:
         return "hi"
@@ -57,8 +60,8 @@ def detect_language(text: str) -> Dict[str, str]:
             lang_code = top_pred.lang
             confidence = round(top_pred.prob, 4)
 
-            # Map langdetect output to supported set (en, hi, ta)
-            if lang_code in ["hi", "ta", "en"]:
+            # Map langdetect output to supported set (en, hi, ta, te)
+            if lang_code in ["hi", "ta", "te", "en"]:
                 return {
                     "language": lang_code,
                     "confidence": float(confidence),
@@ -71,7 +74,7 @@ def detect_language(text: str) -> Dict[str, str]:
     detected_lang = detect_script_heuristic(text)
     return {
         "language": detected_lang,
-        "confidence": 0.90 if detected_lang in ["hi", "ta", "en"] else 0.75,
+        "confidence": 0.90 if detected_lang in ["hi", "ta", "te", "en"] else 0.75,
         "method": "script_heuristic"
     }
 

@@ -14,6 +14,14 @@ import traceback
 # so they do not contaminate the JSON stdout channel.
 import io
 
+if hasattr(sys.stdin, "reconfigure"):
+    try:
+        sys.stdin.reconfigure(encoding="utf-8")
+        sys.stdout.reconfigure(encoding="utf-8")
+        sys.stderr.reconfigure(encoding="utf-8")
+    except Exception:
+        pass
+
 _original_stdout = sys.stdout
 _stderr_only     = sys.stderr
 

@@ -1,6 +1,6 @@
 """
-JanSeva Grievance Portal — High-Performance AI Inference Microservice
-=====================================================================
+National Public Grievance Portal — High-Performance AI Inference Microservice
+=============================================================================
 Provides persistent, in-memory model inference HTTP service to eliminate Python process
 spawn overhead.
 
@@ -34,8 +34,8 @@ except ImportError:
 
 if HAS_FASTAPI:
     app = FastAPI(
-        title="JanSeva Grievance AI Engine",
-        description="Production-grade FastAPI inference microservice for JanSeva Grievance Portal.",
+        title="National Grievance AI Engine",
+        description="Production-grade FastAPI inference microservice for National Public Grievance Portal.",
         version="2.0.0"
     )
 
@@ -60,7 +60,7 @@ if HAS_FASTAPI:
     def health_check():
         return {
             "status": "online",
-            "service": "JanSeva AI Inference Microservice (FastAPI)",
+            "service": "National Grievance AI Inference Microservice (FastAPI)",
             "models_loaded": pipeline_instance.initialized,
             "timestamp": time.time()
         }
@@ -103,7 +103,7 @@ class AIInferenceHTTPHandler(BaseHTTPRequestHandler):
         if parsed.path in ("/api/v1/health", "/health"):
             self._send_json({
                 "status": "online",
-                "service": "JanSeva AI Inference Microservice (Native HTTP)",
+                "service": "National Grievance AI Inference Microservice (Native HTTP)",
                 "models_loaded": pipeline_instance.initialized,
                 "timestamp": time.time()
             })
@@ -145,7 +145,7 @@ class AIInferenceHTTPHandler(BaseHTTPRequestHandler):
 
 
 def run_native_server(host="127.0.0.1", port=8000):
-    print(f"[AI Microservice] Initializing JanSeva AI Pipeline...")
+    print(f"[AI Microservice] Initializing National Grievance AI Pipeline...")
     pipeline_instance.initialize()
     server = HTTPServer((host, port), AIInferenceHTTPHandler)
     print(f"✓ AI Microservice running on http://{host}:{port}")

@@ -1,6 +1,6 @@
-# JanSeva Grievance Portal — AI Triage & Resolution System
+# National Public Grievance Portal — AI Triage & Resolution System
 
-A full-stack, multilingual AI grievance triage system supporting English, Hindi, and Tamil across 5 public administration categories:
+A full-stack, multilingual AI grievance triage system supporting English, Hindi, Tamil, and Telugu across 5 public administration categories:
 1. Water Supply & Quality
 2. Sanitation & Garbage
 3. Roads & Potholes

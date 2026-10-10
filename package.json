@@ -4,6 +4,7 @@
   "description": "A production-grade, multilingual AI model layer for citizen grievance systems supporting **English, Hindi, and Tamil** across 5 public administration categories:\r 1. **Water Supply & Quality**\r 2. **Sanitation & Garbage**\r 3. **Roads & Potholes**\r 4. **Electricity & Power Cut**\r 5. **Public Healthcare & Clinics**",
   "main": "index.js",
   "scripts": {
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

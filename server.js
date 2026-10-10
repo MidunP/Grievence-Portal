@@ -1,18 +1,14 @@
 'use strict';
 
 /**
- * JanSeva Grievance Portal — Express Backend Server (Hardened v2)
+ * National Public Grievance Portal — Express Backend Server (Hardened v3)
  * ---------------------------------------------------------------
- * Changes over v1:
- *  - Correct write-lock: chain only on success path, never re-run fn on failure
- *  - Subprocess timeout (30 s) to prevent hung Python processes
- *  - Helmet for secure HTTP headers
- *  - Rate limiting on submission and admin endpoints
- *  - Strict CORS: reads CORS_ORIGIN env var (defaults to localhost:3000)
- *  - Full request body validation (categories, statuses, length)
- *  - Individual ticket lookup endpoint (GET /api/grievances/:id)
- *  - Never expose internal stack traces in responses
- *  - Removed shell: true from spawn (no shell injection)
+ * Changes over v2:
+ *  - Hybrid AI inference: prefers persistent FastAPI/native HTTP microservice
+ *    (zero subprocess overhead), auto-falls back to Python subprocess
+ *  - Microservice liveness probe every 30 s with live status in /api/health
+ *  - SLA breach count added to /api/analytics
+ *  - All v2 hardening retained (write-lock, helmet, rate-limit, validation)
  */
 
 const express = require('express');
@@ -21,6 +17,7 @@ const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const path = require('path');
 const fs = require('fs');
+const http = require('http');
 const { spawn } = require('child_process');
 
 const app = express();
@@ -150,36 +147,33 @@ function saveDB(records) {
     fs.writeFileSync(DB_PATH, JSON.stringify(records, null, 2), 'utf8');
 }
 
-// ── Python inference bridge ───────────────────────────────────
-const PYTHON_TIMEOUT_MS = 45_000; // 45 s maximum
+// ── Python subprocess inference (fallback) ────────────────────
+const PYTHON_TIMEOUT_MS = 45_000;
 
 function runPythonPipeline(payload) {
     return new Promise((resolve, reject) => {
         const py = spawn('python', ['run_pipeline_bridge.py'], {
             cwd: __dirname,
-            // NO shell: true  ← prevents shell injection
+            env: { ...process.env, PYTHONIOENCODING: 'utf-8', PYTHONUTF8: '1' },
         });
 
         let output = '';
         let errorOutput = '';
         let timedOut = false;
 
-        // Hard timeout
         const timer = setTimeout(() => {
             timedOut = true;
             py.kill('SIGKILL');
             reject(new Error('Python pipeline timed out after 45 seconds.'));
         }, PYTHON_TIMEOUT_MS);
 
-        py.stdout.on('data', d => { output += d.toString(); });
-        py.stderr.on('data', d => { errorOutput += d.toString(); });
+        py.stdout.on('data', d => { output += d.toString('utf8'); });
+        py.stderr.on('data', d => { errorOutput += d.toString('utf8'); });
 
         py.on('close', code => {
             clearTimeout(timer);
             if (timedOut) return;
-
             if (code !== 0 && !output.trim()) {
-                // Log stderr internally but do NOT send to client
                 console.error('[Python] non-zero exit:', errorOutput.slice(0, 500));
                 return reject(new Error('AI pipeline process failed.'));
             }
@@ -187,7 +181,7 @@ function runPythonPipeline(payload) {
                 const parsed = JSON.parse(output.trim());
                 if (parsed.error) return reject(new Error(`Pipeline error: ${parsed.error}`));
                 resolve(parsed);
-            } catch (err) {
+            } catch {
                 console.error('[Python] JSON parse failed. Raw:', output.slice(0, 200));
                 reject(new Error('AI pipeline returned invalid output.'));
             }
@@ -199,9 +193,91 @@ function runPythonPipeline(payload) {
             reject(new Error('Failed to start AI pipeline. Ensure Python is installed.'));
         });
 
-        py.stdin.write(JSON.stringify(payload));
+        py.stdin.write(JSON.stringify(payload), 'utf8');
         py.stdin.end();
     });
+}
+
+// ── AI Microservice HTTP client (primary path) ────────────────
+const AI_SERVICE_HOST = process.env.AI_SERVICE_HOST || '127.0.0.1';
+const AI_SERVICE_PORT = parseInt(process.env.AI_SERVICE_PORT || '8000', 10);
+let microserviceAvailable = false;
+
+function callAIMicroservice(payload) {
+    return new Promise((resolve, reject) => {
+        const body = JSON.stringify(payload);
+        const options = {
+            hostname: AI_SERVICE_HOST,
+            port: AI_SERVICE_PORT,
+            path: '/api/v1/triage',
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Content-Length': Buffer.byteLength(body),
+            },
+            timeout: 30_000,
+        };
+
+        const req = http.request(options, (res) => {
+            let data = '';
+            res.on('data', chunk => { data += chunk; });
+            res.on('end', () => {
+                try {
+                    const parsed = JSON.parse(data);
+                    if (parsed.error) return reject(new Error(`Microservice: ${parsed.error}`));
+                    resolve(parsed);
+                } catch {
+                    reject(new Error('Microservice returned invalid JSON.'));
+                }
+            });
+        });
+
+        req.on('timeout', () => { req.destroy(); reject(new Error('Microservice timed out.')); });
+        req.on('error', reject);
+        req.write(body);
+        req.end();
+    });
+}
+
+function probeMicroservice() {
+    const req = http.request({
+        hostname: AI_SERVICE_HOST,
+        port: AI_SERVICE_PORT,
+        path: '/api/v1/health',
+        method: 'GET',
+        timeout: 3_000,
+    }, (res) => {
+        const wasDown = !microserviceAvailable;
+        microserviceAvailable = res.statusCode === 200;
+        if (wasDown && microserviceAvailable) {
+            console.log(`✓ [AI] Microservice online at http://${AI_SERVICE_HOST}:${AI_SERVICE_PORT} — persistent inference active.`);
+        }
+        res.resume();
+    });
+    req.on('error', () => {
+        if (microserviceAvailable) console.warn('[AI] Microservice offline — falling back to subprocess.');
+        microserviceAvailable = false;
+    });
+    req.on('timeout', () => { req.destroy(); microserviceAvailable = false; });
+    req.end();
+}
+
+// Probe on startup and every 30 seconds
+probeMicroservice();
+setInterval(probeMicroservice, 30_000);
+
+// Hybrid router: microservice → subprocess fallback
+async function runInference(payload) {
+    if (microserviceAvailable) {
+        try {
+            const result = await callAIMicroservice(payload);
+            return result;
+        } catch (err) {
+            console.warn('[AI] Microservice call failed, switching to subprocess:', err.message);
+            microserviceAvailable = false; // trigger re-probe on next interval
+        }
+    }
+    return runPythonPipeline(payload);
 }
 
 // ── Input validation ──────────────────────────────────────────
@@ -236,7 +312,7 @@ app.post('/api/process-grievance', submitLimiter, async (req, res) => {
     const safeArea = (typeof area === 'string' ? area.trim().slice(0, 100) : null) || 'General Municipality';
 
     try {
-        const aiResult = await runPythonPipeline({ text: text.trim(), area: safeArea, days_open: 0 });
+        const aiResult = await runInference({ text: text.trim(), area: safeArea, days_open: 0 });
 
         const newRecord = {
             id: newTicketId(),
@@ -354,11 +430,19 @@ app.get('/api/analytics', (req, res) => {
         const db = loadDB();
         const total = db.length;
         const byPrio = { Critical: 0, High: 0, Medium: 0, Low: 0 };
-        const byLang = { en: 0, hi: 0, ta: 0 };
+        const byLang = { en: 0, hi: 0, ta: 0, 'en-hi': 0, 'en-ta': 0 };
         const byDept = {};
         const byCat = {};
+        // 7-day daily trend buckets
+        const trend = {};
+        const now = Date.now();
+        for (let i = 6; i >= 0; i--) {
+            const d = new Date(now - i * 86400000);
+            trend[d.toISOString().slice(0, 10)] = 0;
+        }
         let dups = 0;
         let needs_review = 0;
+        let sla_breached = 0;
 
         db.forEach(g => {
             if (byPrio[g.priority] !== undefined) byPrio[g.priority]++;
@@ -367,6 +451,18 @@ app.get('/api/analytics', (req, res) => {
             byCat[g.category] = (byCat[g.category] || 0) + 1;
             if (g.duplicate_matched) dups++;
             if (g.needs_review) needs_review++;
+
+            // SLA breach: ticket open longer than its SLA target
+            if (g.sla_hours && g.created_at && g.status !== 'Resolved') {
+                const ageHours = (now - new Date(g.created_at).getTime()) / 3_600_000;
+                if (ageHours > g.sla_hours) sla_breached++;
+            }
+
+            // Daily trend (last 7 days)
+            if (g.created_at) {
+                const day = g.created_at.slice(0, 10);
+                if (trend[day] !== undefined) trend[day]++;
+            }
         });
 
         return res.json({
@@ -378,6 +474,8 @@ app.get('/api/analytics', (req, res) => {
             department_breakdown: byDept,
             category_breakdown: byCat,
             needs_review_count: needs_review,
+            sla_breached_count: sla_breached,
+            daily_trend: trend,
         });
     } catch (err) {
         console.error('[GET /api/analytics]', err.message);
@@ -385,8 +483,13 @@ app.get('/api/analytics', (req, res) => {
     }
 });
 
-// GET /api/health  — Server heartbeat
-app.get('/api/health', (_req, res) => res.json({ status: 'ok', timestamp: new Date().toISOString() }));
+// GET /api/health  — Server heartbeat + microservice status
+app.get('/api/health', (_req, res) => res.json({
+    status: 'ok',
+    timestamp: new Date().toISOString(),
+    ai_inference_mode: microserviceAvailable ? 'microservice' : 'subprocess',
+    ai_microservice_url: `http://${AI_SERVICE_HOST}:${AI_SERVICE_PORT}`,
+}));
 
 // ── 404 handler ───────────────────────────────────────────────
 app.use((_req, res) => res.status(404).json({ error: 'Endpoint not found.' }));
@@ -400,7 +503,7 @@ app.use((err, _req, res, _next) => {
 
 // ── Start ─────────────────────────────────────────────────────
 app.listen(PORT, () => {
-    console.log(`✓ JanSeva Grievance Portal running at http://localhost:${PORT}`);
+    console.log(`✓ National Public Grievance Portal running at http://localhost:${PORT}`);
     console.log(`  NODE_ENV: ${process.env.NODE_ENV || 'development'}`);
     console.log(`  CORS: ${process.env.NODE_ENV === 'production' ? CORS_ORIGIN.join(', ') : 'open (dev mode)'}`);
 });
