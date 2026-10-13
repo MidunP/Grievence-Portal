@@ -1,5 +1,36 @@
 [
   {
+    "id": "GRV-2026-7107",
+    "text": "The road in front of Coimbatore railway station has a huge pothole causing accidents",
+    "area": "Anna Nagar",
+    "language": "en",
+    "category": "Roads & Potholes",
+    "category_confidence": 0.9224,
+    "priority": "Critical",
+    "priority_reason": "ML model prediction (confidence 93.12%)",
+    "priority_method": "ml",
+    "priority_confidence": 0.9312,
+    "needs_review": false,
+    "department": "Public Works Department (PWD) - Roads Division",
+    "sla_hours": 72,
+    "status": "Submitted",
+    "days_open": 0,
+    "duplicate_matched": false,
+    "matched_complaint": {
+      "id": "516465a3",
+      "text": "Huge pothole near Market Road highway causing accidents.",
+      "category": "Roads & Potholes",
+      "priority": "Critical"
+    },
+    "similarity_score": 0.5772,
+    "explanation": "Grievance classified as 'Roads & Potholes' with 92.2% confidence. Assigned priority 'Critical' (ML model prediction (confidence 93.12%)). Routed to 'Public Works Department (PWD) - Roads Division'.",
+    "key_terms": [
+      "road",
+      "pothole"
+    ],
+    "created_at": "2026-10-13T14:54:11.697Z"
+  },
+  {
     "id": "GRV-2026-3277",
     "text": "Main water supply pipeline burst on Station Road near Ward 4. Thousands of gallons leaking, localized water contamination.",
     "area": "Anna Nagar",
