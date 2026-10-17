@@ -17,8 +17,9 @@ ENV/
 .env.local
 .env.*.local
 *.env
+# NOTE: .env.example is intentionally NOT ignored
 
-# Plan files & AI artifacts (Exclude plan markdown files)
+# Plan files & AI artifacts
 *plan*.md
 *Plan*.md
 *PLAN*.md
@@ -27,6 +28,11 @@ ENV/
 *TASK*.md
 .gemini/
 artifacts/
+
+# Research & paper generation artifacts (not needed in prod)
+paper_figures/
+*.docx
+~$*.docx
 
 # System & IDE files
 .DS_Store

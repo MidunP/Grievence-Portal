@@ -1,9 +1,27 @@
-node_modules
-.venv
-__pycache__
+node_modules/
+.venv/
+__pycache__/
 *.pyc
-.git
+*.pyo
+.git/
 .gitignore
 .env
-tmp
-artifacts
+.env.local
+tmp/
+artifacts/
+
+# Research & paper generation artifacts (not needed in production image)
+paper_figures/
+*.pdf
+*.docx
+~$*.docx
+create_research_paper.py
+generate_paper_figures.py
+Sample\ Paper.pdf
+
+# Dev/test files (not needed at runtime)
+test_e2e.py
+evaluate.py
+.vscode/
+.idea/
+.DS_Store

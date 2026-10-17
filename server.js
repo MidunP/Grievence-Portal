@@ -199,67 +199,50 @@ function runPythonPipeline(payload) {
 }
 
 // ── AI Microservice HTTP client (primary path) ────────────────
-const AI_SERVICE_HOST = process.env.AI_SERVICE_HOST || '127.0.0.1';
-const AI_SERVICE_PORT = parseInt(process.env.AI_SERVICE_PORT || '8000', 10);
+// Supports full URL via AI_SERVICE_URL (for remote/production)
+// Falls back to AI_SERVICE_HOST + AI_SERVICE_PORT (local / legacy)
+const AI_SERVICE_URL = (() => {
+    if (process.env.AI_SERVICE_URL) return process.env.AI_SERVICE_URL.replace(/\/$/, '');
+    const host = process.env.AI_SERVICE_HOST || '127.0.0.1';
+    const port = parseInt(process.env.AI_SERVICE_PORT || '8000', 10);
+    return `http://${host}:${port}`;
+})();
+
 let microserviceAvailable = false;
 
-function callAIMicroservice(payload) {
-    return new Promise((resolve, reject) => {
-        const body = JSON.stringify(payload);
-        const options = {
-            hostname: AI_SERVICE_HOST,
-            port: AI_SERVICE_PORT,
-            path: '/api/v1/triage',
+async function callAIMicroservice(payload) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 30_000);
+    try {
+        const res = await fetch(`${AI_SERVICE_URL}/api/v1/triage`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Content-Length': Buffer.byteLength(body),
-            },
-            timeout: 30_000,
-        };
-
-        const req = http.request(options, (res) => {
-            let data = '';
-            res.on('data', chunk => { data += chunk; });
-            res.on('end', () => {
-                try {
-                    const parsed = JSON.parse(data);
-                    if (parsed.error) return reject(new Error(`Microservice: ${parsed.error}`));
-                    resolve(parsed);
-                } catch {
-                    reject(new Error('Microservice returned invalid JSON.'));
-                }
-            });
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+            signal: controller.signal,
         });
-
-        req.on('timeout', () => { req.destroy(); reject(new Error('Microservice timed out.')); });
-        req.on('error', reject);
-        req.write(body);
-        req.end();
-    });
+        const data = await res.json();
+        if (data.error) throw new Error(`Microservice: ${data.error}`);
+        return data;
+    } finally {
+        clearTimeout(timer);
+    }
 }
 
-function probeMicroservice() {
-    const req = http.request({
-        hostname: AI_SERVICE_HOST,
-        port: AI_SERVICE_PORT,
-        path: '/api/v1/health',
-        method: 'GET',
-        timeout: 3_000,
-    }, (res) => {
+async function probeMicroservice() {
+    try {
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), 4_000);
+        const res = await fetch(`${AI_SERVICE_URL}/api/v1/health`, { signal: controller.signal });
+        clearTimeout(timer);
         const wasDown = !microserviceAvailable;
-        microserviceAvailable = res.statusCode === 200;
+        microserviceAvailable = res.status === 200;
         if (wasDown && microserviceAvailable) {
-            console.log(`✓ [AI] Microservice online at http://${AI_SERVICE_HOST}:${AI_SERVICE_PORT} — persistent inference active.`);
+            console.log(`✓ [AI] Microservice online at ${AI_SERVICE_URL} — persistent inference active.`);
         }
-        res.resume();
-    });
-    req.on('error', () => {
+    } catch {
         if (microserviceAvailable) console.warn('[AI] Microservice offline — falling back to subprocess.');
         microserviceAvailable = false;
-    });
-    req.on('timeout', () => { req.destroy(); microserviceAvailable = false; });
-    req.end();
+    }
 }
 
 // Probe on startup and every 30 seconds
@@ -488,7 +471,8 @@ app.get('/api/health', (_req, res) => res.json({
     status: 'ok',
     timestamp: new Date().toISOString(),
     ai_inference_mode: microserviceAvailable ? 'microservice' : 'subprocess',
-    ai_microservice_url: `http://${AI_SERVICE_HOST}:${AI_SERVICE_PORT}`,
+    ai_microservice_url: AI_SERVICE_URL,
+    node_env: process.env.NODE_ENV || 'development',
 }));
 
 // ── 404 handler ───────────────────────────────────────────────

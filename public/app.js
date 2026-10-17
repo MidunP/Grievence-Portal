@@ -5,6 +5,9 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+    /* ── Backend warm-up (prevents cold-start delay on Render free tier) ── */
+    fetch('/api/health', { priority: 'low' }).catch(() => {});
+
     /* ── Live Portal Clock ───────────────────────────────────── */
     const clockEl = document.getElementById('portal-live-clock');
     function updateLiveClock() {
