@@ -237,10 +237,15 @@ document.addEventListener('DOMContentLoaded', () => {
             'notice-tag': dict.noticeTag,
             'notice-text': dict.noticeText,
             'nav-lbl-lodge-sec': dict.navLodgeSec,
+            'nav-lbl-lodge-en': '',       // BUG FIX: hide English sub-label in non-English modes
             'nav-lbl-track-sec': dict.navTrackSec,
+            'nav-lbl-track-en': '',
             'nav-lbl-admin-sec': dict.navAdminSec,
+            'nav-lbl-admin-en': '',
             'nav-lbl-charter-sec': dict.navCharterSec,
+            'nav-lbl-charter-en': '',
             'nav-lbl-gov-sec': dict.navGovSec,
+            'nav-lbl-gov-en': '',
             'page-title-lodge': dict.pageTitleLodge,
             'form-gro-title': dict.formGroTitle,
             'sample-box-label': dict.sampleLabel,
@@ -431,6 +436,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const submitBtn = document.getElementById('submit-btn');
     const btnText = document.getElementById('btn-text');
     const btnLoader = document.getElementById('btn-loader');
+    const resetBtn = document.getElementById('reset-btn');
+
+    // BUG FIX: Reset button must also reset char counter and clear the docket panel
+    if (resetBtn) {
+        resetBtn.addEventListener('click', () => {
+            if (charCount) charCount.textContent = '0';
+            // Clear docket result back to empty state
+            const emptyState = document.getElementById('ai-empty-state');
+            const resultContent = document.getElementById('ai-result-content');
+            if (emptyState) emptyState.classList.remove('hidden');
+            if (resultContent) resultContent.classList.add('hidden');
+            toast('Form cleared. You may submit a new petition.', 'info');
+        });
+    }
 
     if (form) {
         form.addEventListener('submit', async (e) => {
@@ -438,6 +457,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const text = textarea ? textarea.value.trim() : '';
             const area = document.getElementById('area-select')?.value || 'Anna Nagar';
+            const landmark = document.getElementById('landmark-input')?.value.trim() || '';
             const citizenName = document.getElementById('citizen-name')?.value.trim() || 'Citizen (Anonymous)';
             const declaration = document.getElementById('statutory-declaration');
 
@@ -458,10 +478,12 @@ document.addEventListener('DOMContentLoaded', () => {
             if (btnLoader) btnLoader.classList.remove('hidden');
 
             try {
+                // BUG FIX: Include landmark in submission payload
+                const areaFull = landmark ? `${area} — near ${landmark}` : area;
                 const res = await fetch('/api/process-grievance', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ text, area })
+                    body: JSON.stringify({ text, area: areaFull })
                 });
 
                 const data = await res.json();
@@ -489,6 +511,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const resultContent = document.getElementById('ai-result-content');
         if (emptyState) emptyState.classList.add('hidden');
         if (resultContent) resultContent.classList.remove('hidden');
+
+        // BUG FIX: Update ticket-status-badge in the docket header
+        const statusBadgeDocket = document.getElementById('ticket-status-badge');
+        if (statusBadgeDocket) {
+            statusBadgeDocket.textContent = ticket.status || 'Submitted';
+            statusBadgeDocket.className = 'gov-status-badge ' + (
+                ticket.status === 'Flagged Duplicate' ? 'status-duplicate' : 'status-submitted'
+            );
+        }
 
         // References & Timing
         const ticketIdEl = document.getElementById('ticket-id');
@@ -702,9 +733,12 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         const currentStep = statusOrder[t.status] || 1;
 
+        // BUG FIX: HTML has tl-line-1 through tl-line-4 (1-indexed connectors between steps)
+        // JS was looking for tl-line-0 which doesn't exist. Connectors sit BETWEEN steps,
+        // so connector after step[idx] = tl-line-{idx+1}
         steps.forEach((s, idx) => {
             const stepEl = document.getElementById(`tl-${s}`);
-            const lineEl = document.getElementById(`tl-line-${idx}`);
+            const lineEl = document.getElementById(`tl-line-${idx + 1}`); // FIXED: was idx, now idx+1
             if (stepEl) {
                 stepEl.classList.remove('step-done', 'step-current');
                 if (idx + 1 < currentStep) stepEl.classList.add('step-done');
@@ -714,6 +748,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 lineEl.classList.toggle('line-done', idx + 1 < currentStep);
             }
         });
+
+        // BUG FIX: Clear static ATR placeholder text when real ticket data is shown
+        const atrEl = document.getElementById('track-atr-content');
+        if (atrEl) {
+            atrEl.textContent = t.status === 'Resolved'
+                ? 'Grievance has been resolved and case closed by the competent authority.'
+                : t.status === 'Dispatched' || t.status === 'In Progress'
+                    ? 'Field inspection team deployed. Work order issued to zonal maintenance crew.'
+                    : 'Petition received and under administrative review. ATR will be filed upon dispatch.';
+        }
     }
 
     /* ── Nodal Officer Console (Operations) ───────────────────── */

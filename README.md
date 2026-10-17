@@ -61,7 +61,8 @@ The project employs a hybrid Node.js + Python architecture designed for low-late
 
 ## Machine Learning & Model Handover Guide
 
-For complete technical architecture, transformer fine-tuning steps, hyperparameter tuning, and collaborator handover instructions, see **[`ML_MODEL_GUIDE.md`](./ML_MODEL_GUIDE.md)**.
+For complete technical architecture, transformer fine-tuning steps, hyperparameter tuning, and collaborator handover instructions, see **[`docs/ML_MODEL_GUIDE.md`](./docs/ML_MODEL_GUIDE.md)**.
+
 
 ### Current Performance Metrics
 - **Classification Macro-F1**: 1.000 (100% test accuracy across English, Hindi, Tamil)
@@ -78,6 +79,107 @@ python train_models.py --regen
 ---
 
 ## Repository Structure
+
+```
+Grievance Portal/
+│
+├── ── DEPLOYMENT ────────────────────────────────────────────
+│   ├── Dockerfile              # Docker (Python 3.10 + Node 20, single container)
+│   ├── start.sh                # Boot: FastAPI → health-check → Express
+│   ├── render.yaml             # Render.com IaC (Web Service + persistent disk)
+│   ├── vercel.json             # Vercel static host + /api/* proxy to Render
+│   └── .env.example            # All environment variables documented
+│
+├── ── BACKEND (Node.js) ────────────────────────────────────
+│   ├── server.js               # Express REST API + hybrid AI router
+│   ├── package.json
+│   └── requirements.txt        # Python ML dependencies
+│
+├── ── FRONTEND ─────────────────────────────────────────────
+│   └── public/
+│       ├── index.html          # Multilingual SPA (EN / HI / TA / TE)
+│       ├── app.js              # Submission, tracking, admin console, I18N
+│       └── style.css           # Government design system
+│
+├── ── ML PIPELINE (Python) ─────────────────────────────────
+│   ├── config.py               # Central config: paths, categories, departments
+│   ├── pipeline.py             # 9-Phase AI Pipeline orchestrator
+│   ├── fastapi_app.py          # FastAPI AI microservice (port 8000)
+│   ├── run_pipeline_bridge.py  # Express→Python subprocess JSON bridge
+│   ├── data_generator.py       # Synthetic multilingual dataset generator
+│   ├── train_models.py         # Training & evaluation CLI
+│   ├── evaluate.py             # Benchmark evaluation suite
+│   ├── models/
+│   │   ├── language_detector.py
+│   │   ├── complaint_classifier.py
+│   │   ├── duplicate_detector.py
+│   │   ├── priority_predictor.py
+│   │   ├── department_router.py
+│   │   └── explainer.py
+│   ├── data_store/
+│   │   ├── grievances_db.json  # Ticket DB (write-mutex guarded)
+│   │   ├── train.json          # Training set (815 samples)
+│   │   ├── val.json            # Validation set (144 samples)
+│   │   └── test.json           # Uncontaminated test set (144 samples)
+│   └── saved_models/
+│       ├── baseline_classifier.pkl
+│       └── priority_predictor.pkl
+│
+├── ── TESTS ────────────────────────────────────────────────
+│   └── tests/
+│       └── test_e2e.py         # Automated E2E integration test suite
+│
+└── ── DOCUMENTATION ────────────────────────────────────────
+    └── docs/
+        ├── ML_MODEL_GUIDE.md   # Senior engineer ML & training guide
+        ├── PROJECT_CHECKLIST.md
+        ├── api_standalone_reference.py  # Standalone FastAPI ML test harness
+        └── research/           # Paper generation scripts (not production)
+```
+
+---
+
+## Quick Start
+
+### 1. Start the Full Stack Locally
+```bash
+# Terminal 1: Start AI engine
+uvicorn fastapi_app:app --port 8000
+
+# Terminal 2: Start Express server
+node server.js
+```
+Open **`http://localhost:3000`** in your browser.
+
+### 2. Retrain ML Models & Evaluate
+```bash
+python train_models.py --regen
+```
+
+### 3. Run Automated End-to-End Tests
+Ensure `node server.js` is running, then:
+```bash
+python tests/test_e2e.py
+```
+
+### 4. Deploy to Production
+See **[`render.yaml`](./render.yaml)** and **[`vercel.json`](./vercel.json)** for Render + Vercel deployment.
+
+---
+
+## Concurrency & Data Safety
+
+The server includes a Promise-based **write-mutex lock (`withWriteLock`)** on `data_store/grievances_db.json`. This guarantees atomic read/write operations during high-concurrency ticket submissions and prevents JSON corruption.
+
+---
+
+## Verification & Audit Summary
+
+- **Backend Unified**: Single canonical backend (`server.js`).
+- **Data Leakage Eliminated**: Verified 0 text-level overlap between train, val, and test splits.
+- **Robust Fallbacks**: Pipeline runs seamlessly under minimal Python environments (numpy-only fallback mode).
+- **Automated Testing**: 100% passing E2E suite covering validation, processing, duplicate flagging, admin updates, and analytics.
+- **Deployment Ready**: Vercel (frontend CDN) + Render (Docker backend) with persistent disk for ticket storage.
 
 ```
 Grievance Portal/
