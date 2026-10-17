@@ -41,12 +41,13 @@ const VALID_PRIORITIES = ['Critical', 'High', 'Medium', 'Low'];
 app.use(helmet({ contentSecurityPolicy: false })); // CSP off so CDN scripts load
 
 // ── CORS ──────────────────────────────────────────────────────
-const CORS_ORIGIN = process.env.CORS_ORIGIN
-    ? process.env.CORS_ORIGIN.split(',').map(s => s.trim())
-    : [`http://localhost:${PORT}`, `http://127.0.0.1:${PORT}`];
+const rawCors = process.env.CORS_ORIGIN;
+const corsOriginConfig = (!rawCors || rawCors.trim() === '*')
+    ? '*'
+    : rawCors.split(',').map(s => s.trim());
 
 app.use(cors({
-    origin: process.env.NODE_ENV === 'production' ? CORS_ORIGIN : '*',
+    origin: process.env.NODE_ENV === 'production' ? corsOriginConfig : '*',
     methods: ['GET', 'POST', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
 }));

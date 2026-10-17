@@ -1,0 +1,10 @@
+# Extended Dependencies for Local Research, Deep Learning & Paper Figures
+# (Optional — install only if fine-tuning transformers or generating paper figures)
+-r requirements.txt
+sentence-transformers>=2.2.2
+transformers>=4.30.0
+torch>=2.0.0
+faiss-cpu>=1.7.4
+shap>=0.42.0
+matplotlib>=3.7.0
+pytest>=7.4.0

@@ -1,9 +1,8 @@
 # ============================================================
-# render.yaml — Render.com Infrastructure-as-Code
+# render.yaml — Render.com Infrastructure-as-Code Blueprint
 # Deploys a single Docker Web Service with:
-#   - Express API (port 3000, public)
+#   - Express API (port 3000, public HTTPS)
 #   - FastAPI AI Engine (port 8000, internal)
-#   - Persistent disk at /app/data_store (tickets survive deploys)
 # ============================================================
 
 services:
@@ -28,16 +27,19 @@ services:
         value: 8000
 
       # ──────────────────────────────────────────────────────
-      # IMPORTANT: After deploying, set CORS_ORIGIN below to
-      # your actual Vercel frontend URL, e.g.:
-      #   https://grievance-portal.vercel.app
-      # You can set this in the Render dashboard under
-      # Environment Variables.
+      # Set CORS_ORIGIN to your frontend URL(s) or '*' for open access
+      # Example: https://grievance-portal.vercel.app
       # ──────────────────────────────────────────────────────
       - key: CORS_ORIGIN
-        value: https://your-app.vercel.app  # ← REPLACE THIS
+        value: "*"
 
-    disk:
-      name: grievance-data-store
-      mountPath: /app/data_store
-      sizeGB: 1
+    # ──────────────────────────────────────────────────────
+    # Note: Render persistent disks require Starter ($7/mo) or higher.
+    # On the Free plan, ephemeral container storage at /app/data_store
+    # is used automatically and initialized on boot.
+    # To enable a persistent disk on a paid plan, uncomment below:
+    # ──────────────────────────────────────────────────────
+    # disk:
+    #   name: grievance-data-store
+    #   mountPath: /app/data_store
+    #   sizeGB: 1
